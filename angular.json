@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "admin-cv"
+    }
+  },
+  "defaultProject": "admin-cv",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,27 +1,27 @@
 # AdminCv
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+Proyecto de administración del panel de CV, hecho con AngujarJS
 
-## Development server
+## Pre-requisitos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Tener instalado: npm.
 
-## Code scaffolding
+`sudo apt install npm`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Instalación de: AngujarJS, NodeJS, TypeScript, MYSQL como BD (opcional Apache)
 
-## Build
+AngularJS: `npm install -g @angular/cli`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+NodeJS: `sudo apt install nodejs`
 
-## Running unit tests
+TypeScript: `npm install typescript`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+(Configuración de MYSQL para Ubuntu 20.04 [AQUÍ](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04-es "Configuración MYSQL").)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+MYSQL: `sudo apt install mysql-server`
+
+(opcional)
+Apache: `sudo apt install apache2`
