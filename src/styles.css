@@ -1,1 +1,136 @@
+/* HEADER */
+
+   /*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+
+.vertical-nav {
+    min-width: 17rem;
+    width: 17rem;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+  }
+  
+  .page-content {
+    width: calc(100% - 17rem);
+    margin-left: 17rem;
+    transition: all 0.4s;
+  }
+  
+  /* for toggle behavior */
+  
+  #sidebar.active {
+    margin-left: -17rem;
+  }
+  
+  #content.active {
+    width: 100%;
+    margin: 0;
+  }
+
+  .navegacion {
+    padding: 2.3rem!important;
+  }
+
+  #sidebarCollapse:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    #sidebar {
+      margin-left: -17rem;
+    }
+    #sidebar.active {
+      margin-left: 0;
+    }
+    #content {
+      width: 100%;
+      margin: 0;
+    }
+    #content.active {
+      margin-left: 17rem;
+      width: calc(100% - 17rem);
+    }
+  }
+  
+  /*
+  *
+  * ==========================================
+  * FOR DEMO PURPOSE
+  * ==========================================
+  *
+  */
+  
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  .separator {
+    margin: 3rem 0;
+    border-bottom: 1px dashed #fff;
+  }
+  
+  .text-uppercase {
+    letter-spacing: 0.1em;
+  }
+  
+  .text-gray {
+    color: #aaa;
+  }
+
 /* You can add global styles to this file, and also import other style files */
+/* Botón menú */
+.bi-list, .bi-arrows-fullscreen, .bi-box-arrow-right {
+    background-color: rgb(141, 141, 141);
+    color: #fff;
+    border-radius: 2px;
+    padding: 1px!important;
+  }
+
+  .bi-arrows-fullscreen, .bi-box-arrow-right {
+    padding: 0.2rem!important;
+  }
+
+  .bi-list:hover, .bi-arrows-fullscreen:hover, .bi-box-arrow-right:hover {
+    color: rgb(66, 66, 66);
+  }
+  i-bs:hover {
+    cursor: pointer;
+  }
+
+  /* FOOTER */
+
+  footer {
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    background-color: #F8F9FA;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  footer > div > a {
+    color: #000;
+    font-weight: bold;
+  }
+
+  footer > div > a:hover {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+  }
+
+  /* Estilo del contenido */
+
+  .contenido-pagina {
+    padding: 4rem;
+  }

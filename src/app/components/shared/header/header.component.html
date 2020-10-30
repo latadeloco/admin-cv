@@ -1,0 +1,56 @@
+<div class="page-content p-5 bg-light navegacion d-flex justify-content-between" id="content">
+  <i-bs id="sidebarCollapse" name="list" width="2rem" 
+  height="2rem"></i-bs>
+  <div class="row mx-md-n2 navegacion-derecha">
+    <div class="col px-md-2">
+      <i-bs name="arrows-fullscreen" width="1.7rem" 
+      height="1.7rem"></i-bs>
+    </div>
+    <div class="col px-md-2">
+      <i-bs name="box-arrow-right" width="1.7rem" 
+      height="1.7rem"></i-bs>
+    </div>
+  </div>
+  
+</div>
+    <!-- Vertical navbar -->
+<div class="vertical-nav bg-white" id="sidebar">
+  <div class="py-4 px-3 mb-4 bg-light">
+    <div class="media d-flex align-items-center"><img src="../../../assets/img/default.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+      <div class="media-body">
+        <h4 class="m-0">Jesús Robles</h4>
+        <p class="font-weight-light text-muted mb-0">Desarrollador Web</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menú CV</p>
+
+  <ul class="nav flex-column bg-white mb-0" #menu>
+    <li class="nav-item">
+      <a [routerLink]="['datos-personales']" #datos (click)="activeOptMenu(menu, datos)" class="nav-link text-dark font-italic bg-light">
+                Datos Personales
+            </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['formacion']" #formacion (click)="activeOptMenu(menu, formacion)" class="nav-link text-dark font-italic">
+                Formación
+            </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['experiencia-laboral']" #experiencia (click)="activeOptMenu(menu, experiencia)" class="nav-link text-dark font-italic">
+                Experiencia Laboral
+            </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['objetivos-profesionales']" #objetivos  (click)="activeOptMenu(menu, objetivos)" class="nav-link text-dark font-italic">
+                Objetivos Profesionales
+            </a>
+    </li>
+    <li class="nav-item">
+        <a [routerLink]="['proyectos']" #proyectos (click)="activeOptMenu(menu, proyectos)" class="nav-link text-dark font-italic">
+                Proyectos    
+        </a>
+    </li>
+  </ul>
+</div>
