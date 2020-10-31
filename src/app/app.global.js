@@ -12,15 +12,17 @@ $(function() {
         $('#sidebar, #content').toggleClass('active');
     });
 
-    var a = $('.nav-item > .nav-link');
-
-    function activeOptMenu() {
-        for (let i = 0; i < a.length; i++) {
-            console.log(a[i].hash == window.location.hash)
-            if (a[i].hash = window.location.hash) {
-                $(a[i]).addClass('bg-light');
-                break;
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+            document.exitFullscreen(); 
             }
         }
     }
+
+    $('#fullscreen').on('click', () => {
+        toggleFullScreen();
+    });
 });

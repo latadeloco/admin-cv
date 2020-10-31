@@ -9,6 +9,7 @@ import { APP_ROUTING } from "./app.routes";
 
 // Servicios
 
+import { OpcionesMenuService } from './services/opciones-menu.service';
 
 // Componentes
 
@@ -31,7 +32,9 @@ import { ProyectosComponent } from './components/proyectos/proyectos.component';
     NgxBootstrapIconsModule.pick(allIcons),
     APP_ROUTING
   ],
-  providers: [],
+  providers: [
+    OpcionesMenuService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

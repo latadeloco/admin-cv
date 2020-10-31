@@ -16,13 +16,13 @@
     top: 0;
     left: 0;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s;
+    transition: all 1s;
   }
   
   .page-content {
     width: calc(100% - 17rem);
     margin-left: 17rem;
-    transition: all 0.4s;
+    transition: all 1s;
   }
   
   /* for toggle behavior */
@@ -129,8 +129,33 @@
     font-weight: bold;
   }
 
+  /* Estilo de scrollBar */
+
+  /* width */
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #797979; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #494949; 
+}
+
+
   /* Estilo del contenido */
 
   .contenido-pagina {
-    padding: 4rem;
+    padding: 0.5rem;
   }
