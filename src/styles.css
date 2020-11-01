@@ -1,4 +1,14 @@
+/* Clases para el body */
+
+.login {
+  background-color: #97aab6;
+}
+
 /* HEADER */
+
+.invisible {
+  display: none;
+}
 
    /*
 *
@@ -90,18 +100,22 @@
 /* You can add global styles to this file, and also import other style files */
 /* Botón menú */
 .bi-list, .bi-arrows-fullscreen, .bi-box-arrow-right {
-    background-color: rgb(141, 141, 141);
+    background-color: #243996;
     color: #fff;
-    border-radius: 2px;
-    padding: 1px!important;
+    border-radius: 10px;
+    padding: 5px!important;
+    width: 35px;
+    height: 35px;
   }
 
   .bi-arrows-fullscreen, .bi-box-arrow-right {
-    padding: 0.2rem!important;
+    padding: 7px!important;
   }
 
   .bi-list:hover, .bi-arrows-fullscreen:hover, .bi-box-arrow-right:hover {
-    color: rgb(66, 66, 66);
+    color: rgb(243, 240, 240);
+    background-color: #246c96;
+    box-shadow: 0 4px 16px rgb(10, 44, 134);
   }
   i-bs:hover {
     cursor: pointer;
@@ -159,3 +173,71 @@
   .contenido-pagina {
     padding: 0.5rem;
   }
+
+
+/* Estilos Login Usuario */
+
+#div-login {
+  background-color: #fafafa;
+  padding: 2rem;
+  border: 2px solid #899694;
+  border-radius: 1rem;
+}
+
+.label-login {
+  font-family: 'Lobster', cursive;
+}
+
+.input-login:focus {
+  color: #001a52;
+}
+
+.input-login {
+  color: #0b86a5;
+}
+
+.submit-login {
+  color: #fff;
+  background-color: #0b86a5!important;
+  border-color: #0b86a5!important;
+  box-shadow: 0px;
+}
+
+.submit-login:hover {
+  color: #fff;
+  background-color: #001a52!important;
+  border-color: #001a52!important;
+  box-shadow: 0 4px 16px rgb(11, 134, 165)!important;
+  transition: all 0.2s ease!important;
+}
+
+.submit-login:focus {
+  color: #fff;
+  box-shadow: 0 4px 16px rgb(11, 134, 165)!important;
+}
+
+.submit-login:active {
+  color: #fff;
+  background-color: #001a52!important;
+  border-color: #001a52!important;
+  box-shadow: 0 4px 16px rgb(11, 134, 165)!important;
+}
+.submit-login:active:after {
+  color: #fff;
+  background-color: #001a52!important;
+  border-color: #001a52!important;
+  box-shadow: 0 4px 16px rgb(11, 134, 165)!important;
+}
+
+/* Estilos de la página interior (generales) */
+
+body {
+  font-family: 'Blinker', sans-serif;
+}
+
+
+/* Formularios */
+
+.border-formulario {
+  border: 2px solid #0c810c;
+}

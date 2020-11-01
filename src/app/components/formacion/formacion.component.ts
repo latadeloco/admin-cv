@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Shared } from 'src/app/app.component';
 
 @Component({
   selector: 'app-formacion',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormacionComponent implements OnInit {
 
-  constructor() { }
+  @Output() cambiarVisualizacion: EventEmitter<Shared>
+
+  constructor() {
+    this.cambiarVisualizacion = new EventEmitter();
+    this.cambiarVisualizacion.emit(new Shared())
+  }
 
   ngOnInit(): void {
   }

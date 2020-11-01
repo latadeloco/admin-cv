@@ -28,7 +28,7 @@
 
   <ul class="nav flex-column bg-white mb-0" #menu>
     <li class="nav-item" *ngFor="let opcionMenu of optsMenu; let i = index">
-      <ng-container *ngIf="i == 0 && hashPathDefault == '#/datos-personales'; else elseTemplate">
+      <ng-container *ngIf="hashPathDefault == '#/datos-personales'; else elseTemplate">
         <a [routerLink]="[opcionMenu.url]"  #opcion (click)="activeOptMenu(menu, opcion)" class="nav-link text-dark font-italic bg-light">
           {{ opcionMenu.nombre }}
         </a>

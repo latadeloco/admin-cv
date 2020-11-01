@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Opcion, OpcionesMenuService } from 'src/app/services/opciones-menu.service';
-
+import { AppComponent } from "../../../app.component";
 
 @Component({
     selector: 'app-header',
@@ -10,7 +10,6 @@ import { Opcion, OpcionesMenuService } from 'src/app/services/opciones-menu.serv
 })
 
 export class HeaderComponent implements OnInit {
-
     optsMenu : Opcion[] = [];
     hashPathDefault : string;
     constructor( private _opcionesMenuService : OpcionesMenuService ) {

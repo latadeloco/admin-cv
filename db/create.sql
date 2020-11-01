@@ -5,11 +5,13 @@ DROP TABLE IF EXISTS objetivos_profesionales;
 DROP TABLE IF EXISTS tipo_skills;
 DROP TABLE IF EXISTS skills;
 DROP TABLE IF EXISTS proyectos;
+DROP TABLE IF EXISTS usuario;
 
 CREATE TABLE datos_personales(
     `id_datos_personales` int(50) not null primary key auto_increment
   , `nombre` varchar(50) not null
   , `apellidos` varchar (60) not null
+  , `puesto` varchar(100)
   , `fecha_nacimiento` date
   , `telefono` varchar(12)
   , `email` varchar(100)
@@ -67,4 +69,14 @@ CREATE TABLE proyectos (
     `id_proyecto` int (50) not null primary key auto_increment
   , `nombre` varchar(255) not null
   , `link` text
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE usuario (
+    `id_usuario` int (50) not null primary key auto_increment
+  , `email` varchar(150) not null unique
+  , `username` varchar(50) not null unique
+  , `pass` char(60) not null
+  , `token` char(60) not null
+  , `auth_two_factor` boolean default false
+  , `desactivate` boolean default false
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

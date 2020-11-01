@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,33 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'admin-cv';
+  constructor() {
+  }
+
+}
+
+export class Shared {
+  constructor() {
+    this.visualizacion();
+  }
+
+  public visualizacion() {
+    var header = document.getElementById('header-app');
+    var footer = document.getElementById('footer-app');
+    var body = document.getElementById('body');
+    var contenido = document.getElementsByClassName('contenido-router-outlet')[0];
+
+    if (window.location.hash == '#/iniciar-sesion') {
+      header.classList.add('invisible');
+      footer.classList.add('invisible');
+      body.classList.add('login');
+      contenido.classList.remove('page-content');
+    } else {
+      header.classList.remove('invisible');
+      footer.classList.remove('invisible');
+      body.classList.remove('login');
+
+      contenido.classList.add('page-content');
+    }
+  }
 }

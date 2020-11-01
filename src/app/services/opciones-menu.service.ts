@@ -7,6 +7,10 @@ export class OpcionesMenuService {
 
   private optsMenu : Opcion[] = [
     {
+      nombre: 'Iniciar Sesión',
+      url: 'iniciar-sesion'
+    },
+    {
       nombre: 'Datos Personales',
       url: 'datos-personales'
     },

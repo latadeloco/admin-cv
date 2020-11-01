@@ -1,0 +1,73 @@
+<ng-template #content let-modal>
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title label-login">No hay un usuario para acceder</h4>
+    </div>
+    <form id="formularioRegistro" [formGroup]="registroUsuario" (ngSubmit)="registrarUsuario()">
+        <div class="col-12 modal-body">
+            
+            <div class="row">
+                <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                    
+                    <input type="text" class="form-control input-login label-login" placeholder="Nombre de usuario *" formControlName="nombre" required>
+                    <div class="invalid-feedback label-login">
+                        Introduce un nombre de usuario
+                    </div>
+                </div>
+                <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                    <input type="password" class="form-control input-login label-login"  placeholder="Contraseña *" formControlName="pass" required>
+                    <div class="invalid-feedback label-login">
+                        Introduce una contraseña como mínimo de 4 caracteres
+                    </div>
+                </div>
+                <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                    <input type="email" class="form-control input-login label-login"  placeholder="Correo electrónico *" formControlName="email" required>
+                    <div class="invalid-feedback label-login">
+                        Introduce un correo electrónico válido
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn submit-login label-login btn-block">Registrarse</button>
+        </div>
+    </form>
+</ng-template>
+
+<div class="d-flex justify-content-center align-self-center" style="margin-top:25vh">
+    
+    <form [formGroup]="inicioSesionFormGroup" (ngSubmit)="logIn()">
+        <div id="div-login">
+            <h1 class="label-login" style="text-align: center;">Iniciar Sesión</h1>
+            <div class="row">
+                <div class="col-12 p-1">
+                    <label for="username" class="label-login">Nombre de usuario: </label>
+                </div>
+                <div class="col-12 p-1">
+                    <input type="text" class="form-control label-login input-login" id="username" placeholder="Introduce el nombre del usuario" formControlName="userName">
+                    <div class="invalid-feedback label-login">
+                        El usuario no puede estar vacío.
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-4">
+                <div class="col-12 p-1">
+                    <label for="pass" class="label-login">Contraseña: </label>
+                </div>
+                <div class="col-12 p-1 pb-4">
+                    <input type="password" id="passWord" class="form-control label-login input-login" id="passWord" placeholder="Introduce la contraseña" formControlName="pass">
+                    <div class="invalid-feedback label-login">
+                        La contraseña no puede estar vacía.
+                    </div>
+                    <div>
+                        <input type="hidden" id="logInId">
+                        <div class="invalid-feedback label-login">
+                            El usuario o la contraseña son incorrectas
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit"  class="btn btn-success btn-block p-2 label-login submit-login">Iniciar sesión</button>
+        </div>
+    </form>
+</div>
+

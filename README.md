@@ -25,3 +25,17 @@ MYSQL: `sudo apt install mysql-server`
 
 (opcional)
 Apache: `sudo apt install apache2`
+
+## Pre-requisitos con el usuario de la base de datos a la hora de desplegarlo en producción
+
+Antes de desplegar la App en producción, en MySQL tendremos que crear un usuario específico para la App del back-end que está implementada con NodeJS.
+
+Para ello se deja la siguiente traza de código:
+
+``` 
+CREATE USER 'usuario-back-end-node'@'%' IDENTIFIED BY 'password';
+GRANT ALL ON base_datos_cv.* TO 'usuario-back-end-node'@'%';
+FLUSH PRIVILEGES;
+```
+
+Posteriormente, se tendrá que poner la nueva configuración en el archivo **index.js** en la ruta ***back-end***.

@@ -1,10 +1,14 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import * as bcrypt from 'bcryptjs';
 
 export const environment = {
   production: false
 };
+
+export const baseUrlApi = "http://192.168.1.96:3500/";
+export const salt = bcrypt.genSaltSync(11);
 
 /*
  * For easier debugging in development mode, you can import the following file

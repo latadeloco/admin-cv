@@ -4,12 +4,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 
+// Para peticiones HTTP
+
+import { HttpClientModule } from "@angular/common/http";
+
+// Para formularios
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 // Rutas
 import { APP_ROUTING } from "./app.routes";
 
 // Servicios
 
 import { OpcionesMenuService } from './services/opciones-menu.service';
+import { ToastService } from './services/toast.service';
+
 
 // Componentes
 
@@ -20,21 +29,42 @@ import { FormacionComponent } from './components/formacion/formacion.component';
 import { ExperienciaLaboralComponent } from './components/experiencia-laboral/experiencia-laboral.component';
 import { ObjetivosProfesionalesComponent } from './components/objetivos-profesionales/objetivos-profesionales.component';
 import { ProyectosComponent } from './components/proyectos/proyectos.component';
+import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
+import { UsuarioService } from './services/usuario.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdToastGlobal } from './components/shared/toast/toast-global.components';
+import { ToastsContainer } from './components/shared/toast/toast-container.components';
 
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, FooterComponent, DatosPersonalesComponent, FormacionComponent, ExperienciaLaboralComponent, ObjetivosProfesionalesComponent, ProyectosComponent
+    AppComponent, 
+    HeaderComponent, 
+    FooterComponent, 
+    DatosPersonalesComponent, 
+    FormacionComponent, 
+    ExperienciaLaboralComponent, 
+    ObjetivosProfesionalesComponent, 
+    ProyectosComponent, 
+    IniciarSesionComponent,
+    NgbdToastGlobal,
+    ToastsContainer,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgxBootstrapIconsModule.pick(allIcons),
-    APP_ROUTING
+    APP_ROUTING,
+    HttpClientModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
-    OpcionesMenuService
+    OpcionesMenuService,
+    UsuarioService,
+    ToastService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, NgbdToastGlobal],
 })
 export class AppModule { }
