@@ -10,6 +10,9 @@ export class FormacionComponent implements OnInit {
 
   @Output() cambiarVisualizacion: EventEmitter<Shared>
 
+  /**
+   * Constructor del componente
+   */
   constructor() {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared())
