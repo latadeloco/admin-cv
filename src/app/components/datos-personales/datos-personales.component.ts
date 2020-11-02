@@ -18,6 +18,9 @@ export class DatosPersonalesComponent implements OnInit {
     this.cambiarVisualizacion.emit(new Shared())
   }
 
+  /**
+   * Método de inicialización del componente
+   */
   ngOnInit(): void {
     
   }
