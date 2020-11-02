@@ -32,12 +32,21 @@ export class OpcionesMenuService {
     }
 ];
 
+  /**
+   * Constructor del servicio
+   */
   constructor() {
   }
 
+  /**
+   * Retorna las opciones del menú
+   */
   getOptsMenu():Opcion[] { return this.optsMenu }
 }
 
+/**
+ * Interface interna dentro del servicio (que se puede exportar en caso de quererla reutilizar) para mejor estructuración de las opciones de menú
+ */
 export interface Opcion {
   nombre: string;
   url: string;

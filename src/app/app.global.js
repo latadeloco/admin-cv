@@ -1,3 +1,6 @@
+/**
+ * Funciones globales a toda la aplicación, se incluye en el angular.json para que se empaquete
+ */
 $(function() {
 // Sidebar toggle behavior
     $('#sidebarCollapse').on('click', function() {

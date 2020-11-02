@@ -32,6 +32,15 @@ export class IniciarSesionComponent implements OnInit {
       const isDesktopDevice = this.deviceService.isDesktop();
    */
 
+   /**
+    * Constructor del componente
+    * @param usuarioService servicio necesario para el uso de token, en caso de tenerlo, redirigir al panel en caso de no tenerlo se sigue con el proceso
+    * @param modalService necesario para iniciar el modal del registro del usuario
+    * @param config configuración del modal
+    * @param formBuilder necesario para el formulario reactivo
+    * @param toastService servicio para la creación de una notificación en caso de registro de usuario
+    * @param router necesario para hacer la redirección en caso de token válido
+    */
   constructor(
     private usuarioService: UsuarioService,
     private modalService: NgbModal,
@@ -51,8 +60,10 @@ export class IniciarSesionComponent implements OnInit {
     this.authForm();
   }
 
+  /**
+   * Se inicia el componente preguntando si existe el usuario, si no existe salta el modal para el registro del mismo
+   */
   ngOnInit(): void {
-    console.log(localStorage.getItem('user-token')); 
     this.usuarioService.getExisteUsuario().toPromise().then(data => {
       if (data[0].response != null) {
         this.modalService.open(this.content, { centered: true })
@@ -61,6 +72,9 @@ export class IniciarSesionComponent implements OnInit {
 
   }
 
+  /**
+   * Método para establecer los parámetros del formulario reactivo del registro del usuario
+   */
   createForm() {
     this.registroUsuario = this.formBuilder.group({
       nombre: [''],
@@ -69,6 +83,9 @@ export class IniciarSesionComponent implements OnInit {
     });
   }
 
+  /**
+   * Método para conectar los parámetros del formulario de inicio de sesion
+   */
   authForm() {
     this.inicioSesionFormGroup = this.formBuilder.group({
       userName : [''],
@@ -76,6 +93,9 @@ export class IniciarSesionComponent implements OnInit {
     });
   }
 
+  /**
+   * Método para el registro del usuario
+   */
   registrarUsuario() {
     var formNombre = document.getElementById('formularioRegistro').children[0].children[0].children[0].children[0];
     var formPass = document.getElementById('formularioRegistro').children[0].children[0].children[1].children[0];
@@ -135,6 +155,9 @@ export class IniciarSesionComponent implements OnInit {
     }
   }
 
+  /**
+   * Método para el login de usuario
+   */
   logIn() {
     var loginIdError = document.getElementById('logInId');
     var userName = document.getElementById('username');

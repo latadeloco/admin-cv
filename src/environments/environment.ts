@@ -7,7 +7,10 @@ export const environment = {
   production: false
 };
 
+// constante URL para apuntar al servicio nodeJS
 export const baseUrlApi = "http://192.168.1.96:3500/";
+
+// constante para establecer la fuerza de encriptación (fuerza = 11)
 export const salt = bcrypt.genSaltSync(11);
 
 /*

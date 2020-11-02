@@ -8,7 +8,9 @@ import { ObjetivosProfesionalesComponent } from './components/objetivos-profesio
 import { ProyectosComponent } from './components/proyectos/proyectos.component';
 import { AuthGuard } from './guards/auth.guard';
 
-
+/**
+ * Constante para parametrizar las rutas (routes)
+ */
 const APP_ROUTES: Routes = [
     { path : 'iniciar-sesion', component: IniciarSesionComponent },
     { path : 'datos-personales', component: DatosPersonalesComponent, canActivate: [AuthGuard] },

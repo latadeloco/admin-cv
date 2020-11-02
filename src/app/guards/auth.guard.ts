@@ -7,13 +7,20 @@ import { UsuarioService } from '../services/usuario.service';
 })
 export class AuthGuard implements CanActivate {
 
+  /**
+   * Constructor del Guard
+   * @param usuarioService Parámetro necesario para establecer el token de usuario
+   * @param router Parámetro para la navegación en caso de que el token exista
+   */
   constructor (
     private usuarioService : UsuarioService,
     private router : Router
   ) {
 
   }
-
+  /**
+   * Método para añadir en las rutas, obtiene el token si no existe se lo envía sino redirige
+   */
   canActivate(): boolean {
     if (this.usuarioService.getUserToken()) {
       return this.usuarioService.getUserToken();

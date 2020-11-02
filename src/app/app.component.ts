@@ -13,11 +13,19 @@ export class AppComponent {
 }
 
 export class Shared {
+
+  /**
+   * Constructor de la clase Shared
+   */
   constructor() {
     this.visualizacion();
   }
 
-  public visualizacion() {
+  /**
+   * Método en el cuál el contenido ve el hash actual y modifica si debe aparecer el Header y Footer.
+   * Método utilizado para parametrizar la pantalla de inicio de sesión y las pantallas internas una vez hecho el logueo el usuario.
+   */
+  visualizacion() {
     var header = document.getElementById('header-app');
     var footer = document.getElementById('footer-app');
     var body = document.getElementById('body');
