@@ -1,68 +1,72 @@
-<form class="container">
+<div class="container">
     <div class="center">
+      <form [formGroup]="subirImagenGroup">
         <div class="form-group">
           <div class="row">
             <div class="col-12 col-xs-6 col-sm-6 col-lg-6 p-2">
               <label for="exampleFormControlFile1">Elegir foto de perfil</label>
-                  <input type="file" class="form-control-file input-sm" accept="image/png, image/jpeg" id="exampleFormControlFile1">
+                  <input type="file" (change)="subirImagenServer($event.target.files)" class="form-control-file input-sm" accept="image/png, image/jpeg" id="exampleFormControlFile1">
             </div>
             <div class="col-12 col-xs-6 col-sm-6 col-lg-6 p-2" style="font-size: 2px;">
               <input type="submit" class="btn btn-success btn-sm btn-block" value="Subir foto de perfil">
             </div>
           </div>
         </div>
+      </form>
     </div>
-    <div class="row">
-      <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-        <input type="text" class="form-control input-sm" placeholder="Nombre *" required>
-      </div>
-      <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-        <input type="text" class="form-control" placeholder="Apellidos *" required>
-      </div>
-      <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-        <input type="text" class="form-control" placeholder="Puesto actual *" required>
-      </div>
-    </div>
-    <div class="row pt-4">
+    <form [formGroup]="datosPersonalesGroup" (ngSubmit)="datosPersonalesForm()">
+      <div class="row">
         <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-          <input type="date" class="form-control" placeholder="Fecha de Nacimiento (dd/mm/aaaa) *" required>
+          <input type="text" class="form-control input-sm" placeholder="Nombre *" formControlName="nombre">
         </div>
         <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-          <input type="number" min="8" max="13" class="form-control" placeholder="Teléfono *" required>
+          <input type="text" class="form-control" placeholder="Apellidos *" formControlName="apellidos">
         </div>
         <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-            <input type="email" class="form-control" placeholder="Correo Electrónico *" required>
+          <input type="text" class="form-control" placeholder="Puesto actual *" formControlName="puesto">
+        </div>
+      </div>
+      <div class="row pt-4">
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
+            <input type="date" class="form-control" placeholder="Fecha de Nacimiento (dd/mm/aaaa) *" formControlName="nacimiento">
           </div>
-    </div>
-    <div class="row pt-4">
-        <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
-          <input type="text" class="form-control" placeholder="Dirección *" required>
-        </div>
-    </div>
-    <div class="row pt-4">
-        <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-          <input type="text" class="form-control" placeholder="Población *" required>
-        </div>
-        <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-            <input type="text" class="form-control" placeholder="Provincia *" required>
-        </div>
-        <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
-            <input type="number" min="5" max="10" class="form-control" placeholder="Código Postal *" required>
-        </div>
-    </div>
-    <div class="row pt-4">
-        <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
-            <textarea name="descripcionBreve" class="form-control" style="resize: none;" cols="30" rows="10" placeholder="Descripción breve..."></textarea>
-        </div>
-    </div>
-    <div class="row pt-4">
-        <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
-            <textarea name="descripcionSobreMi" class="form-control" style="resize: none;" cols="30" rows="10" placeholder="Descripción sobre mí..."></textarea>
-        </div>
-    </div>
-    <div class="row pt-4">
-        <div class="form-check col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
-            <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
-        </div>
-    </div>
-  </form>
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
+            <input type="number" min="8" max="13" class="form-control" placeholder="Teléfono *" formControlName="telefono">
+          </div>
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
+              <input type="email" class="form-control" placeholder="Correo Electrónico *" formControlName="email">
+            </div>
+      </div>
+      <div class="row pt-4">
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+            <input type="text" class="form-control" placeholder="Dirección *" formControlName="direccion">
+          </div>
+      </div>
+      <div class="row pt-4">
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
+            <input type="text" class="form-control" placeholder="Población *" formControlName="poblacion">
+          </div>
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
+              <input type="text" class="form-control" placeholder="Provincia *" formControlName="provincia">
+          </div>
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
+              <input type="number" min="5" max="10" class="form-control" placeholder="Código Postal *" formControlName="codigoPostal">
+          </div>
+      </div>
+      <div class="row pt-4">
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+              <textarea name="descripcionBreve" class="form-control" style="resize: none;" cols="30" rows="10" placeholder="Descripción breve..." formControlName="descripcionBreve"></textarea>
+          </div>
+      </div>
+      <div class="row pt-4">
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+              <textarea name="descripcionSobreMi" class="form-control" style="resize: none;" cols="30" rows="10" placeholder="Descripción sobre mí..." formControlName="descripcionSobreMi"></textarea>
+          </div>
+      </div>
+      <div class="row pt-4">
+          <div class="form-check col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+              <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+          </div>
+      </div>
+      </form>
+  </div>

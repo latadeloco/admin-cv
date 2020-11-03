@@ -3,9 +3,17 @@ var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
+const fs = require('fs');
+
 const TokenGenerator = require('uuid-token-generator');
 const { config } = require('process');
 const token = new TokenGenerator(256, TokenGenerator.BASE62);
+
+// Subir Archivos al servidor
+const multipart = require('connect-multiparty');
+const subirImagenes = multipart({
+    uploadDir: './../src/assets/img'
+});
 
 var configuracionMysql = {
     host: 'localhost',
@@ -123,8 +131,40 @@ app.get("/usuario/logIn", (req, res, otro) => {
  * 
  */
 
+app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
+    // List all the filenames before renaming 
+    /*getCurrentFilenames(); 
+    
+    // Rename the file 
+    fs.rename('hello.txt', 'geeks.txt', (error) => { 
+    if (error) { 
+        
+        // Show the error  
+        console.log(error); 
+    } 
+    else { 
+    
+        // List all the filenames after renaming 
+        console.log("\nFile Renamed\n"); 
+    
+        // List all the filenames after renaming 
+        getCurrentFilenames(); 
+    } 
+    }); */
+    res.json({
+        'message': 'Archivo subido correctamente.',
+        'path' : req.files.imagen.path
+    }); 
+});
 
-
+// Function to get current filenames 
+// in directory 
+function getCurrentFilenames() { 
+    console.log("Current filenames:"); 
+    fs.readdirSync(__dirname).forEach(file => { 
+        console.log(file); 
+    }); 
+} 
 
 
 
