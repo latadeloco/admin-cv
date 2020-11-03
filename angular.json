@@ -32,7 +32,6 @@
               "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
-              "src/app/app.global.js"
             ]
           },
           "configurations": {
