@@ -178,6 +178,29 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
 });
 
 
+app.get('/datos-personales/imagenPerfil', (req, res) => {
+    fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
+        if (err != null) {
+            return
+        } else {
+            res.json({
+                'perfilExiste' : true,
+                'extension' : 'jpg'
+            });
+        }
+    });
+    fs.stat('..\\src\\assets\\img\\perfil.png', (err, stat) => {
+        if (err != null) {
+            return
+        } else {
+            res.json({
+                'perfilExiste' : true,
+                'extension' : 'png'
+            });
+        }
+    });
+
+});
 
 
 /**

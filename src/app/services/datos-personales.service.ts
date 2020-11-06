@@ -8,10 +8,15 @@ import { baseUrlApi } from 'src/environments/environment';
 export class DatosPersonalesService {
   
   slash = "datos-personales/";
+  urlBase = baseUrlApi + this.slash;
 
   constructor(private http: HttpClient) { }
 
   setSubirImagenPerfil(formData) {
-    return this.http.post(baseUrlApi + this.slash + "subirImagen", formData);
+    return this.http.post(this.urlBase + "subirImagen", formData);
+  }
+
+  getImagenPerfil() {
+    return this.http.get(this.urlBase + "imagenPerfil");
   }
 }
