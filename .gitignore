@@ -49,3 +49,4 @@ Thumbs.db
 # custom folders
 /back-end copy
 /back-end/node_modules
+debug.log
