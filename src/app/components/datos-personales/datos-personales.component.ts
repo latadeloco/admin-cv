@@ -11,7 +11,6 @@ import { DatosPersonalesService } from 'src/app/services/datos-personales.servic
 export class DatosPersonalesComponent implements OnInit {
   
   @Output() cambiarVisualizacion: EventEmitter<Shared>
-  subirImagenGroup: FormGroup;
   datosPersonalesGroup: FormGroup;
   fileUpload: File;
 
@@ -23,9 +22,8 @@ export class DatosPersonalesComponent implements OnInit {
     private datosPersonalesService : DatosPersonalesService
   ) {
     this.cambiarVisualizacion = new EventEmitter();
-    this.cambiarVisualizacion.emit(new Shared())
-    this.subirImagenForm()
-    this.datosPersonalesForm()
+    this.cambiarVisualizacion.emit(new Shared());
+    this.datosPersonalesForm();
   }
 
   /**
@@ -43,12 +41,6 @@ export class DatosPersonalesComponent implements OnInit {
 
     this.datosPersonalesService.setSubirImagenPerfil(formData).toPromise().then(respuesta => {
       console.log(respuesta);
-    })
-  }
-
-  subirImagenForm() {
-    this.subirImagenGroup = this.formBuilder.group({
-
     });
   }
 
@@ -66,7 +58,7 @@ export class DatosPersonalesComponent implements OnInit {
       codigoPostal: [''],
       descripcionBreve: [''],
       descripcionSobreMi: ['']
-    })
+    });
   }
 
 }
