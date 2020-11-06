@@ -1,14 +1,11 @@
 <div class="container">
     <div class="center">
-      <form [formGroup]="subirImagenGroup">
+      <form>
         <div class="form-group">
           <div class="row">
-            <div class="col-12 col-xs-6 col-sm-6 col-lg-6 p-2">
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
               <label for="exampleFormControlFile1">Elegir foto de perfil</label>
                   <input type="file" (change)="subirImagenServer($event.target.files)" class="form-control-file input-sm" accept="image/png, image/jpeg" id="exampleFormControlFile1">
-            </div>
-            <div class="col-12 col-xs-6 col-sm-6 col-lg-6 p-2" style="font-size: 2px;">
-              <input type="submit" class="btn btn-success btn-sm btn-block" value="Subir foto de perfil">
             </div>
           </div>
         </div>
