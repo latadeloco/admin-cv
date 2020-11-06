@@ -132,6 +132,8 @@ app.get("/usuario/logIn", (req, res, otro) => {
  */
 
 app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
+    console.log(req);
+    console.log("holaaa")
     res.json({
         'message': 'Archivo subido correctamente.',
     }); 

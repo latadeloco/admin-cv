@@ -84,4 +84,16 @@ export class HeaderComponent implements OnInit {
             }
         }
     }
+
+    toogleFullAndLogOut() {
+        var sidebar = document.getElementById('sidebar');
+
+        if(!sidebar.classList.contains('active') && screen.width < 600) {
+            document.getElementById('fullscreen').style.display = "none";
+            document.getElementById('logOutIcon').style.display = "none";
+        } else if(sidebar.classList.contains('active') && screen.width < 600) {
+            document.getElementById('fullscreen').style.display = "inherit";
+            document.getElementById('logOutIcon').style.display = "inherit";
+        }
+    }
 }
