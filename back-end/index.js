@@ -200,11 +200,7 @@ app.get('/datos-personales/imagenPerfil', (req, res) => {
         }
     });
     res.json({
-<<<<<<< HEAD
-        "mensaje": "comprobación finalizada"
-=======
         'mensaje' : 'comprobación finalizada.'
->>>>>>> iniciarSesion
     })
 });
 
