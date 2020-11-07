@@ -201,7 +201,9 @@ app.get('/datos-personales/imagenPerfil', (req, res) => {
             });
         }
     });
-
+    res.json({
+        'mensaje' : 'comprobación finalizada.'
+    })
 });
 
 
