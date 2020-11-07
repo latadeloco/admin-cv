@@ -14,7 +14,17 @@
   display: none;
 }
 
-   /*
+
+
+
+
+
+
+
+
+
+
+/*
 *
 * ==========================================
 * CUSTOM UTIL CLASSES
@@ -23,85 +33,59 @@
 */
 
 .vertical-nav {
-    min-width: 17rem;
-    width: 17rem;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    transition: all 1s;
-  }
-  
-  .page-content {
-    width: calc(100% - 17rem);
-    margin-left: 17rem;
-    transition: all 1s;
-  }
-  
-  /* for toggle behavior */
-  
-  #sidebar.active {
+  min-width: 17rem;
+  width: 17rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s;
+}
+
+.page-content {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+}
+
+/* for toggle behavior */
+
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
     margin-left: -17rem;
   }
-  
-  #content.active {
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #content {
     width: 100%;
     margin: 0;
   }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+}
 
-  .navegacion {
-    padding: 2.3rem!important;
-  }
 
-  #sidebarCollapse:hover {
-    cursor: pointer;
-  }
 
-  @media (max-width: 768px) {
-    #sidebar {
-      margin-left: -17rem;
-    }
-    #sidebar.active {
-      margin-left: 0;
-    }
-    #content {
-      width: 100%;
-      margin: 0;
-    }
-    #content.active {
-      margin-left: 17rem;
-      width: calc(100% - 17rem);
-    }
-  }
-  
-  /*
-  *
-  * ==========================================
-  * FOR DEMO PURPOSE
-  * ==========================================
-  *
-  */
-  
-  body {
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  
-  .separator {
-    margin: 3rem 0;
-    border-bottom: 1px dashed #fff;
-  }
-  
-  .text-uppercase {
-    letter-spacing: 0.1em;
-  }
-  
-  .text-gray {
-    color: #aaa;
-  }
+/* SE TERMINA AQUÍ */
 
-/* You can add global styles to this file, and also import other style files */
+
+
+
+
+
 /* Botón menú */
 .bi-list, .bi-arrows-fullscreen, .bi-box-arrow-right {
     background-color: #243996;
@@ -245,3 +229,4 @@ body {
 .border-formulario {
   border: 2px solid #0c810c;
 }
+
