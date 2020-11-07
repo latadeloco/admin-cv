@@ -9,6 +9,7 @@ export class UsuarioService {
   
   slash = "usuario/";
   userToken : string;
+  urlBase = baseUrlApi + this.slash;
 
   /**
    * Constructor del servicio
@@ -21,7 +22,7 @@ export class UsuarioService {
    * Retorna una petición para ver si existen usuarios
    */
   getExisteUsuario() {
-    return this.http.get(baseUrlApi + this.slash + 'existe');
+    return this.http.get(this.urlBase + 'existe');
   }
 
   /**
@@ -29,7 +30,7 @@ export class UsuarioService {
    * @param usuario Parámetro necesario, se envía objeto JSON a API
    */
   setCreateUsuario(usuario) {
-    return this.http.post(baseUrlApi + this.slash + 'crear', 
+    return this.http.post(this.urlBase + 'crear', 
       {
         params: JSON.stringify(usuario),
         responseType: 'json'
@@ -41,7 +42,7 @@ export class UsuarioService {
    * Retorna JSON, petición para el logueo del usuario
    */
   setLogIn() {
-    return this.http.get(baseUrlApi + this.slash + 'logIn');
+    return this.http.get(this.urlBase + 'logIn');
   }
 
   /**

@@ -26,7 +26,6 @@
 
 
 /*
->>>>>>> iniciarSesion
 *
 * ==========================================
 * CUSTOM UTIL CLASSES
@@ -61,6 +60,19 @@
     width: 100%;
     margin: 0;
   }
+
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+
+
+
+
+/* SE TERMINA AQUÍ */
+
+
+
 
   .navegacion {
     padding: 2.3rem!important;
@@ -113,6 +125,15 @@
     color: #aaa;
   }
 
+
+
+
+
+
+
+
+
+  
 /* You can add global styles to this file, and also import other style files */
 /* Botón menú */
 .bi-list, .bi-arrows-fullscreen, .bi-box-arrow-right {
