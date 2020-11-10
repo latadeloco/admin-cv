@@ -16,7 +16,31 @@ export class DatosPersonalesService {
     return this.http.post(this.urlBase + "subirImagen", formData);
   }
 
+  setTieneImagenPerfil(updateOInsert) {
+    return this.http.get(this.urlBase + 'tieneImagenPerfil/' + updateOInsert);
+  }
+
   getImagenPerfil() {
     return this.http.get(this.urlBase + "imagenPerfil");
+  }
+
+  getDatosPersonales() {
+    return this.http.get(this.urlBase + 'ver');
+  }
+
+  setDatosPersonales(datosPersonales) {
+    return this.http.post(this.urlBase + 'crear',
+      {
+        params: datosPersonales,
+        responseType: 'json'
+      })
+  }
+
+  setUpdateDatosPersonales(datosPersonales) {
+    return this.http.post(this.urlBase + 'actualizar',
+      {
+        params: datosPersonales,
+        responseType: 'json'
+      })
   }
 }

@@ -16,6 +16,7 @@
             "allowedCommonJsDependencies": [
               "bcryptjs"
             ],
+            "baseHref": "/admin-cv/",
             "outputPath": "dist/admin-cv",
             "index": "src/index.html",
             "main": "src/main.ts",
