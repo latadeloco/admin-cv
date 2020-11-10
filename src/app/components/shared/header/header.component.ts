@@ -32,12 +32,14 @@ export class HeaderComponent implements OnInit {
          ) {
         this.hashPathDefault = window.location.hash;
 
-        this.urlImg = '../../../assets/img/default.png';
+        this.urlImg = '../../../admin-cv/assets/img/default.png';
 
-        this.datosPersonalesService.getImagenPerfil().toPromise().then(data => {
-            if (data['perfilExiste'] == true) this.urlImg = '../../../assets/img/perfil.'+ data['extension'];
-        }).catch(() => {
-            this.toast.showDanger("Error al conectar con el servidor", 5000);
+        this.datosPersonalesService.getImagenPerfil().toPromise().then(imagenPefilDetectada => {
+            if (imagenPefilDetectada['imagenNotFound'] == undefined) this.urlImg = '../../../admin-cv/assets/img/default.png';
+            if (imagenPefilDetectada['perfilExiste'] == true) this.urlImg = '../../../admin-cv/assets/img/perfil.'+ imagenPefilDetectada['extension'];
+        }).catch((err) => {
+            console.log(err)
+            this.urlImg = '../../../admin-cv/assets/img/default.png';
         });
     }
     urlImg: string;

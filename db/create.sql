@@ -21,7 +21,7 @@ CREATE TABLE datos_personales(
   , `codigo_postal` int(10)
   , `descripcion_breve` text
   , `descripcion_sobre_mi` text
-  , `imagen` text
+  , `imagen` boolean default false
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE formacion(

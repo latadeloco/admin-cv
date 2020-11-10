@@ -12,7 +12,8 @@ const token = new TokenGenerator(256, TokenGenerator.BASE62);
 // Subir Archivos al servidor
 const multipart = require('connect-multiparty');
 const subirImagenes = multipart({
-    uploadDir: './../src/assets/img'
+    uploadDir: './../src/assets/img',
+    autoFiles: true
 });
 
 var configuracionMysql = {
@@ -88,11 +89,6 @@ app.post("/usuario/crear", (req, res, otro) => {
         email,
         token.generate()
     ], function(error, result, fields) {
-        console.log(error)
-        console.log("\n")
-        console.log(result)
-        console.log("\n")
-        console.log(fields)
         con.on('error', function(err) {
             console.log('[MYSQL]ERROR', err);
         })
@@ -108,6 +104,9 @@ app.post("/usuario/crear", (req, res, otro) => {
  * Petición de comprobación de credenciales del usuario
  */
 app.get("/usuario/logIn", (req, res, otro) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
     con.query("SELECT username, pass, token FROM usuario",
     function(error, result, fields) {
         con.on('error', function(err) {
@@ -136,12 +135,13 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
         'message': 'Archivo subido correctamente.',
     }); 
 
+
     fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
         if (err) {
             return
         } else {
             fs.unlink('..\\src\\assets\\img\\perfil.jpg', () => {
-                
+                switchFileImageType(req);
             });
         }
     });
@@ -150,60 +150,202 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
             return
         } else {
             fs.unlink('..\\src\\assets\\img\\perfil.png', () => {
-
+                switchFileImageType(req);
             });
         }
     });
 
+    switchFileImageType(req);
+});
+
+function switchFileImageType(req) {
     if (req.files.imagen.type == 'image/png') {
         fs.stat('..\\src\\assets\\img\\perfil.png', (err, stast) => {
             if (err != null) {
                 fs.rename(req.files.imagen.path, '..\\src\\assets\\img\\perfil.png', (err) => {
-                    if (err) throw err;
+                    if (err) return;
                     console.log('Cambio de foto de perfil!');
                     });
             }
         });
-        
     } else if (req.files.imagen.type == 'image/jpeg') {
         fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stast) => {
             if (err != null) {
                 fs.rename(req.files.imagen.path, '..\\src\\assets\\img\\perfil.jpg', (err) => {
-                    if (err) throw err;
+                    if (err) return;
                     console.log('Cambio de foto de perfil!');
                     });
             }
         });
     }
+}
+
+/**
+ * Petición para cambiar a que tenga imagen perfil
+ */
+app.get("/datos-personales/tieneImagenPerfil/:updateOInsert", (req, res, otro) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    
+    var updateOInsert = req.params.updateOInsert;
+    if (updateOInsert == 'true') {
+        con.query("UPDATE INTO datos_personales SET imagen=true",
+        function(error, result, fields) {
+            con.on('error', function(err) {
+                console.log('[MYSQL]ERROR', err);
+            })
+            if (error == null) {
+                res.end(JSON.stringify({responseOK : 'Se ha cambiado el estado de imagen de perfil.'}));
+            } else {
+                res.end(JSON.stringify({responseKO : 'Se ha producido un error inesperado.'}));
+            }
+        })
+    } else if (updateOInsert == 'false') {
+        con.query("INSERT INTO datos_personales(nombre, apellidos, imagen) VALUES (?,?,?)", [
+            '',
+            '',
+            true
+        ],
+        function(error, result, fields) {
+            con.on('error', function(err) {
+                console.log('[MYSQL]ERROR', err);
+            })
+            if (error == null) {
+                res.end(JSON.stringify({responseOK : 'Se ha cambiado el estado de imagen de perfil.'}));
+            } else {
+                res.end(JSON.stringify({responseKO : 'Se ha producido un error inesperado.'}));
+            }
+        })
+    } else {
+        res.end(JSON.stringify({responseKO : 'Se ha producido un error en el servidor inesperado.'}))
+    }
 });
 
-
 app.get('/datos-personales/imagenPerfil', (req, res) => {
-    fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
-        if (err != null) {
-            return
-        } else {
-            res.json({
-                'perfilExiste' : true,
-                'extension' : 'jpg'
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    con.query("SELECT imagen FROM datos_personales",
+    function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (result.length != 0) {
+            fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
+                if (err != null) {
+                    return
+                } else {
+                    res.end(JSON.stringify({
+                        'perfilExiste' : true,
+                        'extension' : 'jpg'
+                    }));
+                }
             });
-        }
-    });
-    fs.stat('..\\src\\assets\\img\\perfil.png', (err, stat) => {
-        if (err != null) {
-            return
-        } else {
-            res.json({
-                'perfilExiste' : true,
-                'extension' : 'png'
+            fs.stat('..\\src\\assets\\img\\perfil.png', (err, stat) => {
+                if (err != null) {
+                    return
+                } else {
+                    res.end(JSON.stringify({
+                        'perfilExiste' : true,
+                        'extension' : 'png'
+                    }));
+                }
             });
+        } else {
+            res.end(JSON.stringify({
+                imagenNotFound : 'No se ha encontrado imagen de perfil.'
+            }));
         }
-    });
-    res.json({
-        'mensaje' : 'comprobación finalizada.'
+    })
+
+});
+
+/**
+ * Función para enviar todos los datos personales del usuario de la base de datos
+ */
+app.get("/datos-personales/ver", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT * FROM datos_personales" ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        } else {
+            res.end(JSON.stringify({response : 'No hay datos personales'}));
+        }
     })
 });
 
+app.post("/datos-personales/crear", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var datosPersonales = req.body.params;
+    con.query("INSERT INTO datos_personales(nombre, apellidos, puesto, fecha_nacimiento, telefono, email, direccion, poblacion, provincia, codigo_postal, descripcion_breve, descripcion_sobre_mi) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+    [
+        datosPersonales.nombre,
+        datosPersonales.apellidos,
+        datosPersonales.puesto,
+        datosPersonales.nacimiento,
+        datosPersonales.telefono,
+        datosPersonales.email,
+        datosPersonales.direccion,
+        datosPersonales.poblacion,
+        datosPersonales.provincia,
+        datosPersonales.codigoPostal,
+        datosPersonales.descripcionBreve,
+        datosPersonales.descripcionSobreMi
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Datos Personales insertados correctamente.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar los datos personales.'}));
+        }
+    })
+})
+
+app.post("/datos-personales/actualizar", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var datosPersonales = req.body.params;
+    con.query("UPDATE datos_personales SET nombre=?, apellidos=?, puesto=?, fecha_nacimiento=?, telefono=?, email=?, direccion=?, poblacion=?, provincia=?, codigo_postal=?, descripcion_breve=?, descripcion_sobre_mi=?",
+    [
+        datosPersonales.nombre,
+        datosPersonales.apellidos,
+        datosPersonales.puesto,
+        datosPersonales.nacimiento,
+        datosPersonales.telefono,
+        datosPersonales.email,
+        datosPersonales.direccion,
+        datosPersonales.poblacion,
+        datosPersonales.provincia,
+        datosPersonales.codigoPostal,
+        datosPersonales.descripcionBreve,
+        datosPersonales.descripcionSobreMi
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        console.log(error)
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Datos Personales actualizados correctamente.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al actualizar los datos personales.'}));
+        }
+    })
+})
 
 /**
  * 
