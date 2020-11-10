@@ -65,16 +65,16 @@ export class DatosPersonalesComponent implements OnInit {
 
   datosPersonalesForm() {
     this.datosPersonalesGroup = this.formBuilder.group({
-      nombre             : ['Jesús', [Validators.required, Validators.maxLength(50)]],
-      apellidos          : ['Robles Sánchez', [Validators.required, Validators.maxLength(60)]],
-      puesto             : ['Desarrollador Full-Stack', [Validators.required, Validators.maxLength(100)]],
-      nacimiento         : ['1992-09-11', Validators.required],
-      telefono           : ['691748568', [Validators.required, Validators.min(100000000), Validators.max(999999999999)]],
-      email              : ['jesusroblessanchez@gmail.com', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9._]+\.[a-z]{2,3}$')]],
-      direccion          : ['C/San Salvador Bloque 54, Bajo B', [Validators.required, Validators.maxLength(100)]],
-      poblacion          : ['Sanlúcar de Barrameda', [Validators.required, Validators.maxLength(50)]],
-      provincia          : ['Cádiz', [Validators.required, Validators.maxLength(20)]],
-      codigoPostal       : [11540, [Validators.required, Validators.max(9999999999)]],
+      nombre             : ['', [Validators.required, Validators.maxLength(50)]],
+      apellidos          : ['', [Validators.required, Validators.maxLength(60)]],
+      puesto             : ['', [Validators.required, Validators.maxLength(100)]],
+      nacimiento         : ['', Validators.required],
+      telefono           : ['', [Validators.required, Validators.min(100000000), Validators.max(999999999999)]],
+      email              : ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9._]+\.[a-z]{2,3}$')]],
+      direccion          : ['', [Validators.required, Validators.maxLength(100)]],
+      poblacion          : ['', [Validators.required, Validators.maxLength(50)]],
+      provincia          : ['', [Validators.required, Validators.maxLength(20)]],
+      codigoPostal       : [, [Validators.required, Validators.max(9999999999)]],
       descripcionBreve   : ['', []],
       descripcionSobreMi : ['', []]
     });
