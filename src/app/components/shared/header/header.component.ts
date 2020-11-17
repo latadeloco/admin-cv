@@ -15,6 +15,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class HeaderComponent implements OnInit {
     optsMenu : Opcion[] = [];
     hashPathDefault : string;
+    urlImg: string;
 
     /**
      * Constructor del componente
@@ -28,27 +29,21 @@ export class HeaderComponent implements OnInit {
         private usuarioService : UsuarioService,
         private datosPersonalesService : DatosPersonalesService,
         private router: Router,
-        private toast: ToastService
          ) {
         this.hashPathDefault = window.location.hash;
 
         this.urlImg = '../../../admin-cv/assets/img/default.png';
-
-        this.datosPersonalesService.getImagenPerfil().toPromise().then(imagenPefilDetectada => {
-            if (imagenPefilDetectada['imagenNotFound'] == undefined) this.urlImg = '../../../admin-cv/assets/img/default.png';
-            if (imagenPefilDetectada['perfilExiste'] == true) this.urlImg = '../../../admin-cv/assets/img/perfil.'+ imagenPefilDetectada['extension'];
-        }).catch((err) => {
-            console.log(err)
-            this.urlImg = '../../../admin-cv/assets/img/default.png';
-        });
     }
-    urlImg: string;
 
     /**
      * Método de iniciación del componente
      */
     ngOnInit(): void {        
         this.optsMenu = this._opcionesMenuService.getOptsMenu();
+        this.datosPersonalesService.getImagenPerfil().toPromise().then(imagenPefilDetectada => {
+            if (imagenPefilDetectada['imagenNotFound'] == undefined) this.urlImg = '../../../admin-cv/assets/img/default.png';
+            if (imagenPefilDetectada['perfilExiste'] == true) this.urlImg = '../../../admin-cv/assets/img/perfil.'+ imagenPefilDetectada['extension'];
+        });
     }
     
     /**

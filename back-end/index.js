@@ -249,7 +249,10 @@ app.get('/datos-personales/imagenPerfil', (req, res) => {
         con.on('error', function(err) {
             console.log('[MYSQL]ERROR', err);
         })
-        if (result.length != 0) {
+
+        let tieneImagen = JSON.parse(JSON.stringify(result[0]['imagen']));
+
+        if (tieneImagen === 1) {
             fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
                 if (err != null) {
                     return
