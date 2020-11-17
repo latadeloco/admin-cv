@@ -34,6 +34,8 @@ import { UsuarioService } from './services/usuario.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdToastGlobal } from './components/shared/toast/toast-global.components';
 import { ToastsContainer } from './components/shared/toast/toast-container.components';
+import { AddFormacionComponent } from './components/formacion/add-formacion/add-formacion.component';
+import { UpdateFormacionComponent } from './components/formacion/update-formacion/update-formacion.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { ToastsContainer } from './components/shared/toast/toast-container.compo
     IniciarSesionComponent,
     NgbdToastGlobal,
     ToastsContainer,
+    AddFormacionComponent,
+    UpdateFormacionComponent,
   ],
   imports: [
     BrowserModule,

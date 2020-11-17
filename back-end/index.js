@@ -15,6 +15,10 @@ const subirImagenes = multipart({
     uploadDir: './../src/assets/img',
     autoFiles: true
 });
+const subirCertificados = multipart({
+    uploadDir: './../src/assets/certificados',
+    autoFiles: true
+});
 
 var configuracionMysql = {
     host: 'localhost',
@@ -130,6 +134,10 @@ app.get("/usuario/logIn", (req, res, otro) => {
  * 
  */
 
+ /**
+  * Petición para subir la imagen de perfil
+  * @param { imagen a subir } subirImagenes
+  */
 app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
     res.json({
         'message': 'Archivo subido correctamente.',
@@ -158,6 +166,10 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
     switchFileImageType(req);
 });
 
+/**
+ * Función para verificar y añadir la foto de perfil (png o jpg)
+ * @param {respuesta necesaria para funcion} req 
+ */
 function switchFileImageType(req) {
     if (req.files.imagen.type == 'image/png') {
         fs.stat('..\\src\\assets\\img\\perfil.png', (err, stast) => {
@@ -182,6 +194,7 @@ function switchFileImageType(req) {
 
 /**
  * Petición para cambiar a que tenga imagen perfil
+ * @param { actualizar o insertar un nuevo dato personal } updateOInsert
  */
 app.get("/datos-personales/tieneImagenPerfil/:updateOInsert", (req, res, otro) => {
     con == true ? con.destroy() : 
@@ -222,6 +235,10 @@ app.get("/datos-personales/tieneImagenPerfil/:updateOInsert", (req, res, otro) =
     }
 });
 
+/**
+ * Petición para ver que imagen de perfil actual
+ * TODO
+ */
 app.get('/datos-personales/imagenPerfil', (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -282,6 +299,9 @@ app.get("/datos-personales/ver", (req, res) => {
     })
 });
 
+/**
+ * Petición para crear los nuevos datos personales 
+ */
 app.post("/datos-personales/crear", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -314,6 +334,9 @@ app.post("/datos-personales/crear", (req, res) => {
     })
 })
 
+/**
+ * Petición para actualizar los datos personales
+ */
 app.post("/datos-personales/actualizar", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -346,6 +369,263 @@ app.post("/datos-personales/actualizar", (req, res) => {
         }
     })
 })
+
+
+/**
+ * 
+ * 
+ * FORMACIÓN
+ * 
+ * 
+ */
+
+
+ /**
+  * Petición para añadir una nueva formación
+  */
+app.post("/formacion/add", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var formacion = req.body;
+    con.query("INSERT INTO formacion(nombre_titulacion, nombre_institucion, fecha_inicio, fecha_fin, certificacion, descripcion_formacion) VALUES(?,?,?,?,?,?)",
+    [
+        formacion.nombreTitulacion,
+        formacion.nombreInstitucion,
+        formacion.fechaInicio,
+        formacion.fechaFin,
+        formacion.certificacion,
+        formacion.descripcion
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Formación añadida.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar la formación actual.'}));
+        }
+    })
+})
+
+/**
+  * Petición para actualizar la formacion
+  */
+ app.post("/formacion/update/:idFormacion", subirCertificados ,(req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var formacion = req.body;
+    var idFormacion = req.params.idFormacion;
+    con.query("UPDATE formacion SET nombre_titulacion = ?, nombre_institucion = ?, fecha_inicio = ?, fecha_fin = ?, certificacion = ?, descripcion_formacion = ? WHERE id_formacion = ?",
+    [
+        formacion.nombreTitulacion,
+        formacion.nombreInstitucion,
+        formacion.fechaInicio,
+        formacion.fechaFin,
+        formacion.certificacion,
+        formacion.descripcion,
+        idFormacion
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+
+        console.log(req.files)
+
+        fs.stat('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
+            if (err) {
+                return
+            } else {
+                fs.unlink('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', () => {
+                    switchFileCertificate(req, idFormacion);
+                });
+            }
+        });
+
+        switchFileCertificate(req, idFormacion);
+
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Formación actualizada.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al actualizar la formación actual.'}));
+        }
+    })
+})
+
+
+/**
+ * Petición para subir un certificado al añadir una nueva formación
+ */
+app.post("/formacion/subirCertificado", subirCertificados, (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT id_formacion as id FROM formacion ORDER by id_formacion DESC LIMIT 1" ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        }) 
+
+        var id = result.length == 0 ? 1 : (JSON.parse(JSON.stringify(result))[0]['id']);
+
+        fs.stat('..\\src\\assets\\certificados\\' + id + '.pdf', (err, stat) => {
+            if (err) {
+                return
+            } else {
+                fs.unlink('..\\src\\assets\\certificados\\' + id + '.pdf', () => {
+                    switchFileCertificate(req, id);
+                });
+            }
+        });
+    
+        switchFileCertificate(req, id);
+    })
+});
+
+/**
+ * Petición para subir un certificado con una formación existente
+ * @param { parámetro para recoger la formación existente para subir el certificado } idFormacion
+ */
+app.post("/formacion/subirCertificadoConFormacionExistente/:idFormacion", subirCertificados, (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    var idFormacion = req.params.idFormacion;
+    con.query("UPDATE formacion SET certificacion=true WHERE id_formacion = ?", 
+    [
+        idFormacion
+    ] ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        }) 
+
+        fs.stat('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
+            if (err) {
+                return
+            } else {
+                fs.unlink('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', () => {
+                    switchFileCertificate(req, idFormacion);
+                });
+            }
+        });
+        switchFileCertificate(req, idFormacion);
+    })
+});
+
+/**
+ * Función para comprobar y añadir los documentos PDF de las formaciones
+ * @param {respuesta necesaria para funcion} req 
+ */
+function switchFileCertificate(req, id) {
+    if (req.files.certificado.type == 'application/pdf') {
+        fs.stat('..\\src\\assets\\certificados\\' + id + '.pdf', (err, stast) => {
+            if (err != null) {
+                fs.rename(req.files.certificado.path, '..\\src\\assets\\certificados\\' + id + '.pdf', (err) => {
+                    if (err) return;
+                    console.log('Añadido certificado!');
+                    });
+            }
+        });
+    }
+}
+
+/**
+ * Petición para ver todas las formaciones
+ */
+app.get("/formacion/viewAll", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT * FROM formacion ORDER BY id_formacion" ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+
+        res.end(JSON.stringify(result));
+    })
+});
+
+/**
+ * Petición para ver todas las formaciones
+ */
+app.get("/formacion/view/:id", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var idFormacion = req.params.id;
+
+    con.query("SELECT * FROM formacion WHERE id_formacion = ?", [ idFormacion ] ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify(result));
+        } else {
+            res.end(JSON.stringify({
+                "responseKO" : 'Formación no encontrada.'
+            }))
+        }
+    })
+});
+
+/**
+ * Petición de eliminación de certificado
+ */
+app.post("/formacion/removeCertificate", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var removeCertificate = req.body.certificado;
+    con.query("UPDATE formacion SET certificacion=false WHERE id_formacion = " + removeCertificate ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+
+        fs.stat('..\\src\\assets\\certificados\\' + removeCertificate + '.pdf', (err, stat) => {
+            if (err) {
+                res.json({
+                    responseKO: 'El certificado que intenta eliminar no existe.',
+                }); 
+                return
+            } else {
+                fs.unlink('..\\src\\assets\\certificados\\' + removeCertificate + '.pdf', () => {
+                    res.json({
+                        responseOK: 'Certificado eliminado correctamente.',
+                    }); 
+                });
+            }
+        });
+    })
+});
+
+/**
+ * Petición para eliminar una formación existente por el id
+ * @param { campo que recoge la formación a eliminar } id
+ */
+app.get("/formacion/removeFormacion/:id", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var idFormacion = req.params.id;
+    con.query("DELETE FROM formacion WHERE id_formacion = ?",  idFormacion ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+
+        if (error == null) {
+            res.json({
+                'responseOK' : 'Formación eliminada correctamente.'
+            });
+        } else {
+            res.json({
+                'responseKO' : 'No se ha podido eliminar la formación.'
+            });
+        }
+    })
+});
 
 /**
  * 

@@ -1,0 +1,5 @@
+@media (max-width: 889px) {
+    .institucion-formacion, .fecha-inicio-formacion, .fecha-fin-formacion, .id-formacion {
+        display: none;
+    }
+  }

@@ -1,0 +1,76 @@
+<div class="container">
+    <form [formGroup]="formacionGroup" (ngSubmit)="saveFormacionForm()">
+        <div class="row">
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
+            <label for="nombreTitulacion">Nombre de la Titulación:</label>
+            <input type="text" class="form-control input-sm" placeholder="Nombre de la Titulación *" formControlName="nombreTitulacion" [class.is-invalid]="getValidateFormControl('nombreTitulacion')">
+            <small *ngIf="getValidateFormControl('nombreTitulacion')" class="text-danger">
+              Ingrese el nombre de la titulación y que no sea más de 100 caracteres
+            </small>
+          </div>
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
+            <label for="nombreInstitucion">Nombre de la Institución:</label>
+            <input type="text" class="form-control" placeholder="Nombre de la Institución" formControlName="nombreInstitucion" [class.is-invalid]="getValidateFormControl('nombreInstitucion')">
+            <small *ngIf="getValidateFormControl('nombreInstitucion')" class="text-danger">
+              El nombre de la institución no puede tener más de 100 caracteres
+            </small>
+          </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
+              <label for="fechaInicio">Fecha de inicio:</label>
+              <input type="date" class="form-control" placeholder="Fecha de inicio (dd/mm/aaaa)" formControlName="fechaInicio">
+            </div>
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
+                <label for="fechaFin">Fecha de finalización:</label>
+                <input type="date" class="form-control" placeholder="Fecha de finalización (dd/mm/aaaa)" formControlName="fechaFin" [class.is-invalid]="getValidateFormControl('fechaFin')">
+                <small *ngIf="getValidateFormControl('fechaFin')" class="text-danger">
+                    La fecha de finalización tiene que ser mayor que la fecha de inicio de la titulación
+                </small>
+            </div>
+        </div>
+        
+        <div class="row pt-4">
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+              <label for="descripcion">Descripción de la titulación:</label>
+              <textarea name="descripcion" class="form-control" style="resize: none;" cols="30" rows="10" placeholder="Descripción de la titulación..." formControlName="descripcion"></textarea>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="form-check col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                <button type="submit" class="btn btn-success btn-block">Añadir titulación</button>
+            </div>
+        </div>
+        </form>
+
+        <ng-template #content let-modal>
+            <div class="modal-header" style="text-align: center;">
+                <h4 class="modal-title label-login">¿Tiene certificado de la formación actual?</h4>
+            </div>
+            <form id="formularioRegistro" [formGroup]="formacionGroup">
+                <div class="col-12 modal-body">
+                    
+                    <div class="row">
+                        <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                            <input class="btn btn-success form-control" type="submit" value="Tengo certificado" (click)="saveDefinitelyFormacion(true)">
+                            <input class="btn btn-warning form-control" type="submit" value="No tengo certificado" (click)="saveDefinitelyFormacion(false)">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+
+        <ng-template #contentCertificate let-modal>
+            <div class="modal-header" style="text-align: center;">
+                <h4 class="modal-title label-login">Subir certificado</h4>
+            </div>
+                <div class="col-12 modal-body">
+                    <div class="row">
+                        <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                            <label for="exampleFormControlFile1">Elegir certificado (Sólo PDF)</label>
+                                <input type="file" (change)="subirCertificado($event.target.files)" class="form-control-file input-sm" accept="application/pdf" id="exampleFormControlFile1">
+                          </div>
+                    </div>
+                </div>
+        </ng-template>
+</div>
