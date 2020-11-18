@@ -19,6 +19,16 @@ export class AddExperienciaLaboralComponent implements OnInit {
   experienciaLaboralGroup : FormGroup;
   fileUpload : File;
 
+  /**
+   * Constructor del componente
+   * @param formBuilder constructor necesario para el formulario reactivo
+   * @param toast servicio de alertas
+   * @param experienciaLaboralServive servicio necesario para las llamadas a la API
+   * @param validadores servicio que valida las fechas
+   * @param modal componente necesario para el modal de subida de archivo
+   * @param router argumento necesario para la redirección
+   * @param config configuración de modales
+   */
   constructor(
     private formBuilder : FormBuilder,
     private toast : ToastService,
@@ -38,9 +48,15 @@ export class AddExperienciaLaboralComponent implements OnInit {
     this.experienciaLaboralForm();
   }
 
+  /**
+   * Inicia el componente
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Recoge los argumentos del formulario y los valida
+   */
   experienciaLaboralForm() {
     this.experienciaLaboralGroup = this.formBuilder.group({
       nombreEmpresa : ['', [Validators.required]],
@@ -85,6 +101,10 @@ export class AddExperienciaLaboralComponent implements OnInit {
     }
   }
 
+  /**
+   * Parametrización del modal donde se pregunta por el logotipo de la empresa
+   * @param item argumento necesario para mostrar según que pestaña del modal
+   */
   displayTab(item) {
     let formularioPorId = document.getElementById('formularioSubirLogotipoExperiencia');
     let tabs = document.getElementsByClassName('uploadLogo');
@@ -104,6 +124,10 @@ export class AddExperienciaLaboralComponent implements OnInit {
     tab['style']['display'] = 'inherit'
   }
 
+  /**
+   * Subida del logotipo desde local
+   * @param file formData necesario para recogida del archivo 
+   */
   subirLogotipo(file) {
     this.fileUpload = file;
 
@@ -122,6 +146,10 @@ export class AddExperienciaLaboralComponent implements OnInit {
     });
   }
 
+  /**
+   * Subida de la URL como logotipo de empresa
+   * @param url objeto JSON para completar en servidor la url
+   */
   descargarYSubirLogoURL(url) {
     var urlParam = new URL(url.value);
 

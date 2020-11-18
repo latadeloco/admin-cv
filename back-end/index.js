@@ -694,7 +694,10 @@ app.get("/experiencias-laborales/viewAll", (req, res) => {
     })
 });
 
-
+/**
+ * Petición para updatear el logo de la empresa dada
+ * @param { FormData, objeto file con todas las propiedades del logotipo } subirLogotipo
+ */
 app.post('/experiencias-laborales/updateSubirLogotipo', subirLogotipo, (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -753,6 +756,10 @@ app.post('/experiencias-laborales/updateSubirLogotipo', subirLogotipo, (req, res
     
 });
 
+/**
+ * Función que devuelve el tipo de extensión del archivo si se sube desde local
+ * @param { argumento que se usa para conseguir las propiedades del logotipo } req 
+ */
 function extensionFileLogo(req) {
     if (req.files.logotipo.type == 'image/jpeg') {
         return "jpg";
@@ -762,6 +769,11 @@ function extensionFileLogo(req) {
     return null;
 }
 
+/**
+ * Función para updatear el logotipo de la empresa recogida por id
+ * @param { argumento para recoger propiedades de la imagen local } req 
+ * @param { argumento que se usa de identificador para renombrar el archivo } id 
+ */
 function updateSwitchFileLogo(req, id) {
     if (req.files.logotipo.type == 'image/png') {
         fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.png', (err) => {
@@ -776,6 +788,11 @@ function updateSwitchFileLogo(req, id) {
     }
 }
 
+/**
+ * Función para ver el tipo de imagen y renombrarla
+ * @param { argumento para recoger propiedades de la imagen local } req 
+ * @param { argumento que se usa de identificador para renombrar el archivo } id 
+ */
 function switchFileLogo(req, id) {
     if (req.files.logotipo.type == 'image/png') {
         fs.stat('..\\src\\assets\\logotipos\\'+ id +'.png', (err, stast) => {
@@ -810,6 +827,9 @@ function switchFileLogo(req, id) {
     }
 }
 
+/**
+ * Petición para añadir una nueva experiencia laboral
+ */
  app.post("/experiencias-laborales/add", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -838,7 +858,9 @@ function switchFileLogo(req, id) {
     })
 })
 
-
+/**
+ * Petición para añadir una imagen por URL
+ */
 app.post('/experiencias-laborales/addImageURL/', (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -864,6 +886,9 @@ app.post('/experiencias-laborales/addImageURL/', (req, res) => {
     })
 });
 
+/**
+ * Petición para updatear una imagen por URL
+ */
 app.post('/experiencias-laborales/updateImageURL/', (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -900,6 +925,11 @@ app.post('/experiencias-laborales/updateImageURL/', (req, res) => {
     })
 });
 
+/**
+ * Función para recoger la URL e insertarla en la ID especificada
+ * @param { objeto JSON con propiedades con todo el path completo } url 
+ * @param { identificador de la experiencia laboral } id 
+ */
 function downloadAndUPloadImgUrl(url, id) {
     
     con.query("UPDATE experiencia_laboral SET logo_empresa=true, logo_url=true, url_logo='"+url+"' WHERE id_experiencia_laboral="+id),function(error, result, fields) {
@@ -909,6 +939,9 @@ function downloadAndUPloadImgUrl(url, id) {
     }
 }
 
+/**
+ * Petición para eliminar la experiencia laboral dada
+ */
 app.post("/experiencias-laborales/removeExperienciaLaboral", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -950,6 +983,9 @@ app.post("/experiencias-laborales/removeExperienciaLaboral", (req, res) => {
     });
 });
 
+/**
+ * Petición para ver una experiencia laboral en concreto por id
+ */
 app.get("/experiencias-laborales/view/:id", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -967,7 +1003,9 @@ app.get("/experiencias-laborales/view/:id", (req, res) => {
     })
 });
 
-
+/**
+ * Petición que updatea la experiencia laboral con los campos dados
+ */
 app.post("/experiencias-laborales/update/", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);

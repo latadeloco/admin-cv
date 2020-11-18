@@ -14,10 +14,14 @@ export class ExperienciaLaboralComponent implements OnInit {
   @Output() cambiarVisualizacion: EventEmitter<Shared>
   experienciasLaborales = new Array();
 
+  /**
+   * Constructor del componente
+   * @param laboralService servicio necesario para llamadas a API
+   * @param toast servicio de alertas
+   */
   constructor(
     private laboralService : ExperienciaLaboralService,
     private toast : ToastService,
-    private router : Router
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -30,6 +34,9 @@ export class ExperienciaLaboralComponent implements OnInit {
     })
   }
 
+  /**
+   * Inicia el componente
+   */
   ngOnInit(): void {
   }
 

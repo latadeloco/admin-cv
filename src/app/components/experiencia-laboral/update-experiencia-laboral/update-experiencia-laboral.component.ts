@@ -10,7 +10,6 @@ import { ValidadoresService } from 'src/app/services/validadores.service';
 @Component({
   selector: 'app-update-experiencia-laboral',
   templateUrl: './update-experiencia-laboral.component.html',
-  styleUrls: ['./update-experiencia-laboral.component.css']
 })
 export class UpdateExperienciaLaboralComponent implements OnInit {
 
@@ -21,6 +20,17 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
   cargado : boolean = false;
   fileUpload : File;
 
+  /**
+   * Constructor del componente
+   * @param activeRoute recoge el id del path
+   * @param experienciaLaboralService servicio necesario para peticiones a API
+   * @param config argumento de configuración de los modales
+   * @param formBuilder constructor del formulario reactivo
+   * @param validadores servicio necesario para validación de fechas
+   * @param toast servicio para alertas
+   * @param router necesario para redirecciones
+   * @param modal argumento para subir el modal
+   */
   constructor(
     private activeRoute : ActivatedRoute,
     private experienciaLaboralService : ExperienciaLaboralService,
@@ -40,10 +50,17 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
     config.keyboard = false;
   }
 
+  /**
+   * Inicia el componente
+   */
   ngOnInit(): void {
     this.experienciaLaboralForm(this.routeParams);
   }
 
+  /**
+   * Recoge los parámetros de la llamada a la API para aplicarlo al formulario y que se muestren 
+   * @param routeParams argumento necesario para obtener el id del path
+   */
   experienciaLaboralForm(routeParams) {
     this.experienciaLaboralService.getExperienciaLaboral(routeParams).toPromise().then(experienciaLaboral => {
       var fechaInicio = this.formatDate(new Date(experienciaLaboral[0]['fecha_inicio']));
@@ -95,7 +112,9 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
     return this.experienciaLaboralGroup.get(formControl).invalid && this.experienciaLaboralGroup.get(formControl).touched;
   }
 
-
+  /**
+   * Update de la experiencia laboral
+   */
   saveUpdateExperienciaLaboral() {
     if (this.experienciaLaboralGroup.invalid) {
       this.toast.showDanger("Hay campos que no son válido, repásalos", 4000);
@@ -118,6 +137,10 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
     }
   }
 
+  /**
+   * Parametrización del modal donde se pregunta por el logotipo de la empresa
+   * @param item argumento necesario para mostrar según que pestaña del modal
+   */
   displayTab(item) {
     let formularioPorId = document.getElementById('formularioSubirLogotipoExperiencia');
     let tabs = document.getElementsByClassName('uploadLogo');
@@ -137,6 +160,10 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
     tab['style']['display'] = 'inherit'
   }
 
+  /**
+   * Subida del archivo local a servidor
+   * @param file formData necesario para la subida de la imagen
+   */
   subirLogotipo(file) {
     this.fileUpload = file;
 
@@ -159,6 +186,10 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
     });
   }
 
+  /**
+   * Updatea el logotipo de una URL válida
+   * @param url argumento necesario pasado con objeto JSON para completarlo en back
+   */
   descargarYSubirLogoURL(url) {
     var urlParam = new URL(url.value);
 
