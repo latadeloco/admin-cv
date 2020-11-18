@@ -1,0 +1,89 @@
+<div class="container">
+  <div *ngIf="cargado">
+    <form [formGroup]="experienciaLaboralGroup" (ngSubmit)="saveUpdateExperienciaLaboral()">
+        <div class="row">
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
+            <label for="nombreEmpresa">Nombre de la Empresa:</label>
+            <input type="text" class="form-control input-sm" placeholder="Nombre de la Empresa *" formControlName="nombreEmpresa" [class.is-invalid]="getValidateFormControl('nombreEmpresa')">
+            <small *ngIf="getValidateFormControl('nombreEmpresa')" class="text-danger">
+              Ingrese el nombre de la empresa con un máximo de 100 caracteres.
+            </small>
+          </div>
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
+            <label for="nombrePuesto">Puesto:</label>
+            <input type="text" class="form-control" placeholder="Puesto que desempeñaste *" formControlName="nombrePuesto"  [class.is-invalid]="getValidateFormControl('nombrePuesto')">
+            <small *ngIf="getValidateFormControl('nombrePuesto')" class="text-danger">
+                Es necesario que escribas que puesto desempeñaste.
+              </small>
+          </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+              <label for="funcionesPuesto">Funciones del puesto:</label>
+              <textarea name="funcionesPuesto" class="form-control" style="resize: none;" cols="30" rows="5" placeholder="Cuenta que funciones desempeñaste en el puesto..." formControlName="funcionesPuesto"></textarea>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
+              <label for="fechaInicio">Fecha de inicio:</label>
+              <input type="date" class="form-control" placeholder="Fecha de inicio (dd/mm/aaaa)" formControlName="fechaInicio">
+            </div>
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
+                <label for="fechaFin">Fecha de finalización:</label>
+                <input type="date" class="form-control" placeholder="Fecha de finalización (dd/mm/aaaa)" formControlName="fechaFin" [class.is-invalid]="getValidateFormControl('fechaFin')">
+                <small *ngIf="getValidateFormControl('fechaFin')" class="text-danger">
+                    La fecha de finalización tiene que ser mayor que la fecha de inicio de la titulación
+                </small>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+              <label for="cronologia">Cronología:</label>
+              <textarea name="cronologia" class="form-control" style="resize: none;" cols="30" rows="2" placeholder="Escribe un resumen muy breve..." formControlName="cronologia"></textarea>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+              <label for="observaciones">Observaciones:</label>
+              <textarea name="observaciones" class="form-control" style="resize: none;" cols="30" rows="5" placeholder="Observaciones del puesto..." formControlName="observaciones"></textarea>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="form-check col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+              <button type="submit" class="btn btn-primary btn-block">Actualizar Experiencia Laboral</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+        <ng-template #content let-modal>
+            <div class="modal-header" style="text-align: center;">
+                <h4 class="modal-title label-login">Subir logotipo de la empresa</h4>
+            </div>
+            <form id="formularioSubirLogotipoExperiencia" [formGroup]="experienciaLaboralGroup">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                      <span class="uploadLogo nav-link active" (click)="displayTab(1)">Subir logo local</span>
+                    </li>
+                    <li class="nav-item">
+                      <span class="uploadLogo nav-link" (click)="displayTab(2)">Url de internet</span>
+                    </li>
+                  </ul>
+                  <div id="subirLogolocal">
+                    <div class="col-12 modal-body">
+                        <div class="row">
+                            <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                                <label for="exampleFormControlFile1">Subir logotipo (PNG o JPG/JPEG)</label>
+                                    <input type="file" (change)="subirLogotipo($event.target.files)" class="form-control-file input-sm" accept=".png,.jpg,.jpeg" id="exampleFormControlFile1">
+                                </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div id="subirLogoInternet" class="container" style="display: none;">
+                    <input type="text" name="logoURL" #url placeholder="Indica la URL del logotipo">
+                    <input type="button" class="btn btn-warning" value="Descargar Imagen de URL" (click)="descargarYSubirLogoURL(url)">
+                </div>
+            </form>
+        </ng-template>
+
+</div>

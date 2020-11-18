@@ -36,6 +36,8 @@ import { NgbdToastGlobal } from './components/shared/toast/toast-global.componen
 import { ToastsContainer } from './components/shared/toast/toast-container.components';
 import { AddFormacionComponent } from './components/formacion/add-formacion/add-formacion.component';
 import { UpdateFormacionComponent } from './components/formacion/update-formacion/update-formacion.component';
+import { AddExperienciaLaboralComponent } from './components/experiencia-laboral/add-experiencia-laboral/add-experiencia-laboral.component';
+import { UpdateExperienciaLaboralComponent } from './components/experiencia-laboral/update-experiencia-laboral/update-experiencia-laboral.component';
 
 
 @NgModule({
@@ -53,6 +55,8 @@ import { UpdateFormacionComponent } from './components/formacion/update-formacio
     ToastsContainer,
     AddFormacionComponent,
     UpdateFormacionComponent,
+    AddExperienciaLaboralComponent,
+    UpdateExperienciaLaboralComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,66 @@
-<p>experiencia-laboral works!</p>
+<div class="container">
+    <div>
+        <a [routerLink]="['add-experiencia-laboral']" class="btn btn-success">Añadir Experiencia Laboral</a>
+    </div>
+    <ng-container *ngIf="experienciasLaborales.length === 0; else elseTemplate">
+        <div class="container label-login p-4">
+            No hay experiencias laborales
+        </div>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <div class="container p-2">
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="id-explab text-center" scope="col">#</th>
+                    <th class="empresa-explab text-center" scope="col">Empresa</th>
+                    <th class="logotipo-explab text-center" scope="col">Logotipo</th>
+                    <th class="puesto-explab text-center" scope="col">Puesto</th>
+                    <th class="fecha-inicio-explab text-center" scope="col">Fecha inicio</th>
+                    <th class="fecha-fin-explab text-center" scope="col">Fecha fin</th>
+                    <th class="acciones-explab text-center" scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let experienciaLaboral of experienciasLaborales[0]; index as i">
+                    <th class="id-explab" scope="row"> {{ i+1 }} </th>
+                    <td class="empresa-explab text-center" scope="col">{{ experienciaLaboral['empresa'] }}</td>
+                    <ng-container *ngIf="experienciaLaboral['logo_empresa'] !== 0; else elseTemplate">
+                      <ng-container *ngIf="experienciaLaboral['logo_url'] == 0; else elseTemplate">
+                        <td class="logotipo-explab text-center" scope="col">
+                          <img class="logo" [src]=" './assets/logotipos/' + experienciaLaboral['id_experiencia_laboral'] + experienciaLaboral['url_logo'] " width="50px" />
+                        </td>
+                      </ng-container>
+                      <ng-template #elseTemplate>
+                        <td class="logotipo-explab text-center" scope="col">
+                          <img [src]="experienciaLaboral['url_logo']"  width="50px" />
+                        </td>
+                      </ng-template>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                      <td></td>
+                    </ng-template>
+                    
+                    <td class="puesto-explab text-center" scope="col">{{ experienciaLaboral['puesto'] }}</td>
+                    <td class="fecha-inicio-explab text-center" scope="col">{{ experienciaLaboral['fecha_inicio'] | date:'dd/MM/yyyy' }}</td>
+                    <td class="fecha-fin-explab text-center" scope="col">{{ experienciaLaboral['fecha_fin'] | date:'dd/MM/yyyy' }}</td>
+                    <td class="acciones-explab text-center" scope="col">
+                        <div class="d-flex justify-content-center">
+                            <a [routerLink]="['update-experiencia-laboral', experienciaLaboral['id_experiencia_laboral']]" class="btn btn-success btn-sm ml-2">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                </svg>
+                            </a>
+                            <button (click)="eliminarExperienciaLaboral(experienciaLaboral['id_experiencia_laboral'])" class="btn btn-danger btn-sm ml-2">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </ng-template>
+</div>

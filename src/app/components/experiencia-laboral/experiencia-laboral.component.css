@@ -1,0 +1,9 @@
+@media (max-width: 889px) {
+    .id-explab,
+    .puesto-explab,
+    .fecha-inicio-explab,
+    .fecha-fin-explab 
+    {
+        display: none;
+    }
+}

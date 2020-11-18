@@ -38,6 +38,8 @@ CREATE TABLE experiencia_laboral(
     `id_experiencia_laboral` int (50) not null primary key auto_increment
   , `empresa` varchar(100) not null 
   , `logo_empresa` boolean not null default false
+  , `logo_url` boolean not null default false
+  , `url_logo` text
   , `puesto` text not null
   , `funciones_puesto` text
   , `fecha_inicio` date

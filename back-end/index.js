@@ -9,14 +9,24 @@ const TokenGenerator = require('uuid-token-generator');
 const { config } = require('process');
 const token = new TokenGenerator(256, TokenGenerator.BASE62);
 
+const extensionesValidasImages = ['png', 'jpg', 'jpeg'];
+
 // Subir Archivos al servidor
 const multipart = require('connect-multiparty');
+const e = require('express');
+const { CONFIG_FILENAME } = require('tslint/lib/configuration');
+const { identifierModuleUrl } = require('@angular/compiler');
 const subirImagenes = multipart({
     uploadDir: './../src/assets/img',
     autoFiles: true
 });
 const subirCertificados = multipart({
     uploadDir: './../src/assets/certificados',
+    autoFiles: true
+});
+
+const subirLogotipo = multipart({
+    uploadDir: './../src/assets/logotipos',
     autoFiles: true
 });
 
@@ -237,7 +247,6 @@ app.get("/datos-personales/tieneImagenPerfil/:updateOInsert", (req, res, otro) =
 
 /**
  * Petición para ver que imagen de perfil actual
- * TODO
  */
 app.get('/datos-personales/imagenPerfil', (req, res) => {
     con == true ? con.destroy() : 
@@ -629,6 +638,366 @@ app.get("/formacion/removeFormacion/:id", (req, res) => {
         }
     })
 });
+
+/**
+ * 
+ * 
+ * 
+ * EXPERIENCIAS LABORALES
+ * 
+ * 
+ * 
+ */
+
+/**
+ * Petición para ver todas las experiencias laborales
+ */
+app.get("/experiencias-laborales/viewAll", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT * FROM experiencia_laboral ORDER BY id_experiencia_laboral" ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        
+        res.end(JSON.stringify(result));
+    })
+});
+
+ /**
+  * Petición para subir el logotipo de la empresa
+  * @param { imagen a subir } subirImagenes
+  */
+ app.post('/experiencias-laborales/subirLogotipo', subirLogotipo, (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    con.query("SELECT id_experiencia_laboral as id FROM experiencia_laboral ORDER by id_experiencia_laboral DESC LIMIT 1" ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        }) 
+
+        var id = result.length == 0 ? 1 : (JSON.parse(JSON.stringify(result))[0]['id']);
+
+        if (error == null) {
+            switchFileLogo(req, id);
+            res.json({
+                'responseOK' : 'Logotipo subido correctamente'
+            })
+        } else {
+            res.json({
+                'responseKO' : 'Ha habido un error al subir el logotipo'
+            })
+        }
+    })
+});
+
+
+app.post('/experiencias-laborales/updateSubirLogotipo', subirLogotipo, (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    var id = req.query.idExperienciaLaboral;
+    var extension;
+
+    if (extensionFileLogo(req) !== null) {
+        if (extensionFileLogo(req) == 'jpg') {
+            extension = extensionFileLogo(req);
+        } else if (extensionFileLogo(req) == 'png') {
+            extension = extensionFileLogo(req);
+        }
+    } else {
+        res.json({
+            'responseKO' : 'El tipo de imagen no se reconoce.'
+        })
+        return;
+    }
+
+    fs.unlink('..\\src\\assets\\logotipos\\'+ id +'.png', function(err) {
+        if (err != null) {
+            console.log("no existe")
+        }
+    });
+    fs.unlink('..\\src\\assets\\logotipos\\'+ id +'.jpg', function(err) {
+        if (err != null) {
+            console.log("no existe")
+        }
+    });
+
+    con.query("SELECT logo_empresa, logo_url, url_logo FROM experiencia_laboral WHERE id_experiencia_laboral = " + id, function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        }) 
+
+        con.query("UPDATE experiencia_laboral SET logo_empresa=true, logo_url=0, url_logo='."+extension+"' WHERE id_experiencia_laboral = " + id ,function(error, result, fields) {
+            con.on('error', function(err) {
+                console.log('[MYSQL]ERROR', err);
+            }) 
+
+            updateSwitchFileLogo(req, id);
+            
+            if (error == null) {
+                res.json({
+                    'responseOK' : 'Logotipo subido correctamente'
+                })
+            } else {
+                res.json({
+                    'responseKO' : 'Ha habido un error al subir el logotipo'
+                })
+            }
+        })
+    });
+    
+});
+
+function extensionFileLogo(req) {
+    if (req.files.logotipo.type == 'image/jpeg') {
+        return "jpg";
+    } else if (req.files.logotipo.type == 'image/png') {
+        return "png";
+    }
+    return null;
+}
+
+function updateSwitchFileLogo(req, id) {
+    if (req.files.logotipo.type == 'image/png') {
+        fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.png', (err) => {
+            if (err) return;
+            console.log('¡Subido logotipo PNG!');
+        });
+    } else if (req.files.logotipo.type == 'image/jpeg') {
+        fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.jpg', (err) => {
+            if (err) return;
+            console.log('¡Subido logotipo JPG!');
+        });
+    }
+}
+
+function switchFileLogo(req, id) {
+    if (req.files.logotipo.type == 'image/png') {
+        fs.stat('..\\src\\assets\\logotipos\\'+ id +'.png', (err, stast) => {
+            if (err != null) {
+                fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.png', (err) => {
+                    if (err) return;
+                    console.log('¡Subido logotipo PNG!');
+
+                    con.query("UPDATE experiencia_laboral SET logo_empresa=true, logo_url=false, url_logo='.png' WHERE id_experiencia_laboral="+id),function(error, result, fields) {
+                        con.on('error', function(err) {
+                            console.log('[MYSQL]ERROR', err);
+                        }) 
+                    }
+                });
+            }
+        });
+    } else if (req.files.logotipo.type == 'image/jpeg') {
+        fs.stat('..\\src\\assets\\logotipos\\'+ id +'.jpg', (err, stast) => {
+            if (err != null) {
+                fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.jpg', (err) => {
+                    if (err) return;
+                    console.log('¡Subido logotipo JPG!');
+
+                    con.query("UPDATE experiencia_laboral SET logo_empresa=true, logo_url=false, url_logo='.jpg' WHERE id_experiencia_laboral="+id),function(error, result, fields) {
+                        con.on('error', function(err) {
+                            console.log('[MYSQL]ERROR', err);
+                        }) 
+                    }
+                    });
+            }
+        });
+    }
+}
+
+ app.post("/experiencias-laborales/add", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var experienciaLaboral = req.body;
+    con.query("INSERT INTO experiencia_laboral(empresa, puesto, funciones_puesto, fecha_inicio, fecha_fin, observaciones, cronologia) VALUES(?,?,?,?,?,?,?)",
+    [
+        experienciaLaboral.nombreEmpresa,
+        experienciaLaboral.nombrePuesto,
+        experienciaLaboral.funcionesPuesto,
+        experienciaLaboral.fechaInicio,
+        experienciaLaboral.fechaFin,
+        experienciaLaboral.observaciones,
+        experienciaLaboral.cronologia
+        
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Experiencia Laboral añadida.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar la experiencia laboral.'}));
+        }
+    })
+})
+
+
+app.post('/experiencias-laborales/addImageURL/', (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT id_experiencia_laboral as id, url_logo as url_logo FROM experiencia_laboral ORDER by id_experiencia_laboral DESC LIMIT 1" ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        }) 
+        var id = result.length == 0 ? 1 : (JSON.parse(JSON.stringify(result))[0]['id']);
+        var url = req.body.params.protocolo +"//"+ req.body.params.host + req.body.params.path;
+
+        if (error == null) {
+            downloadAndUPloadImgUrl(url, id);
+            res.json({
+                'responseOK' : 'Imagen subida correctamente.'
+            })
+        } else {
+            res.json({
+                'responseKO' : 'Ha habido un error.'
+            })
+        }
+        
+    })
+});
+
+app.post('/experiencias-laborales/updateImageURL/', (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    
+    var idExperienciaLaboral = req.body.params.idExperienciaLaboral;
+    var url = req.body.params.protocolo +"//"+ req.body.params.host + req.body.params.path;
+
+    fs.unlink('..\\src\\assets\\logotipos\\'+ idExperienciaLaboral +'.png', function(err) {
+        if (err != null) {
+            console.log("no existe")
+        }
+    });
+    fs.unlink('..\\src\\assets\\logotipos\\'+ idExperienciaLaboral +'.jpg', function(err) {
+        if (err != null) {
+            console.log("no existe")
+        }
+    });
+
+    con.query("UPDATE experiencia_laboral SET logo_empresa=true, logo_url=true, url_logo='" + url + "' WHERE id_experiencia_laboral = " + idExperienciaLaboral ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        }) 
+        if (error == null) {
+            res.json({
+                'responseOK' : 'Imagen subida correctamente.'
+            })
+        } else {
+            res.json({
+                'responseKO' : 'Ha habido un error.'
+            })
+        }
+        
+    })
+});
+
+function downloadAndUPloadImgUrl(url, id) {
+    
+    con.query("UPDATE experiencia_laboral SET logo_empresa=true, logo_url=true, url_logo='"+url+"' WHERE id_experiencia_laboral="+id),function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+    }
+}
+
+app.post("/experiencias-laborales/removeExperienciaLaboral", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var idExperienciaLaboral = req.body.params;
+    con.query("SELECT logo_empresa, url_logo FROM experiencia_laboral WHERE id_experiencia_laboral = " + idExperienciaLaboral, function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        var extension = JSON.parse(JSON.stringify(result[0]['url_logo']));
+        var tieneLogo = JSON.parse(JSON.stringify(result[0]['logo_empresa']));
+        
+        if (tieneLogo === 1) {
+            fs.stat('..\\src\\assets\\logotipos\\' + idExperienciaLaboral + extension, (err, stat) => {
+                if (err) {
+                    return
+                } else {
+                    fs.unlink('..\\src\\assets\\logotipos\\' + idExperienciaLaboral + extension, () => {
+                    });
+                }
+            });
+        }
+        con.query("DELETE FROM experiencia_laboral WHERE id_experiencia_laboral = " + idExperienciaLaboral ,function(error, result, fields) {
+            con.on('error', function(err) {
+                console.log('[MYSQL]ERROR', err);
+            })
+    
+            if (error == null) {
+                res.json({
+                    'responseOK' : 'Experiencia laboral eliminada'
+                })
+            } else {
+                res.json({
+                    'responseKO' : 'No se ha podido eliminar la experiencia laboral'
+                })
+            }
+        })
+
+    });
+});
+
+app.get("/experiencias-laborales/view/:id", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    
+    var idExperienciaLaboral = req.params.id;
+    con.query("SELECT * FROM experiencia_laboral WHERE id_experiencia_laboral = ?", [
+        idExperienciaLaboral
+    ] ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        
+        res.end(JSON.stringify(result));
+    })
+});
+
+
+app.post("/experiencias-laborales/update/", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    var experienciaLaboral = req.body.params.experienciaLaboral;
+    var idExperienciaLaboral = req.body.params.idExperienciaLaboral;
+
+    con.query("UPDATE experiencia_laboral SET empresa=?, puesto=?, funciones_puesto=?, fecha_inicio=?, fecha_fin=?, observaciones=?, cronologia=? WHERE id_experiencia_laboral=?",
+    [
+        experienciaLaboral.nombreEmpresa,
+        experienciaLaboral.nombrePuesto,
+        experienciaLaboral.funcionesPuesto,
+        experienciaLaboral.fechaInicio,
+        experienciaLaboral.fechaFin,
+        experienciaLaboral.observaciones,
+        experienciaLaboral.cronologia,
+        idExperienciaLaboral
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Experiencia laboral añadida.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar la experiencia laboral actual.'}));
+        }
+    })
+})
 
 /**
  * 
