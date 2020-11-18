@@ -27,6 +27,10 @@ export class OpcionesMenuService {
       url: 'objetivos-profesionales'
     },
     {
+      nombre: 'Skills',
+      url: 'skills'
+    },
+    {
       nombre: 'Proyectos',
       url: 'proyectos'
     }

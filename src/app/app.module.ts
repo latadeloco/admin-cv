@@ -38,6 +38,7 @@ import { AddFormacionComponent } from './components/formacion/add-formacion/add-
 import { UpdateFormacionComponent } from './components/formacion/update-formacion/update-formacion.component';
 import { AddExperienciaLaboralComponent } from './components/experiencia-laboral/add-experiencia-laboral/add-experiencia-laboral.component';
 import { UpdateExperienciaLaboralComponent } from './components/experiencia-laboral/update-experiencia-laboral/update-experiencia-laboral.component';
+import { SkillsComponent } from './components/skills/skills.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { UpdateExperienciaLaboralComponent } from './components/experiencia-labo
     UpdateFormacionComponent,
     AddExperienciaLaboralComponent,
     UpdateExperienciaLaboralComponent,
+    SkillsComponent,
   ],
   imports: [
     BrowserModule,
