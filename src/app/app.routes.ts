@@ -7,8 +7,11 @@ import { AddFormacionComponent } from './components/formacion/add-formacion/add-
 import { FormacionComponent } from './components/formacion/formacion.component';
 import { UpdateFormacionComponent } from './components/formacion/update-formacion/update-formacion.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
+import { AddObjetivosProfesionalesComponent } from './components/objetivos-profesionales/add-objetivos-profesionales/add-objetivos-profesionales.component';
 import { ObjetivosProfesionalesComponent } from './components/objetivos-profesionales/objetivos-profesionales.component';
+import { UpdateObjetivosProfesionalesComponent } from './components/objetivos-profesionales/update-objetivos-profesionales/update-objetivos-profesionales.component';
 import { ProyectosComponent } from './components/proyectos/proyectos.component';
+import { SkillsComponent } from './components/skills/skills.component';
 import { AuthGuard } from './guards/auth.guard';
 
 /**
@@ -23,7 +26,10 @@ const APP_ROUTES: Routes = [
     { path : 'formacion', component: FormacionComponent, canActivate: [AuthGuard] },
     { path : 'formacion/add-formacion', component: AddFormacionComponent, canActivate: [AuthGuard] },
     { path : 'formacion/update-formacion/:id', component: UpdateFormacionComponent, canActivate: [AuthGuard] },
+    { path : 'skills', component: SkillsComponent, canActivate: [AuthGuard] },
     { path : 'objetivos-profesionales', component: ObjetivosProfesionalesComponent, canActivate: [AuthGuard] },
+    { path : 'objetivos-profesionales/add-objetivo-profesional', component: AddObjetivosProfesionalesComponent, canActivate: [AuthGuard] },
+    { path : 'objetivos-profesionales/update-objetivo-profesional/:id', component: UpdateObjetivosProfesionalesComponent, canActivate: [AuthGuard] },
     { path : 'proyectos', component: ProyectosComponent, canActivate: [AuthGuard] },
     { path : '**', pathMatch: 'full', redirectTo: 'iniciar-sesion' }
 ];

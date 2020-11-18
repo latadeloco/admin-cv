@@ -1,0 +1,18 @@
+<div class="container">
+    <form [formGroup]="objetivoProfesionalGroup" (ngSubmit)="saveObjetivoProfesionalForm()">
+        <div class="row">
+          <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+            <label for="objetivoProfesional">Describe tu Objetivo Profesional:</label>
+            <textarea name="objetivoProfesional" class="form-control" style="resize: none;" cols="50" rows="5" placeholder="Exponga su objetivo profesional... *" formControlName="objetivoProfesional" [class.is-invalid]="getValidateFormControl('objetivoProfesional')"></textarea>
+            <small *ngIf="getValidateFormControl('objetivoProfesional')" class="text-danger">
+                Ingrese su objetivo profesional
+              </small>
+          </div>
+        </div>
+        <div class="row pt-4">
+            <div class="form-check col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                <button type="submit" class="btn btn-success btn-block">Añadir Objetivo Profesional</button>
+            </div>
+        </div>
+    </form>
+</div>

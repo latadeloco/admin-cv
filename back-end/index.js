@@ -1040,6 +1040,119 @@ app.post("/experiencias-laborales/update/", (req, res) => {
 /**
  * 
  * 
+ * 
+ * OBJETIVOS PROFESIONALES
+ * 
+ * 
+ * 
+ */
+
+app.post("/objetivo-profesional/add", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var objetivoProfesional = req.body;
+    con.query("INSERT INTO objetivos_profesionales(objetivo_profesional) VALUES(?)",
+    [
+        objetivoProfesional.objetivoProfesional,
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Objetivo Profesional añadido correctamente.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar el objetivo profesional.'}));
+        }
+    })
+})
+
+app.get("/objetivo-profesional/viewAll", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT * FROM objetivos_profesionales ORDER BY objetivo_profesional" ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+
+        res.end(JSON.stringify(result));
+    })
+});
+
+app.get("/objetivo-profesional/view/:id", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var idObjetivoProfesional = req.params.id;
+
+    con.query("SELECT * FROM objetivos_profesionales WHERE id_objetivos_profesionales = ?", [ idObjetivoProfesional ] ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify(result));
+        } else {
+            res.end(JSON.stringify({
+                "responseKO" : 'Formación no encontrada.'
+            }))
+        }
+    })
+});
+
+app.post("/objetivo-profesional/update" ,(req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var objetivoProfesional = req.body.params.objetivoProfesional.objetivoProfesional;
+    var idObjetivoProfesional = req.body.params.idObjetivoProfesional;
+
+    con.query("UPDATE objetivos_profesionales SET objetivo_profesional = ? WHERE id_objetivos_profesionales = ?",
+    [
+        objetivoProfesional,
+        idObjetivoProfesional
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Objetivo profesional actualizado.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al actualizar el objetivo profesional.'}));
+        }
+    })
+})
+
+app.post("/objetivo-profesional/remove" ,(req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    var idObjetivoProfesional = req.body.params.idObjetivoProfesional;
+
+    con.query("DELETE FROM objetivos_profesionales WHERE id_objetivos_profesionales = ?",
+    [
+        idObjetivoProfesional
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Objetivo profesional eliminado.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al eliminar el objetivo profesional.'}));
+        }
+    })
+})
+
+/**
+ * 
+ * 
  * ARRANCAR SERVIDOR
  * 
  * 
