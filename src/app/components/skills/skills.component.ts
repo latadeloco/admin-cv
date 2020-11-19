@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Shared } from 'src/app/app.component';
+import { SkillService } from 'src/app/services/skill.service';
 
 @Component({
   selector: 'app-skills',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SkillsComponent implements OnInit {
 
-  constructor() { }
+  @Output() cambiarVisualizacion: EventEmitter<Shared>;
+  skills = new Array();
 
-  ngOnInit(): void {
+  constructor(
+    private skillsService : SkillService
+  ) {
+    this.cambiarVisualizacion = new EventEmitter();
+    this.cambiarVisualizacion.emit(new Shared());
   }
 
+  ngOnInit(): void {
+    this.skillsService.getViewAllSkill().toPromise().then(respuestaSkills => {
+      this.skills.push(respuestaSkills)
+    });
+  }
+
+  eliminarSkill(idSkill) {
+
+  }
 }

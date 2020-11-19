@@ -11,7 +11,9 @@ import { AddObjetivosProfesionalesComponent } from './components/objetivos-profe
 import { ObjetivosProfesionalesComponent } from './components/objetivos-profesionales/objetivos-profesionales.component';
 import { UpdateObjetivosProfesionalesComponent } from './components/objetivos-profesionales/update-objetivos-profesionales/update-objetivos-profesionales.component';
 import { ProyectosComponent } from './components/proyectos/proyectos.component';
+import { AddSkillComponent } from './components/skills/add-skill/add-skill.component';
 import { SkillsComponent } from './components/skills/skills.component';
+import { UpdateSkillComponent } from './components/skills/update-skill/update-skill.component';
 import { AuthGuard } from './guards/auth.guard';
 
 /**
@@ -27,6 +29,8 @@ const APP_ROUTES: Routes = [
     { path : 'formacion/add-formacion', component: AddFormacionComponent, canActivate: [AuthGuard] },
     { path : 'formacion/update-formacion/:id', component: UpdateFormacionComponent, canActivate: [AuthGuard] },
     { path : 'skills', component: SkillsComponent, canActivate: [AuthGuard] },
+    { path : 'skills/add-skill', component: AddSkillComponent, canActivate: [AuthGuard] },
+    { path : 'skills/update-skill/:id', component: UpdateSkillComponent, canActivate: [AuthGuard] },
     { path : 'objetivos-profesionales', component: ObjetivosProfesionalesComponent, canActivate: [AuthGuard] },
     { path : 'objetivos-profesionales/add-objetivo-profesional', component: AddObjetivosProfesionalesComponent, canActivate: [AuthGuard] },
     { path : 'objetivos-profesionales/update-objetivo-profesional/:id', component: UpdateObjetivosProfesionalesComponent, canActivate: [AuthGuard] },

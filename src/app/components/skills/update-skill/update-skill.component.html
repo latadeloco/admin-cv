@@ -1,0 +1,55 @@
+<div *ngIf="cargado">
+    <div class="container">
+        <form [formGroup]="skillGroup" (ngSubmit)="updateSkill()">
+            <div class="row">
+                <div class="col-12 col-xs-12 col-sm-12 col-lg-3 p-2">
+                    <label for="tipoSkill">Tipo de Skill: </label>
+                </div>
+                <div class="col-12 col-xs-12 col-sm-12 col-lg-7 p-2">
+                    <select name="tipoSkill" class="form-control" formControlName="tipoSkill"  [class.is-invalid]="getValidateFormControl('tipoSkill')">
+                        <option [disabled]="true">Selecciona un tipo de Skill...</option>
+                        <option *ngFor="let tipoSkill of tiposSkillArray[0]" [value]="tipoSkill['id_tipo_skills']">{{ tipoSkill['tipo_skill'] }}</option>
+                    </select>
+                    <small *ngIf="getValidateFormControl('tipoSkill')" class="text-danger">
+                        Ingrese el tipo de skill o añade una nueva.
+                    </small>
+                </div>
+                <div class="col-12 col-xs-12 col-sm-12 col-lg-2 p-2">
+                    <input type="button" class="btn btn-info" (click)="setExponerTipoSkill(true)" value="Añadir tipo de skill">
+                </div>
+                
+            </div>
+            <div *ngIf="exponerTipoSkill">
+                <form [formGroup]="tipoSkillGroup">
+                    <div class="m-4 rounded p-4 bg-light">
+                        <label for="nombreTipoSkill">Tipo de Skill: </label>
+                        <input type="text" name="nombreTipoSkill" class="form-control" placeholder="Introduce el nombre del tipo de la skill... *" formControlName="nombreTipoSkill" [class.is-invalid]="getValidateFormControlTipoSkill('nombreTipoSkill')">
+                        <small *ngIf="getValidateFormControlTipoSkill('nombreTipoSkill')" class="text-danger">
+                            Introduce el nombre del tipo de skill
+                        </small>
+                        <br>
+                        <input type="button" class="btn btn-warning m-2" (click)="saveTipoSkill()" value="Añadir Tipo Skill">
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+              <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                <label for="nombreSkill">Nombre de Skill:</label>
+                <input type="text" name="nombreSkill" class="form-control" placeholder="Introduce el nombre de la skill... *" formControlName="nombreSkill" [class.is-invalid]="getValidateFormControl('nombreSkill')">
+                <small *ngIf="getValidateFormControl('nombreSkill')" class="text-danger">
+                    Ingrese el nombre de la skill
+                </small>
+              </div>
+              <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                <label for="descripcionSkill">Descripción de la skill:</label>
+                <textarea name="descripcionSkill" class="form-control" style="resize: none;" cols="50" rows="5" placeholder="Da una breve descripción de la skill... *" formControlName="descripcionSkill"></textarea>
+              </div>
+            </div>
+            <div class="row pt-4">
+                <div class="form-check col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
+                    <button type="submit" class="btn btn-primary btn-block">Actualizar Skill</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

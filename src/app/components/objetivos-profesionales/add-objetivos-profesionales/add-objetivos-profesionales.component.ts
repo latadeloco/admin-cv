@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Shared } from 'src/app/app.component';
 import { ObjetivoProfesionalService } from 'src/app/services/objetivo-profesional.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -9,6 +10,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class AddObjetivosProfesionalesComponent implements OnInit {
 
+  @Output() cambiarVisualizacion: EventEmitter<Shared>
   objetivoProfesionalGroup : FormGroup;
 
   constructor(
@@ -16,6 +18,9 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
     private objetivoProfesionalService : ObjetivoProfesionalService,
     private toast : ToastService
   ) {
+    this.cambiarVisualizacion = new EventEmitter();
+    this.cambiarVisualizacion.emit(new Shared());
+
     this.objetivoProfesionalForm();
   }
 

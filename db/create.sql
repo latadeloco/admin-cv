@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS experiencia_laboral;
 DROP TABLE IF EXISTS objetivos_profesionales;
 DROP TABLE IF EXISTS tipo_skills;
 DROP TABLE IF EXISTS skills;
-DROP TABLE IF EXISTS proyectos;
 DROP TABLE IF EXISTS usuario;
 
 CREATE TABLE datos_personales(
@@ -66,12 +65,6 @@ CREATE TABLE skills (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 ALTER TABLE skills ADD CONSTRAINT fk_tipo_skills_skills FOREIGN KEY (tipo_skill) REFERENCES tipo_skills(id_tipo_skills);
-
-CREATE TABLE proyectos (
-    `id_proyecto` int (50) not null primary key auto_increment
-  , `nombre` varchar(255) not null
-  , `link` text
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE usuario (
     `id_usuario` int (50) not null primary key auto_increment

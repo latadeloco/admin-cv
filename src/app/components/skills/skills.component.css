@@ -1,0 +1,7 @@
+@media (max-width: 889px) {
+    .id-skill,
+    .tipo-skill
+    {
+        display: none;
+    }
+}

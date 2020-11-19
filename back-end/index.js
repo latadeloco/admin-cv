@@ -1153,6 +1153,145 @@ app.post("/objetivo-profesional/remove" ,(req, res) => {
 /**
  * 
  * 
+ * 
+ * SKILLS
+ * 
+ * 
+ * 
+ */
+
+app.post("/skills/addTipoSkill", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var tipoSkill = req.body.nombreTipoSkill;
+    con.query("INSERT INTO tipo_skills(tipo_skill) VALUES(?)",
+    [
+        tipoSkill,
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Tipo de Skill añadida correctamente.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar el tipo de skill.'}));
+        }
+    })
+})
+
+app.post("/skills/addSkill", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    var tipoSkill = req.body.tipoSkill;
+    var nombreSkill = req.body.nombreSkill;
+    var descripcionSkill = req.body.descripcionSkill;
+    con.query("INSERT INTO skills(nombre_skill, descripcion, tipo_skill) VALUES(?,?,?)",
+    [
+        nombreSkill,
+        descripcionSkill,
+        tipoSkill
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'Skill añadida correctamente.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar la skill.'}));
+        }
+    })
+})
+
+app.get("/skills/viewAllTiposSkill", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT * FROM tipo_skills"
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify(result));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al intentar extraer la información.'}));
+        }
+    })
+})
+
+app.get("/skills/viewAllSkills", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT skills.id_skills as id_skills, skills.nombre_skill as nombre_skill, tipo_skills.tipo_skill as tipo_skill FROM skills, tipo_skills WHERE skills.tipo_skill = tipo_skills.id_tipo_skills"
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify(result));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar extraer la información.'}));
+        }
+    })
+})
+
+app.post("/skills/update", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    var nombreSkill = req.body.params.skill.nombreSkill;
+    var descripcionSkill = req.body.params.skill.descripcionSkill;
+    var tipoSkill = req.body.params.skill.tipoSkill;
+    var idSkill = req.body.params.idSkill;
+
+    con.query("UPDATE skills SET nombre_skill=?, descripcion=?, tipo_skill=? WHERE id_skills = ?", 
+    [
+        nombreSkill,
+        descripcionSkill,
+        tipoSkill,
+        idSkill
+    ]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'La skill se ha actualizado correctamente.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar actualizar la información.'}));
+        }
+    })
+})
+
+app.get("/skills/view/:id", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    var idSkill = req.params.id;
+
+    con.query("SELECT * FROM skills WHERE id_skills = ?", [idSkill]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify(result));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al insertar extraer la información.'}));
+        }
+    })
+})
+
+/**
+ * 
+ * 
  * ARRANCAR SERVIDOR
  * 
  * 

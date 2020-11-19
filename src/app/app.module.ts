@@ -41,6 +41,8 @@ import { UpdateExperienciaLaboralComponent } from './components/experiencia-labo
 import { SkillsComponent } from './components/skills/skills.component';
 import { AddObjetivosProfesionalesComponent } from './components/objetivos-profesionales/add-objetivos-profesionales/add-objetivos-profesionales.component';
 import { UpdateObjetivosProfesionalesComponent } from './components/objetivos-profesionales/update-objetivos-profesionales/update-objetivos-profesionales.component';
+import { AddSkillComponent } from './components/skills/add-skill/add-skill.component';
+import { UpdateSkillComponent } from './components/skills/update-skill/update-skill.component';
 
 
 @NgModule({
@@ -63,6 +65,8 @@ import { UpdateObjetivosProfesionalesComponent } from './components/objetivos-pr
     SkillsComponent,
     AddObjetivosProfesionalesComponent,
     UpdateObjetivosProfesionalesComponent,
+    AddSkillComponent,
+    UpdateSkillComponent,
   ],
   imports: [
     BrowserModule,
