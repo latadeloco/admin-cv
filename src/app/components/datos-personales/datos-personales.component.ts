@@ -7,7 +7,6 @@ import { ToastService } from 'src/app/services/toast.service';
 @Component({
   selector: 'app-datos-personales',
   templateUrl: './datos-personales.component.html',
-  styleUrls: ['./datos-personales.component.css']
 })
 export class DatosPersonalesComponent implements OnInit {
   
@@ -15,9 +14,7 @@ export class DatosPersonalesComponent implements OnInit {
   datosPersonalesGroup: FormGroup;
   fileUpload: File;
 
-  /**
-   * Constructor del componente
-   */
+  
   constructor(
     private formBuilder: FormBuilder,
     private datosPersonalesService : DatosPersonalesService,
@@ -28,9 +25,7 @@ export class DatosPersonalesComponent implements OnInit {
     this.datosPersonalesForm();
   }
 
-  /**
-   * Método de inicialización del componente
-   */
+  
   ngOnInit(): void {
     this.cargarDatosADatosPersonalesForm();
   }
@@ -51,7 +46,6 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   updateOInsertImagenPerfil(updateOInsert: boolean, formData: FormData) {
-    console.log(updateOInsert)
     this.datosPersonalesService.setTieneImagenPerfil(updateOInsert).toPromise().then(_ => {
       this.datosPersonalesService.setSubirImagenPerfil(formData).toPromise().then(respuesta => {
         console.log(respuesta);

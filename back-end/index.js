@@ -153,6 +153,29 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
         'message': 'Archivo subido correctamente.',
     }); 
 
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+    con.query("SELECT imagen FROM datos_personales",
+    function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        });
+
+        if (JSON.parse(JSON.stringify(result)) == 0) {
+            con.query("INSERT INTO datos_personales(nombre, apellidos, imagen) VALUES ('','',true", function(error, result, fields) {
+                con.on('error', function(err) {
+                    console.log('[MYSQL]ERROR', err);
+                });
+            })
+        } else {
+            con.query("UPDATE datos_personales FROM imagen=true", function(error, result, fields) {
+                con.on('error', function(err) {
+                    console.log('[MYSQL]ERROR', err);
+                });
+            })
+        }
+    })
 
     fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
         if (err) {
@@ -259,34 +282,36 @@ app.get('/datos-personales/imagenPerfil', (req, res) => {
             console.log('[MYSQL]ERROR', err);
         })
 
-        let tieneImagen = JSON.parse(JSON.stringify(result[0]['imagen']));
-
-        if (tieneImagen === 1) {
-            fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
-                if (err != null) {
-                    return
-                } else {
-                    res.end(JSON.stringify({
-                        'perfilExiste' : true,
-                        'extension' : 'jpg'
-                    }));
-                }
-            });
-            fs.stat('..\\src\\assets\\img\\perfil.png', (err, stat) => {
-                if (err != null) {
-                    return
-                } else {
-                    res.end(JSON.stringify({
-                        'perfilExiste' : true,
-                        'extension' : 'png'
-                    }));
-                }
-            });
-        } else {
-            res.end(JSON.stringify({
-                imagenNotFound : 'No se ha encontrado imagen de perfil.'
-            }));
-        }
+        if (JSON.parse(JSON.stringify(result.length)) != 0) {
+            let tieneImagen = JSON.parse(JSON.stringify(result[0]['imagen']));
+    
+            if (tieneImagen === 1) {
+                fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
+                    if (err != null) {
+                        return
+                    } else {
+                        res.end(JSON.stringify({
+                            'perfilExiste' : true,
+                            'extension' : 'jpg'
+                        }));
+                    }
+                });
+                fs.stat('..\\src\\assets\\img\\perfil.png', (err, stat) => {
+                    if (err != null) {
+                        return
+                    } else {
+                        res.end(JSON.stringify({
+                            'perfilExiste' : true,
+                            'extension' : 'png'
+                        }));
+                    }
+                });
+            } else {
+                res.end(JSON.stringify({
+                    imagenNotFound : 'No se ha encontrado imagen de perfil.'
+                }));
+            }
+        } 
     })
 
 });

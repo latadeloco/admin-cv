@@ -33,8 +33,14 @@
   <div class="py-4 px-3 mb-4 bg-light">
     <div class="media d-flex align-items-center"><img [src]="urlImg" alt="..." width="65px" height="65px" style="max-width: 65px; max-height: 65px;" class="mr-3 rounded-circle img-thumbnail shadow-sm">
       <div class="media-body">
-        <h4 class="m-0">Jesús Robles</h4>
-        <p class="font-weight-light text-muted mb-0">Desarrollador Web</p>
+        <div *ngIf="cargado">
+            <div *ngIf="nombreUsuario !== null">
+              <h4 class="m-0"> {{ nombreUsuario }} </h4>
+            </div>
+            <div *ngIf="puestoUsuario !== null">
+              <p class="font-weight-light text-muted mb-0"> {{ puestoUsuario }} </p>
+            </div>        
+        </div>
       </div>
     </div>
   </div>

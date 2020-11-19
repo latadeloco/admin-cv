@@ -16,6 +16,9 @@ export class HeaderComponent implements OnInit {
     optsMenu : Opcion[] = [];
     hashPathDefault : string;
     urlImg: string;
+    nombreUsuario = null;
+    puestoUsuario = null;
+    cargado : boolean = false;
 
     /**
      * Constructor del componente
@@ -33,17 +36,29 @@ export class HeaderComponent implements OnInit {
         this.hashPathDefault = window.location.hash;
 
         this.urlImg = '../../../admin-cv/assets/img/default.png';
+        
+        if (window.location.hash !== '#/iniciar-sesion') {
+            datosPersonalesService.getDatosPersonales().toPromise().then(datosPersonales => {
+                if (datosPersonales[0] !== undefined) {
+                    this.nombreUsuario = datosPersonales[0]['nombre'] + " " + datosPersonales[0]['apellidos'];
+                    this.puestoUsuario = datosPersonales[0]['puesto'];
+                    this.cargado = true;
+                }
+            })
+
+            this.datosPersonalesService.getImagenPerfil().toPromise().then(imagenPefilDetectada => {
+                if (imagenPefilDetectada['imagenNotFound'] == undefined) this.urlImg = '../../../admin-cv/assets/img/default.png';
+                if (imagenPefilDetectada['perfilExiste'] == true) this.urlImg = '../../../admin-cv/assets/img/perfil.'+ imagenPefilDetectada['extension'];
+            });
+        }
     }
 
     /**
      * Método de iniciación del componente
      */
-    ngOnInit(): void {        
+    ngOnInit(): void {   
         this.optsMenu = this._opcionesMenuService.getOptsMenu();
-        this.datosPersonalesService.getImagenPerfil().toPromise().then(imagenPefilDetectada => {
-            if (imagenPefilDetectada['imagenNotFound'] == undefined) this.urlImg = '../../../admin-cv/assets/img/default.png';
-            if (imagenPefilDetectada['perfilExiste'] == true) this.urlImg = '../../../admin-cv/assets/img/perfil.'+ imagenPefilDetectada['extension'];
-        });
+        
     }
     
     /**
@@ -82,6 +97,9 @@ export class HeaderComponent implements OnInit {
         }
     }
 
+    /**
+     * Quitar cuando se máximiza el menú en móvil
+     */
     toogleFullAndLogOut() {
         var sidebar = document.getElementById('sidebar');
 
