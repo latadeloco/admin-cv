@@ -18,10 +18,12 @@ export class ExperienciaLaboralComponent implements OnInit {
    * Constructor del componente
    * @param laboralService servicio necesario para llamadas a API
    * @param toast servicio de alertas
+   * @param router necesario para redirecciones
    */
   constructor(
     private laboralService : ExperienciaLaboralService,
     private toast : ToastService,
+    private router : Router
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -30,7 +32,6 @@ export class ExperienciaLaboralComponent implements OnInit {
       if (experienciasLaboralesList['length'] !== 0) {
         this.experienciasLaborales.push(experienciasLaboralesList);
       }
-      console.log(this.experienciasLaborales)
     })
   }
 
@@ -50,12 +51,16 @@ export class ExperienciaLaboralComponent implements OnInit {
       if (respuestaEliminacionExperienciaLaboral['responseOK'] !== undefined) {
         this.toast.showSuccess(respuestaEliminacionExperienciaLaboral['responseOK'], 1500);
       }
-      setTimeout(() => {
-      }, 1450);
-    }).then(_ => {
-      setTimeout(() => {
-        window.location.reload();
-      }, 1450);
+      this.redirectTo('experiencia-laboral');
     });
   }
+
+  /**
+   * Redireccionar
+   * @param uri url a redireccionar
+   */
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 }

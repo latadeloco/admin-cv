@@ -28,7 +28,6 @@ import { DatosPersonalesComponent } from './components/datos-personales/datos-pe
 import { FormacionComponent } from './components/formacion/formacion.component';
 import { ExperienciaLaboralComponent } from './components/experiencia-laboral/experiencia-laboral.component';
 import { ObjetivosProfesionalesComponent } from './components/objetivos-profesionales/objetivos-profesionales.component';
-import { ProyectosComponent } from './components/proyectos/proyectos.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
 import { UsuarioService } from './services/usuario.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -54,7 +53,6 @@ import { UpdateSkillComponent } from './components/skills/update-skill/update-sk
     FormacionComponent, 
     ExperienciaLaboralComponent, 
     ObjetivosProfesionalesComponent, 
-    ProyectosComponent, 
     IniciarSesionComponent,
     NgbdToastGlobal,
     ToastsContainer,

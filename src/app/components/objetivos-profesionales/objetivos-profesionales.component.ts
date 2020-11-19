@@ -17,6 +17,7 @@ export class ObjetivosProfesionalesComponent implements OnInit {
   constructor(
     private objetivoProfesionalService : ObjetivoProfesionalService,
     private toast : ToastService,
+    private router : Router
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -37,12 +38,22 @@ export class ObjetivosProfesionalesComponent implements OnInit {
     this.objetivoProfesionalService.removeObjetivoProfesional(idObjetivoProfesional).toPromise().then(respuestaRemoveObjetivoProfesional => {
       if (respuestaRemoveObjetivoProfesional['responseOK'] != undefined) {
         this.toast.showSuccess(respuestaRemoveObjetivoProfesional['responseOK'], 1500);
-        window.location.reload();
       } else if (respuestaRemoveObjetivoProfesional['responseKO'] != undefined) {
         this.toast.showDanger(respuestaRemoveObjetivoProfesional['responseKO'], 1500);
       } else {
         this.toast.showDanger("Error desconocido", 1500);
       }
+
+      this.redirectTo('objetivos-profesionales');
     })
   }
+
+  /**
+   * Redireccionar
+   * @param uri url a redireccionar
+   */
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 }

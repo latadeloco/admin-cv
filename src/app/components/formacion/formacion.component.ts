@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Shared } from 'src/app/app.component';
 import { FormacionService } from 'src/app/services/formacion.service';
@@ -22,11 +23,13 @@ export class FormacionComponent implements OnInit {
    * @param formacionService servicio necesario para llamadas a API
    * @param toast servicio de alertas
    * @param modal modal para subida de certificado (PDF)
+   * @param router necesario para redirección
    */
   constructor(
     private formacionService : FormacionService,
     private toast : ToastService,
     private modal : NgbModal,
+    private router : Router
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -60,15 +63,11 @@ export class FormacionComponent implements OnInit {
         } else if (respuesta['responseKO'] != undefined) {
           this.toast.showDanger(respuesta['responseKO'], 4000);
         }
-  
-        window.location.reload();
       });
     } else {
-      this.formacionService.removeCertificate(certificado).toPromise().then(_ => {
-        window.location.reload();
-      });
-      
+      this.formacionService.removeCertificate(certificado).toPromise();
     }
+    this.redirectTo('formacion');
   }
 
   /**
@@ -84,11 +83,8 @@ export class FormacionComponent implements OnInit {
         this.toast.showDanger(respuestaEliminacionFormacion['responseKO'], 3000);
       }
 
+      this.redirectTo('formacion')
       
-    }).then(_ => {
-      setTimeout(() => {
-        window.location.reload;
-      }, 3000);
     })
   }
 
@@ -114,4 +110,13 @@ export class FormacionComponent implements OnInit {
 
     this.formacionService.uploadCertificateWithFormacion(formData, this.idFormacionActual).toPromise();
   }
+
+  /**
+   * Redireccionar
+   * @param uri url a redireccionar
+   */
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 }

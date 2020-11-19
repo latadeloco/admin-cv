@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Shared } from 'src/app/app.component';
 import { ObjetivoProfesionalService } from 'src/app/services/objetivo-profesional.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -16,7 +17,8 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
   constructor(
     private formBuilder : FormBuilder,
     private objetivoProfesionalService : ObjetivoProfesionalService,
-    private toast : ToastService
+    private toast : ToastService,
+    private router : Router
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -49,9 +51,7 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
           this.toast.showSuccess("Error desconocido", 1500);
         }
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1450);
+        this.redirectTo('objetivos-profesionales/add-objetivo-profesional');
       })
     }
   }
@@ -64,4 +64,12 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
     return this.objetivoProfesionalGroup.get(formControl).invalid && this.objetivoProfesionalGroup.get(formControl).touched;
   }
 
+  /**
+   * Redireccionar
+   * @param uri url a redireccionar
+   */
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 }

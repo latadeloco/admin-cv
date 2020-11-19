@@ -42,4 +42,12 @@ export class SkillService {
       }
     } )
   }
+
+  deleteSkill(idSkill) {
+    return this.http.post( this.urlBase + 'delete' , {
+      params : {
+        'idSkill': idSkill
+      }
+    } )
+  }
 }

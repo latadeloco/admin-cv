@@ -1289,6 +1289,25 @@ app.get("/skills/view/:id", (req, res) => {
     })
 })
 
+app.post("/skills/delete", (req, res) => {
+    con == true ? con.destroy() : 
+    con = mysql.createConnection(configuracionMysql);
+    con.connect();
+
+    var idSkill = req.body.params.idSkill;
+    con.query("DELETE FROM skills WHERE id_skills = ?", [idSkill]
+    ,function(error, result, fields) {
+        con.on('error', function(err) {
+            console.log('[MYSQL]ERROR', err);
+        })
+        if (error == null) {
+            res.end(JSON.stringify({responseOK : 'La skill se ha eliminado correctamente.'}));
+        } else {
+            res.end(JSON.stringify({responseKO : 'Ha habido un error al intentar eliminar la información.'}));
+        }
+    })
+})
+
 /**
  * 
  * 

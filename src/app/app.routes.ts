@@ -10,7 +10,6 @@ import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesi
 import { AddObjetivosProfesionalesComponent } from './components/objetivos-profesionales/add-objetivos-profesionales/add-objetivos-profesionales.component';
 import { ObjetivosProfesionalesComponent } from './components/objetivos-profesionales/objetivos-profesionales.component';
 import { UpdateObjetivosProfesionalesComponent } from './components/objetivos-profesionales/update-objetivos-profesionales/update-objetivos-profesionales.component';
-import { ProyectosComponent } from './components/proyectos/proyectos.component';
 import { AddSkillComponent } from './components/skills/add-skill/add-skill.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { UpdateSkillComponent } from './components/skills/update-skill/update-skill.component';
@@ -34,7 +33,6 @@ const APP_ROUTES: Routes = [
     { path : 'objetivos-profesionales', component: ObjetivosProfesionalesComponent, canActivate: [AuthGuard] },
     { path : 'objetivos-profesionales/add-objetivo-profesional', component: AddObjetivosProfesionalesComponent, canActivate: [AuthGuard] },
     { path : 'objetivos-profesionales/update-objetivo-profesional/:id', component: UpdateObjetivosProfesionalesComponent, canActivate: [AuthGuard] },
-    { path : 'proyectos', component: ProyectosComponent, canActivate: [AuthGuard] },
     { path : '**', pathMatch: 'full', redirectTo: 'iniciar-sesion' }
 ];
 
