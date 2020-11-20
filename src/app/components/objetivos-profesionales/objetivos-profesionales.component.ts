@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Shared } from 'src/app/app.component';
 import { ObjetivoProfesionalService } from 'src/app/services/objetivo-profesional.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -18,12 +19,12 @@ export class ObjetivosProfesionalesComponent implements OnInit {
    * Constructor del componente
    * @param objetivoProfesionalService servicio necesario para llamadas a API
    * @param toast servicio de alertas
-   * @param router argumento necesario para redireccionamientos
+   * @param reusableService servicio necesario para redireccionamientos
    */
   constructor(
     private objetivoProfesionalService : ObjetivoProfesionalService,
     private toast : ToastService,
-    private router : Router
+    private reusableService : ReusableService
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -60,16 +61,7 @@ export class ObjetivosProfesionalesComponent implements OnInit {
         this.toast.showDanger("Error desconocido", 1500);
       }
 
-      this.redirectTo('objetivos-profesionales');
+      this.reusableService.redirectTo('objetivos-profesionales');
     })
   }
-
-  /**
-   * Redireccionar
-   * @param uri url a redireccionar
-   */
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
- }
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Shared } from 'src/app/app.component';
 import { ObjetivoProfesionalService } from 'src/app/services/objetivo-profesional.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -22,14 +23,14 @@ export class UpdateObjetivosProfesionalesComponent implements OnInit {
    * @param objetivoProfesionalService servicio necesario para llamadas a API
    * @param toast servicio de alertas
    * @param activeRoute argumento necesario para obtener la ID
-   * @param router argumento de redirección
+   * @param reusableService servicio de redirección
    */
   constructor(
     private formBuilder : FormBuilder,
     private objetivoProfesionalService : ObjetivoProfesionalService,
     private toast : ToastService,
     private activeRoute : ActivatedRoute,
-    private router : Router
+    private reusableService : ReusableService
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -69,9 +70,7 @@ export class UpdateObjetivosProfesionalesComponent implements OnInit {
       this.objetivoProfesionalService.updateObjetivoProfesional(this.objetivoProfesionalGroup.value, this.routeParams).toPromise().then(respuestaUpdateObjetivoProfesional => {
         if (respuestaUpdateObjetivoProfesional['responseOK'] != undefined) {
           this.toast.showSuccess(respuestaUpdateObjetivoProfesional['responseOK'], 1500);
-          setTimeout(() => {
-            this.router.navigateByUrl('objetivos-profesionales');
-          }, 1450);
+          this.reusableService.redirectTo('objetivos-profesionales');
         } else if (respuestaUpdateObjetivoProfesional['responseKO'] != undefined) {
           this.toast.showDanger(respuestaUpdateObjetivoProfesional['responseKO'], 1500);
         } else {

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Thermometer } from 'ngx-bootstrap-icons';
 import { Shared } from 'src/app/app.component';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { SkillService } from 'src/app/services/skill.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -25,13 +26,14 @@ export class AddSkillComponent implements OnInit {
    * @param formBuilder constructor del formulario reactivo
    * @param toast servicio de alertas
    * @param skillService servicio necesario para llamadas a API
-   * @param router argumento de redirección
+   * @param reusableService servicio necesario para redirección
+   * 
    */
   constructor(
     private formBuilder : FormBuilder,
     private toast : ToastService,
     private skillService : SkillService,
-    private router : Router
+    private reusableService : ReusableService
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -62,9 +64,7 @@ export class AddSkillComponent implements OnInit {
       this.skillService.addSkill(this.skillGroup.value).toPromise().then(respuestaSkill => {
         if (respuestaSkill['responseOK'] != undefined) {
           this.toast.showSuccess(respuestaSkill['responseOK'], 1300);
-          setTimeout(() => {
-            this.router.navigateByUrl('skills');
-          }, 1250);
+          this.reusableService.redirectTo('skills')
         } else if (respuestaSkill['responseKO'] != undefined) {
           this.toast.showDanger(respuestaSkill['responseKO'] ,1300);
         } else {

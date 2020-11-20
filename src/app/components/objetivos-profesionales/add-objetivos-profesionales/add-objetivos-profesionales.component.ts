@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Shared } from 'src/app/app.component';
 import { ObjetivoProfesionalService } from 'src/app/services/objetivo-profesional.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -19,13 +20,13 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
    * @param formBuilder constructor de formulario reactivo
    * @param objetivoProfesionalService servicio necesario para llamadas a API
    * @param toast servicio de alertas
-   * @param router argumento para redireccionamiento
+   * @param reusableService servicio para redireccionamiento
    */
   constructor(
     private formBuilder : FormBuilder,
     private objetivoProfesionalService : ObjetivoProfesionalService,
     private toast : ToastService,
-    private router : Router
+    private reusableService : ReusableService
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -67,7 +68,7 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
           this.toast.showSuccess("Error desconocido", 1500);
         }
 
-        this.redirectTo('objetivos-profesionales/add-objetivo-profesional');
+        this.reusableService.redirectTo('objetivos-profesionales/add-objetivo-profesional');
       })
     }
   }
@@ -79,13 +80,4 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
   getValidateFormControl(formControl): boolean {
     return this.objetivoProfesionalGroup.get(formControl).invalid && this.objetivoProfesionalGroup.get(formControl).touched;
   }
-
-  /**
-   * Redireccionar
-   * @param uri url a redireccionar
-   */
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
- }
 }

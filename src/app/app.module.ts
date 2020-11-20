@@ -43,7 +43,6 @@ import { UpdateObjetivosProfesionalesComponent } from './components/objetivos-pr
 import { AddSkillComponent } from './components/skills/add-skill/add-skill.component';
 import { UpdateSkillComponent } from './components/skills/update-skill/update-skill.component';
 
-
 @NgModule({
   declarations: [
     AppComponent, 

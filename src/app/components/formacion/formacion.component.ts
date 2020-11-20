@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Shared } from 'src/app/app.component';
 import { FormacionService } from 'src/app/services/formacion.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -23,13 +24,13 @@ export class FormacionComponent implements OnInit {
    * @param formacionService servicio necesario para llamadas a API
    * @param toast servicio de alertas
    * @param modal modal para subida de certificado (PDF)
-   * @param router necesario para redirección
+   * @param reusableService necesario para redirección
    */
   constructor(
     private formacionService : FormacionService,
     private toast : ToastService,
     private modal : NgbModal,
-    private router : Router
+    private reusableService : ReusableService,
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -67,7 +68,7 @@ export class FormacionComponent implements OnInit {
     } else {
       this.formacionService.removeCertificate(certificado).toPromise();
     }
-    this.redirectTo('formacion');
+    this.reusableService.redirectTo('formacion');
   }
 
   /**
@@ -83,7 +84,7 @@ export class FormacionComponent implements OnInit {
         this.toast.showDanger(respuestaEliminacionFormacion['responseKO'], 3000);
       }
 
-      this.redirectTo('formacion')
+      this.reusableService.redirectTo('formacion')
       
     })
   }
@@ -111,12 +112,4 @@ export class FormacionComponent implements OnInit {
     this.formacionService.uploadCertificateWithFormacion(formData, this.idFormacionActual).toPromise();
   }
 
-  /**
-   * Redireccionar
-   * @param uri url a redireccionar
-   */
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
- }
 }

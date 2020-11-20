@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Shared } from 'src/app/app.component';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { SkillService } from 'src/app/services/skill.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -23,7 +24,8 @@ export class SkillsComponent implements OnInit {
   constructor(
     private skillsService : SkillService,
     private toast : ToastService,
-    private router : Router
+    private router : Router,
+    private reusableService : ReusableService
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -52,7 +54,8 @@ export class SkillsComponent implements OnInit {
         this.toast.showDanger("Error desconocido", 1300);
       }
 
-      this.redirectTo('skills')
+      this.reusableService.redirectTo('skills');
+      //this.redirectTo('skills')
     })
   }
 
@@ -63,5 +66,5 @@ export class SkillsComponent implements OnInit {
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
- }
+  }
 }
