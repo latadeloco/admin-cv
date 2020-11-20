@@ -16,6 +16,7 @@ export class UpdateObjetivosProfesionalesComponent implements OnInit {
   objetivoProfesionalGroup : FormGroup;
   routeParams;
   cargado : boolean = false;
+  reusable;
 
   /**
    * Constructor del componente
@@ -32,6 +33,7 @@ export class UpdateObjetivosProfesionalesComponent implements OnInit {
     private activeRoute : ActivatedRoute,
     private reusableService : ReusableService
   ) {
+    this.reusable = reusableService;
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
 
@@ -78,13 +80,5 @@ export class UpdateObjetivosProfesionalesComponent implements OnInit {
         }
       })
     }
-  }
-
-  /**
-   * Validador de campos dinámico
-   * @param formControl control dentro del formulario html
-   */
-  getValidateFormControl(formControl): boolean {
-    return this.objetivoProfesionalGroup.get(formControl).invalid && this.objetivoProfesionalGroup.get(formControl).touched;
   }
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Shared } from 'src/app/app.component';
 import { FormacionService } from 'src/app/services/formacion.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ValidadoresService } from 'src/app/services/validadores.service';
 
@@ -18,6 +19,7 @@ export class AddFormacionComponent implements OnInit {
   @Output() cambiarVisualizacion: EventEmitter<Shared>
   formacionGroup : FormGroup
   fileUpload: File;
+  reusable;
 
   /**
    * Constructor del componente Añadir Formación
@@ -28,6 +30,7 @@ export class AddFormacionComponent implements OnInit {
    * @param modal Modal para aprobación o denegación de certificado
    * @param router Necesario para la redirección
    * @param config Configuración del modal
+   * @param reusableService servicio necesario para reutilización
    */
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +40,9 @@ export class AddFormacionComponent implements OnInit {
     private modal : NgbModal,
     private router : Router,
     config: NgbModalConfig,
+    private reusableService : ReusableService
   ) {
+    this.reusable = this.reusableService;
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
 
@@ -65,14 +70,6 @@ export class AddFormacionComponent implements OnInit {
       certificacion     : [false],
       descripcion       : ['']
     }, {validators : this.validadores.validatorDate('fechaInicio', 'fechaFin')});
-  }
-
-  /**
-   * Validador de campos dinámico
-   * @param formControl control dentro del formulario html
-   */
-  getValidateFormControl(formControl): boolean {
-    return this.formacionGroup.get(formControl).invalid && this.formacionGroup.get(formControl).touched;
   }
 
   /**

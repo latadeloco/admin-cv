@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Shared } from 'src/app/app.component';
 import { DatosPersonalesService } from 'src/app/services/datos-personales.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -13,23 +14,38 @@ export class DatosPersonalesComponent implements OnInit {
   @Output() cambiarVisualizacion: EventEmitter<Shared>
   datosPersonalesGroup: FormGroup;
   fileUpload: File;
-
+  reusable;
   
+  /**
+   * Constructor del componente
+   * @param formBuilder constructor del formulario reactivo
+   * @param datosPersonalesService servicio necesario para llamadas a API
+   * @param toast servicio de alertas
+   * @param reusableService servicio necesario para validaciones y reutilizaciones
+   */
   constructor(
     private formBuilder: FormBuilder,
     private datosPersonalesService : DatosPersonalesService,
-    private toast : ToastService
+    private toast : ToastService,
+    private reusableService : ReusableService
   ) {
+    this.reusable = this.reusableService;
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
     this.datosPersonalesForm();
   }
 
-  
+  /**
+   * Inicio del componente
+   */
   ngOnInit(): void {
     this.cargarDatosADatosPersonalesForm();
   }
 
+  /**
+   * Subir imagen de perfil
+   * @param files objeto File para subida de fotografía
+   */
   subirImagenServer(files) {
     this.fileUpload = files;
 
@@ -45,7 +61,12 @@ export class DatosPersonalesComponent implements OnInit {
     })
   }
 
-  updateOInsertImagenPerfil(updateOInsert: boolean, formData: FormData) {
+  /**
+   * Actualizar o insertar imagen de perfil
+   * @param updateOInsert boolean para saber si actualiza o inserta imagen
+   * @param formData imagen perfil
+   */
+  private updateOInsertImagenPerfil(updateOInsert: boolean, formData: FormData) {
     this.datosPersonalesService.setTieneImagenPerfil(updateOInsert).toPromise().then(_ => {
       this.datosPersonalesService.setSubirImagenPerfil(formData).toPromise().then(respuesta => {
         console.log(respuesta);
@@ -53,10 +74,9 @@ export class DatosPersonalesComponent implements OnInit {
     })
   }
 
-  getValidateFormControl(formControl): boolean {
-    return this.datosPersonalesGroup.get(formControl).invalid && this.datosPersonalesGroup.get(formControl).touched;
-  }
-
+  /**
+   * Inicio del formulario de datos personales
+   */
   datosPersonalesForm() {
     this.datosPersonalesGroup = this.formBuilder.group({
       nombre             : ['', [Validators.required, Validators.maxLength(50)]],
@@ -74,6 +94,9 @@ export class DatosPersonalesComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga de datos en caso de tener datos personales ya inscritos
+   */
   cargarDatosADatosPersonalesForm() {
     this.datosPersonalesService.getDatosPersonales().toPromise().then(datosPersonales => {
       if (datosPersonales[0] != undefined) {
@@ -104,6 +127,9 @@ export class DatosPersonalesComponent implements OnInit {
     });
   }
 
+  /**
+   * Guardar datos personales 
+   */
   saveDatosPersonalesForm() {
     if (this.datosPersonalesGroup.invalid) {
       this.toast.showDanger("Hay campos que no son válido, repásalos", 4000);

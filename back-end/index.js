@@ -1072,6 +1072,9 @@ app.post("/experiencias-laborales/update/", (req, res) => {
  * 
  */
 
+ /**
+  * Petición para añadir un objetivo profesional
+  */
 app.post("/objetivo-profesional/add", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1093,6 +1096,9 @@ app.post("/objetivo-profesional/add", (req, res) => {
     })
 })
 
+ /**
+  * Petición para ver todos los objetivos profesionales
+  */
 app.get("/objetivo-profesional/viewAll", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1106,6 +1112,9 @@ app.get("/objetivo-profesional/viewAll", (req, res) => {
     })
 });
 
+ /**
+  * Petición para ver un objetivo profesional por ID
+  */
 app.get("/objetivo-profesional/view/:id", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1126,6 +1135,9 @@ app.get("/objetivo-profesional/view/:id", (req, res) => {
     })
 });
 
+ /**
+  * Petición para actualizar un objetivo profesional
+  */
 app.post("/objetivo-profesional/update" ,(req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1151,6 +1163,9 @@ app.post("/objetivo-profesional/update" ,(req, res) => {
     })
 })
 
+ /**
+  * Petición para eliminar un objetivo profesional
+  */
 app.post("/objetivo-profesional/remove" ,(req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1185,6 +1200,9 @@ app.post("/objetivo-profesional/remove" ,(req, res) => {
  * 
  */
 
+  /**
+  * Petición para añadir un tipo de skill
+  */
 app.post("/skills/addTipoSkill", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1206,6 +1224,9 @@ app.post("/skills/addTipoSkill", (req, res) => {
     })
 })
 
+ /**
+  * Petición para añadir una skill
+  */
 app.post("/skills/addSkill", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1231,6 +1252,9 @@ app.post("/skills/addSkill", (req, res) => {
     })
 })
 
+ /**
+  * Petición para ver todos los tipos de skills
+  */
 app.get("/skills/viewAllTiposSkill", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1248,6 +1272,9 @@ app.get("/skills/viewAllTiposSkill", (req, res) => {
     })
 })
 
+ /**
+  * Petición para ver todas las skills
+  */
 app.get("/skills/viewAllSkills", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1265,6 +1292,9 @@ app.get("/skills/viewAllSkills", (req, res) => {
     })
 })
 
+ /**
+  * Petición para actualizar una skill
+  */
 app.post("/skills/update", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1294,6 +1324,9 @@ app.post("/skills/update", (req, res) => {
     })
 })
 
+ /**
+  * Petición para ver una skill
+  */
 app.get("/skills/view/:id", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);
@@ -1314,6 +1347,9 @@ app.get("/skills/view/:id", (req, res) => {
     })
 })
 
+ /**
+  * Petición para eliminar una skill
+  */
 app.post("/skills/delete", (req, res) => {
     con == true ? con.destroy() : 
     con = mysql.createConnection(configuracionMysql);

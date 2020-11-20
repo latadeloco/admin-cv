@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Shared } from 'src/app/app.component';
 import { ExperienciaLaboralService } from 'src/app/services/experiencia-laboral.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -18,12 +19,12 @@ export class ExperienciaLaboralComponent implements OnInit {
    * Constructor del componente
    * @param laboralService servicio necesario para llamadas a API
    * @param toast servicio de alertas
-   * @param router necesario para redirecciones
+   * @param reusableService servicio necesario para redirecciones
    */
   constructor(
     private laboralService : ExperienciaLaboralService,
     private toast : ToastService,
-    private router : Router
+    private reusableService : ReusableService
   ) {
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
@@ -51,16 +52,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       if (respuestaEliminacionExperienciaLaboral['responseOK'] !== undefined) {
         this.toast.showSuccess(respuestaEliminacionExperienciaLaboral['responseOK'], 1500);
       }
-      this.redirectTo('experiencia-laboral');
+      this.reusableService.redirectTo('experiencia-laboral');
     });
   }
-
-  /**
-   * Redireccionar
-   * @param uri url a redireccionar
-   */
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
- }
 }

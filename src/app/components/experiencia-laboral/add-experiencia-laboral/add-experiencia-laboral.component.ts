@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Shared } from 'src/app/app.component';
 import { ExperienciaLaboralService } from 'src/app/services/experiencia-laboral.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ValidadoresService } from 'src/app/services/validadores.service';
 
@@ -18,6 +19,7 @@ export class AddExperienciaLaboralComponent implements OnInit {
   @Output() cambiarVisualizacion: EventEmitter<Shared>;
   experienciaLaboralGroup : FormGroup;
   fileUpload : File;
+  reusable;
 
   /**
    * Constructor del componente
@@ -28,6 +30,7 @@ export class AddExperienciaLaboralComponent implements OnInit {
    * @param modal componente necesario para el modal de subida de archivo
    * @param router argumento necesario para la redirección
    * @param config configuración de modales
+   * @param reusableService servicio necesario para reutilizar funciones
    */
   constructor(
     private formBuilder : FormBuilder,
@@ -36,8 +39,10 @@ export class AddExperienciaLaboralComponent implements OnInit {
     private validadores : ValidadoresService,
     private modal : NgbModal,
     private router : Router,
-    config : NgbModalConfig
+    config : NgbModalConfig,
+    private reusableService : ReusableService
   ) {
+    this.reusable = this.reusableService;
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
 
@@ -67,14 +72,6 @@ export class AddExperienciaLaboralComponent implements OnInit {
       cronologia : [''],
       observaciones : ['']
     }, {validators : this.validadores.validatorDate('fechaInicio', 'fechaFin')})
-  }
-
-  /**
-   * Validador de campos dinámico
-   * @param formControl control dentro del formulario html
-   */
-  getValidateFormControl(formControl): boolean {
-    return this.experienciaLaboralGroup.get(formControl).invalid && this.experienciaLaboralGroup.get(formControl).touched;
   }
 
   /**

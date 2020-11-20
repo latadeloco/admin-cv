@@ -3,15 +3,15 @@
         <div class="row">
           <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
             <label for="nombreEmpresa">Nombre de la Empresa:</label>
-            <input type="text" class="form-control input-sm" placeholder="Nombre de la Empresa *" formControlName="nombreEmpresa" [class.is-invalid]="getValidateFormControl('nombreEmpresa')">
-            <small *ngIf="getValidateFormControl('nombreEmpresa')" class="text-danger">
+            <input type="text" class="form-control input-sm" placeholder="Nombre de la Empresa *" formControlName="nombreEmpresa" [class.is-invalid]="reusable.getValidateFormControl('nombreEmpresa', experienciaLaboralGroup)">
+            <small *ngIf="reusable.getValidateFormControl('nombreEmpresa', experienciaLaboralGroup)" class="text-danger">
               Ingrese el nombre de la empresa con un máximo de 100 caracteres.
             </small>
           </div>
           <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
             <label for="nombrePuesto">Puesto:</label>
-            <input type="text" class="form-control" placeholder="Puesto que desempeñaste *" formControlName="nombrePuesto"  [class.is-invalid]="getValidateFormControl('nombrePuesto')">
-            <small *ngIf="getValidateFormControl('nombrePuesto')" class="text-danger">
+            <input type="text" class="form-control" placeholder="Puesto que desempeñaste *" formControlName="nombrePuesto"  [class.is-invalid]="reusable.getValidateFormControl('nombrePuesto', experienciaLaboralGroup)">
+            <small *ngIf="reusable.getValidateFormControl('nombrePuesto', experienciaLaboralGroup)" class="text-danger">
                 Es necesario que escribas que puesto desempeñaste.
               </small>
           </div>
@@ -29,8 +29,8 @@
             </div>
             <div class="col-12 col-xs-12 col-sm-12 col-lg-6 p-2">
                 <label for="fechaFin">Fecha de finalización:</label>
-                <input type="date" class="form-control" placeholder="Fecha de finalización (dd/mm/aaaa)" formControlName="fechaFin" [class.is-invalid]="getValidateFormControl('fechaFin')">
-                <small *ngIf="getValidateFormControl('fechaFin')" class="text-danger">
+                <input type="date" class="form-control" placeholder="Fecha de finalización (dd/mm/aaaa)" formControlName="fechaFin" [class.is-invalid]="reusable.getValidateFormControl('fechaFin', experienciaLaboralGroup)">
+                <small *ngIf="reusable.getValidateFormControl('fechaFin', experienciaLaboralGroup)" class="text-danger">
                     La fecha de finalización tiene que ser mayor que la fecha de inicio de la titulación
                 </small>
             </div>

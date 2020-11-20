@@ -20,6 +20,7 @@ export class SkillsComponent implements OnInit {
    * @param skillsService servicio necesario para llamadas a API
    * @param toast servicio de alertas
    * @param router argumento de redireccionamiento
+   * @param reusableService servicio necesario para reutilización y validación
    */
   constructor(
     private skillsService : SkillService,

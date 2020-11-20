@@ -3,8 +3,8 @@
         <div class="row">
           <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
             <label for="objetivoProfesional">Describe tu Objetivo Profesional:</label>
-            <textarea name="objetivoProfesional" class="form-control" style="resize: none;" cols="50" rows="5" placeholder="Exponga su objetivo profesional... *" formControlName="objetivoProfesional" [class.is-invalid]="getValidateFormControl('objetivoProfesional')"></textarea>
-            <small *ngIf="getValidateFormControl('objetivoProfesional')" class="text-danger">
+            <textarea name="objetivoProfesional" class="form-control" style="resize: none;" cols="50" rows="5" placeholder="Exponga su objetivo profesional... *" formControlName="objetivoProfesional" [class.is-invalid]="reusable.getValidateFormControl('objetivoProfesional', objetivoProfesionalGroup)"></textarea>
+            <small *ngIf="reusable.getValidateFormControl('objetivoProfesional', objetivoProfesionalGroup)" class="text-danger">
                 Ingrese su objetivo profesional
               </small>
           </div>

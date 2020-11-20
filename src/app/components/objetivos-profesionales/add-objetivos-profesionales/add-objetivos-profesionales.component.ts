@@ -14,7 +14,7 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
 
   @Output() cambiarVisualizacion: EventEmitter<Shared>
   objetivoProfesionalGroup : FormGroup;
-
+  reusable;
   /**
    * Constructor del componente
    * @param formBuilder constructor de formulario reactivo
@@ -28,6 +28,7 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
     private toast : ToastService,
     private reusableService : ReusableService
   ) {
+    this.reusable = this.reusableService;
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
 
@@ -71,13 +72,5 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
         this.reusableService.redirectTo('objetivos-profesionales/add-objetivo-profesional');
       })
     }
-  }
-
-  /**
-   * Validador de campos dinámico
-   * @param formControl control dentro del formulario html
-   */
-  getValidateFormControl(formControl): boolean {
-    return this.objetivoProfesionalGroup.get(formControl).invalid && this.objetivoProfesionalGroup.get(formControl).touched;
   }
 }

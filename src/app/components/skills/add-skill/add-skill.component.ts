@@ -11,7 +11,6 @@ import { ToastService } from 'src/app/services/toast.service';
 @Component({
   selector: 'app-add-skill',
   templateUrl: './add-skill.component.html',
-  styleUrls: ['./add-skill.component.css']
 })
 export class AddSkillComponent implements OnInit {
 
@@ -20,6 +19,7 @@ export class AddSkillComponent implements OnInit {
   tipoSkillGroup : FormGroup;
   tiposSkillArray = new Array();
   exponerTipoSkill : boolean = false;
+  reusable;
 
   /**
    * Constructor del componente
@@ -35,6 +35,7 @@ export class AddSkillComponent implements OnInit {
     private skillService : SkillService,
     private reusableService : ReusableService
   ) {
+    this.reusable = this.reusableService;
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
 
@@ -128,21 +129,5 @@ export class AddSkillComponent implements OnInit {
   setExponerTipoSkill(exponerTipoSkill) : boolean {
     this.tipoSkillForm();
     return this.exponerTipoSkill = exponerTipoSkill;
-  }
-
-  /**
-   * Validador de campos dinámico
-   * @param formControl control dentro del formulario html
-   */
-  getValidateFormControl(formControl): boolean {
-    return this.skillGroup.get(formControl).invalid && this.skillGroup.get(formControl).touched;
-  }
-
-  /**
-   * Validador de campos dinámico
-   * @param formControl control dentro del formulario html
-   */
-  getValidateFormControlTipoSkill(formControl): boolean {
-    return this.tipoSkillGroup.get(formControl).invalid && this.tipoSkillGroup.get(formControl).touched;
   }
 }

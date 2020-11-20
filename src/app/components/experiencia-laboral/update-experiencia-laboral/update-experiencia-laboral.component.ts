@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Shared } from 'src/app/app.component';
 import { ExperienciaLaboralService } from 'src/app/services/experiencia-laboral.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ValidadoresService } from 'src/app/services/validadores.service';
 
@@ -19,6 +20,7 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
   experienciaLaboralGroup : FormGroup;
   cargado : boolean = false;
   fileUpload : File;
+  reusable;
 
   /**
    * Constructor del componente
@@ -30,6 +32,7 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
    * @param toast servicio para alertas
    * @param router necesario para redirecciones
    * @param modal argumento para subir el modal
+   * @param reusableService servicio necesario para reutilización
    */
   constructor(
     private activeRoute : ActivatedRoute,
@@ -39,8 +42,10 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
     private validadores : ValidadoresService,
     private toast : ToastService,
     private router : Router,
-    private modal : NgbModal
+    private modal : NgbModal,
+    private reusableService : ReusableService
   ) {
+    this.reusable = this.reusableService;
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
 
@@ -103,15 +108,7 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
 
     return year + "-" + month + '-' + day;
   }
-
-  /**
-   * Validador de campos dinámico
-   * @param formControl control dentro del formulario html
-   */
-  getValidateFormControl(formControl): boolean {
-    return this.experienciaLaboralGroup.get(formControl).invalid && this.experienciaLaboralGroup.get(formControl).touched;
-  }
-
+  
   /**
    * Update de la experiencia laboral
    */

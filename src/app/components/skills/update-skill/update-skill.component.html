@@ -6,11 +6,11 @@
                     <label for="tipoSkill">Tipo de Skill: </label>
                 </div>
                 <div class="col-12 col-xs-12 col-sm-12 col-lg-7 p-2">
-                    <select name="tipoSkill" class="form-control" formControlName="tipoSkill"  [class.is-invalid]="getValidateFormControl('tipoSkill')">
+                    <select name="tipoSkill" class="form-control" formControlName="tipoSkill"  [class.is-invalid]="reusable.getValidateFormControl('tipoSkill', skillGroup)">
                         <option [disabled]="true">Selecciona un tipo de Skill...</option>
                         <option *ngFor="let tipoSkill of tiposSkillArray[0]" [value]="tipoSkill['id_tipo_skills']">{{ tipoSkill['tipo_skill'] }}</option>
                     </select>
-                    <small *ngIf="getValidateFormControl('tipoSkill')" class="text-danger">
+                    <small *ngIf="reusable.getValidateFormControl('tipoSkill', skillGroup)" class="text-danger">
                         Ingrese el tipo de skill o añade una nueva.
                     </small>
                 </div>
@@ -23,8 +23,8 @@
                 <form [formGroup]="tipoSkillGroup">
                     <div class="m-4 rounded p-4 bg-light">
                         <label for="nombreTipoSkill">Tipo de Skill: </label>
-                        <input type="text" name="nombreTipoSkill" class="form-control" placeholder="Introduce el nombre del tipo de la skill... *" formControlName="nombreTipoSkill" [class.is-invalid]="getValidateFormControlTipoSkill('nombreTipoSkill')">
-                        <small *ngIf="getValidateFormControlTipoSkill('nombreTipoSkill')" class="text-danger">
+                        <input type="text" name="nombreTipoSkill" class="form-control" placeholder="Introduce el nombre del tipo de la skill... *" formControlName="nombreTipoSkill" [class.is-invalid]="reusable.getValidateFormControl('tipoSkill', tipoSkillGroup)">
+                        <small *ngIf="reusable.getValidateFormControl('tipoSkill', tipoSkillGroup)" class="text-danger">
                             Introduce el nombre del tipo de skill
                         </small>
                         <br>
@@ -35,8 +35,8 @@
             <div class="row">
               <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
                 <label for="nombreSkill">Nombre de Skill:</label>
-                <input type="text" name="nombreSkill" class="form-control" placeholder="Introduce el nombre de la skill... *" formControlName="nombreSkill" [class.is-invalid]="getValidateFormControl('nombreSkill')">
-                <small *ngIf="getValidateFormControl('nombreSkill')" class="text-danger">
+                <input type="text" name="nombreSkill" class="form-control" placeholder="Introduce el nombre de la skill... *" formControlName="nombreSkill" [class.is-invalid]="reusable.getValidateFormControl('nombreSkill', skillGroup)">
+                <small *ngIf="reusable.getValidateFormControl('nombreSkill', skillGroup)" class="text-danger">
                     Ingrese el nombre de la skill
                 </small>
               </div>

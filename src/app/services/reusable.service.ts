@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -17,5 +18,13 @@ export class ReusableService {
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
+  }
+
+  /**
+   * Validador de campos dinámico
+   * @param formControl control dentro del formulario html
+   */
+  getValidateFormControl(formControl, formGroup: FormGroup): boolean {
+    return formGroup.get(formControl).invalid && formGroup.get(formControl).touched;
   }
 }

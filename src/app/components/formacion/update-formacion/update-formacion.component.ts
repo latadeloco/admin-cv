@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Shared } from 'src/app/app.component';
 import { FormacionService } from 'src/app/services/formacion.service';
+import { ReusableService } from 'src/app/services/reusable.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ValidadoresService } from 'src/app/services/validadores.service';
 
@@ -18,7 +19,8 @@ export class UpdateFormacionComponent implements OnInit {
   fileUpload: File;
   routeParams;
   cargado : boolean = false;
-
+  reusable;
+  
   /**
    * 
    * @param formBuilder constructor para formulario reactivo
@@ -28,6 +30,7 @@ export class UpdateFormacionComponent implements OnInit {
    * @param router necesario para redirecciones
    * @param activeRoute necesario para recoger el parámetro id
    * @param config configuración para el modal
+   * @param reusableService servicio necesario para redirecciones y validaciones
    */
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +40,9 @@ export class UpdateFormacionComponent implements OnInit {
     private router : Router,
     private activeRoute : ActivatedRoute,
     config: NgbModalConfig,
+    private reusableService : ReusableService
   ) {
+    this.reusable = this.reusableService;
     this.cambiarVisualizacion = new EventEmitter();
     this.cambiarVisualizacion.emit(new Shared());
     this.routeParams = this.activeRoute.snapshot.params['id'];
@@ -74,9 +79,7 @@ export class UpdateFormacionComponent implements OnInit {
         this.cargado=true;
       } else {
         this.toast.showDanger(respuestaFormacionActual['responseKO'], 3000);
-        setTimeout(() => {
-          this.router.navigateByUrl('formacion');
-        }, 3000);
+        this.reusableService.redirectTo('formacion');
       }
     })
   }
@@ -103,15 +106,6 @@ export class UpdateFormacionComponent implements OnInit {
 
     return year + "-" + month + '-' + day;
   }
-
-  /**
-   * Validador de formularios
-   * @param formControl control dentro del formulario
-   */
-  getValidateFormControl(formControl): boolean {
-    return this.formacionGroup.get(formControl).invalid && this.formacionGroup.get(formControl).touched;
-  }
-
 
   /**
    * Guardar el formulario

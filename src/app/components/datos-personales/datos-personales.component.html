@@ -15,22 +15,22 @@
       <div class="row">
         <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
           <label for="nombre">Nombre:</label>
-          <input type="text" class="form-control input-sm" placeholder="Nombre *" formControlName="nombre" [class.is-invalid]="getValidateFormControl('nombre')">
-          <small *ngIf="getValidateFormControl('nombre')" class="text-danger">
+          <input type="text" class="form-control input-sm" placeholder="Nombre *" formControlName="nombre" [class.is-invalid]="reusable.getValidateFormControl('nombre', datosPersonalesGroup)">
+          <small *ngIf="reusable.getValidateFormControl('nombre', datosPersonalesGroup)" class="text-danger">
             Ingrese el nombre
           </small>
         </div>
         <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
           <label for="apellidos">Apellidos:</label>
-          <input type="text" class="form-control" placeholder="Apellidos *" formControlName="apellidos" [class.is-invalid]="getValidateFormControl('apellidos')">
-          <small *ngIf="getValidateFormControl('apellidos')" class="text-danger">
+          <input type="text" class="form-control" placeholder="Apellidos *" formControlName="apellidos" [class.is-invalid]="reusable.getValidateFormControl('apellidos', datosPersonalesGroup)">
+          <small *ngIf="reusable.getValidateFormControl('apellidos', datosPersonalesGroup)" class="text-danger">
             Ingrese los apellidos
           </small>
         </div>
         <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
           <label for="puesto">Puesto actual:</label>
-          <input type="text" class="form-control" placeholder="Puesto actual *" formControlName="puesto" [class.is-invalid]="getValidateFormControl('puesto')">
-          <small *ngIf="getValidateFormControl('puesto')" class="text-danger">
+          <input type="text" class="form-control" placeholder="Puesto actual *" formControlName="puesto" [class.is-invalid]="reusable.getValidateFormControl('puesto', datosPersonalesGroup)">
+          <small *ngIf="reusable.getValidateFormControl('puesto', datosPersonalesGroup)" class="text-danger">
             Ingrese el puesto actual que ocupa
           </small>
         </div>
@@ -38,22 +38,22 @@
       <div class="row pt-4">
           <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
             <label for="nacimiento">Fecha de nacimiento:</label>
-            <input type="date" class="form-control" placeholder="Fecha de Nacimiento (dd/mm/aaaa) *" formControlName="nacimiento" [class.is-invalid]="getValidateFormControl('nacimiento')">
-            <small *ngIf="getValidateFormControl('nacimiento')" class="text-danger">
+            <input type="date" class="form-control" placeholder="Fecha de Nacimiento (dd/mm/aaaa) *" formControlName="nacimiento" [class.is-invalid]="reusable.getValidateFormControl('nacimiento', datosPersonalesGroup)">
+            <small *ngIf="reusable.getValidateFormControl('nacimiento', datosPersonalesGroup)" class="text-danger">
             Ingrese la fecha de nacimiento
           </small>
           </div>
           <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
             <label for="telefono">Teléfono:</label>
-            <input type="number" min="8" max="13" class="form-control" placeholder="Teléfono *" formControlName="telefono" [class.is-invalid]="getValidateFormControl('telefono')">
-            <small *ngIf="getValidateFormControl('telefono')" class="text-danger">
+            <input type="number" min="8" max="13" class="form-control" placeholder="Teléfono *" formControlName="telefono" [class.is-invalid]="reusable.getValidateFormControl('telefono', datosPersonalesGroup)">
+            <small *ngIf="reusable.getValidateFormControl('telefono', datosPersonalesGroup)" class="text-danger">
             Ingrese el teléfono
           </small>
           </div>
           <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
             <label for="email">Correo Electrónico:</label>
-            <input type="email" class="form-control" placeholder="Correo Electrónico *" formControlName="email" [class.is-invalid]="getValidateFormControl('email')">
-              <small *ngIf="getValidateFormControl('email')" class="text-danger">
+            <input type="email" class="form-control" placeholder="Correo Electrónico *" formControlName="email" [class.is-invalid]="reusable.getValidateFormControl('email', datosPersonalesGroup)">
+              <small *ngIf="reusable.getValidateFormControl('email', datosPersonalesGroup)" class="text-danger">
             Ingrese el correo electrónico de contacto
           </small>
             </div>
@@ -61,8 +61,8 @@
       <div class="row pt-4">
           <div class="col-12 col-xs-12 col-sm-12 col-lg-12 p-2">
             <label for="direccion">Dirección:</label>
-            <input type="text" class="form-control" placeholder="Dirección *" formControlName="direccion" [class.is-invalid]="getValidateFormControl('direccion')">
-            <small *ngIf="getValidateFormControl('direccion')" class="text-danger">
+            <input type="text" class="form-control" placeholder="Dirección *" formControlName="direccion" [class.is-invalid]="reusable.getValidateFormControl('direccion', datosPersonalesGroup)">
+            <small *ngIf="reusable.getValidateFormControl('direccion', datosPersonalesGroup)" class="text-danger">
             Ingrese la dirección
           </small>
           </div>
@@ -70,22 +70,22 @@
       <div class="row pt-4">
           <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
             <label for="poblacion">Población:</label>
-            <input type="text" class="form-control" placeholder="Población *" formControlName="poblacion" [class.is-invalid]="getValidateFormControl('poblacion')">
-            <small *ngIf="getValidateFormControl('poblacion')" class="text-danger">
+            <input type="text" class="form-control" placeholder="Población *" formControlName="poblacion" [class.is-invalid]="reusable.getValidateFormControl('poblacion', datosPersonalesGroup)">
+            <small *ngIf="reusable.getValidateFormControl('poblacion', datosPersonalesGroup)" class="text-danger">
             Ingrese la población donde reside
           </small>
           </div>
           <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
             <label for="provincia">Provincia:</label>
-            <input type="text" class="form-control" placeholder="Provincia *" formControlName="provincia" [class.is-invalid]="getValidateFormControl('provincia')">
-              <small *ngIf="getValidateFormControl('provincia')" class="text-danger">
+            <input type="text" class="form-control" placeholder="Provincia *" formControlName="provincia" [class.is-invalid]="reusable.getValidateFormControl('provincia', datosPersonalesGroup)">
+              <small *ngIf="reusable.getValidateFormControl('provincia', datosPersonalesGroup)" class="text-danger">
             Ingrese la provincia
           </small>
           </div>
           <div class="col-12 col-xs-12 col-sm-12 col-lg-4 p-2">
             <label for="codigoPostal">Código postal:</label>
-            <input type="number" min="5" max="10" class="form-control" placeholder="Código Postal *" formControlName="codigoPostal" [class.is-invalid]="getValidateFormControl('codigoPostal')">
-              <small *ngIf="getValidateFormControl('codigoPostal')" class="text-danger">
+            <input type="number" min="5" max="10" class="form-control" placeholder="Código Postal *" formControlName="codigoPostal" [class.is-invalid]="reusable.getValidateFormControl('codigoPostal', datosPersonalesGroup)">
+              <small *ngIf="reusable.getValidateFormControl('codigoPostal', datosPersonalesGroup)" class="text-danger">
             Ingrese el código postal
           </small>
           </div>
