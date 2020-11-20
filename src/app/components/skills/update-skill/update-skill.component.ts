@@ -20,6 +20,14 @@ export class UpdateSkillComponent implements OnInit {
   routeParams;
   cargado : boolean = false;
 
+  /**
+   * Constructor del componente
+   * @param toast servicio de alertas
+   * @param skillService servicio necesario para llamadas a API
+   * @param formBuilder constructor de formulario reactivo
+   * @param activatedRoute argumento necesario para obtener el ID
+   * @param router argumento de redirección
+   */
   constructor(
     private toast : ToastService,
     private skillService : SkillService,
@@ -33,6 +41,9 @@ export class UpdateSkillComponent implements OnInit {
     this.routeParams = this.activatedRoute.snapshot.params['id'];
   }
 
+  /**
+   * Inicio del componente
+   */
   ngOnInit(): void {
     this.skillService.getViewAllTipoSkill().toPromise().then(tiposDeSkills => {
       this.tiposSkillArray = new Array();
@@ -41,6 +52,9 @@ export class UpdateSkillComponent implements OnInit {
     });
   }
 
+  /**
+   * Actualizar skill
+   */
   updateSkill() {
     if (this.skillGroup.invalid) {
       this.toast.showDanger("Hay campos que no son válido, repásalos", 4000);
@@ -61,11 +75,18 @@ export class UpdateSkillComponent implements OnInit {
     }
   }
 
+  /**
+  * Visualizar el formulario de tipo de skill
+  * @param exponerTipoSkill valor boolean para ver el formulario de tipo de skill
+  */
   setExponerTipoSkill(exponerTipoSkill) : boolean {
     this.tipoSkillForm();
     return this.exponerTipoSkill = exponerTipoSkill;
   }
 
+  /**
+   * Inicio del formulario de tipo de skill
+   */
   tipoSkillForm() {
     this.skillService.getViewSkill(this.routeParams).toPromise().then(respuestaSkillID => {
       this.skillGroup = this.formBuilder.group({
@@ -77,6 +98,9 @@ export class UpdateSkillComponent implements OnInit {
     })
   }
 
+  /**
+   * Guardar tipo de skill
+   */
   saveTipoSkill() {
     if (this.tipoSkillGroup.invalid) {
       this.toast.showDanger("Hay campos que no son válido, repásalos", 4000);

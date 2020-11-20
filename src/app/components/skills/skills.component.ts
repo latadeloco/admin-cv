@@ -14,6 +14,12 @@ export class SkillsComponent implements OnInit {
   @Output() cambiarVisualizacion: EventEmitter<Shared>;
   skills = new Array();
 
+  /**
+   * Constructor del componente
+   * @param skillsService servicio necesario para llamadas a API
+   * @param toast servicio de alertas
+   * @param router argumento de redireccionamiento
+   */
   constructor(
     private skillsService : SkillService,
     private toast : ToastService,
@@ -23,12 +29,19 @@ export class SkillsComponent implements OnInit {
     this.cambiarVisualizacion.emit(new Shared());
   }
 
+  /**
+   * Inicio de componente
+   */
   ngOnInit(): void {
     this.skillsService.getViewAllSkill().toPromise().then(respuestaSkills => {
       this.skills.push(respuestaSkills)
     });
   }
 
+  /**
+   * Eliminar la skill seleccionada
+   * @param idSkill id skill a eliminar
+   */
   eliminarSkill(idSkill) {
     this.skillsService.deleteSkill(idSkill).toPromise().then(respuestaRemoveSkill => {
       if (respuestaRemoveSkill['responseOK'] !== undefined) {
@@ -43,6 +56,10 @@ export class SkillsComponent implements OnInit {
     })
   }
 
+  /**
+   * Redireccionar
+   * @param uri url a redireccionar
+   */
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));

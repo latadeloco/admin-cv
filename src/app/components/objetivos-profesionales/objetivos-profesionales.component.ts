@@ -14,6 +14,12 @@ export class ObjetivosProfesionalesComponent implements OnInit {
   @Output() cambiarVisualizacion: EventEmitter<Shared>
   objetivosProfesionales = new Array();
 
+  /**
+   * Constructor del componente
+   * @param objetivoProfesionalService servicio necesario para llamadas a API
+   * @param toast servicio de alertas
+   * @param router argumento necesario para redireccionamientos
+   */
   constructor(
     private objetivoProfesionalService : ObjetivoProfesionalService,
     private toast : ToastService,
@@ -25,15 +31,25 @@ export class ObjetivosProfesionalesComponent implements OnInit {
     this.objetivoProfesionalForm();
   }
 
+  /**
+   * Inicio del componente
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Inicio de formulario
+   */
   objetivoProfesionalForm(){
     this.objetivoProfesionalService.getObjetivosProfesionales().toPromise().then(respuestaObjetivoProfesional => {
       this.objetivosProfesionales.push(respuestaObjetivoProfesional);
     })
   }
 
+  /**
+   * Eliminar objetivo profesional
+   * @param idObjetivoProfesional id del objetivo profesional a eliminar
+   */
   eliminarObjetivoProfesional(idObjetivoProfesional) {
     this.objetivoProfesionalService.removeObjetivoProfesional(idObjetivoProfesional).toPromise().then(respuestaRemoveObjetivoProfesional => {
       if (respuestaRemoveObjetivoProfesional['responseOK'] != undefined) {

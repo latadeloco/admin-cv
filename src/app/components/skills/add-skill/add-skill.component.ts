@@ -19,6 +19,14 @@ export class AddSkillComponent implements OnInit {
   tipoSkillGroup : FormGroup;
   tiposSkillArray = new Array();
   exponerTipoSkill : boolean = false;
+
+  /**
+   * Constructor del componente
+   * @param formBuilder constructor del formulario reactivo
+   * @param toast servicio de alertas
+   * @param skillService servicio necesario para llamadas a API
+   * @param router argumento de redirección
+   */
   constructor(
     private formBuilder : FormBuilder,
     private toast : ToastService,
@@ -31,6 +39,9 @@ export class AddSkillComponent implements OnInit {
     this.skillForm();
   }
 
+  /**
+   * Inicio del componente
+   */
   ngOnInit(): void {
     this.skillService.getViewAllTipoSkill().toPromise().then(tiposDeSkills => {
       this.tiposSkillArray = new Array();
@@ -38,6 +49,9 @@ export class AddSkillComponent implements OnInit {
     });
   }
 
+  /**
+   * Guardar skill
+   */
   saveSkill() {
     if (this.skillGroup.invalid) {
       this.toast.showDanger("Hay campos que no son válido, repásalos", 4000);
@@ -60,6 +74,9 @@ export class AddSkillComponent implements OnInit {
     }
   }
 
+  /**
+   * Guardar tipo de skill
+   */
   saveTipoSkill() {
     if (this.tipoSkillGroup.invalid) {
       this.toast.showDanger("Hay campos que no son válido, repásalos", 4000);
@@ -84,6 +101,9 @@ export class AddSkillComponent implements OnInit {
     }
   }
 
+  /**
+   * Inicio del formulario de skill
+   */
   skillForm() {
     this.skillGroup = this.formBuilder.group({
       tipoSkill : ['', [Validators.required]],
@@ -92,12 +112,19 @@ export class AddSkillComponent implements OnInit {
     });
   }
 
+  /**
+   * Inicio del formulario de tipo de skill
+   */
   tipoSkillForm() {
     this.tipoSkillGroup = this.formBuilder.group({
       nombreTipoSkill: ['', [Validators.required]]
     })
   }
 
+  /**
+   * Visualizar el formulario de tipo de skill
+   * @param exponerTipoSkill valor boolean para ver el formulario de tipo de skill
+   */
   setExponerTipoSkill(exponerTipoSkill) : boolean {
     this.tipoSkillForm();
     return this.exponerTipoSkill = exponerTipoSkill;

@@ -16,6 +16,14 @@ export class UpdateObjetivosProfesionalesComponent implements OnInit {
   routeParams;
   cargado : boolean = false;
 
+  /**
+   * Constructor del componente
+   * @param formBuilder constructor del formulario reactivo
+   * @param objetivoProfesionalService servicio necesario para llamadas a API
+   * @param toast servicio de alertas
+   * @param activeRoute argumento necesario para obtener la ID
+   * @param router argumento de redirección
+   */
   constructor(
     private formBuilder : FormBuilder,
     private objetivoProfesionalService : ObjetivoProfesionalService,
@@ -30,9 +38,15 @@ export class UpdateObjetivosProfesionalesComponent implements OnInit {
     this.objetivoProfesionalForm();
   }
 
+  /**
+   * Inicio de componente
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Inicio del formulario
+   */
   objetivoProfesionalForm() {
     this.objetivoProfesionalService.getObjetivoProfesional(this.routeParams).toPromise().then(respuestaObjetivoProfesionalID => {
       this.objetivoProfesionalGroup = this.formBuilder.group({
@@ -42,6 +56,9 @@ export class UpdateObjetivosProfesionalesComponent implements OnInit {
     })
   }
 
+  /**
+   * Actualizar el formulario
+   */
   updateObjetivoProfesional() {
     if (this.objetivoProfesionalGroup.invalid) {
       this.toast.showDanger("Hay campos que no son válido, repásalos", 4000);

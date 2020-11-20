@@ -14,6 +14,13 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
   @Output() cambiarVisualizacion: EventEmitter<Shared>
   objetivoProfesionalGroup : FormGroup;
 
+  /**
+   * Constructor del componente
+   * @param formBuilder constructor de formulario reactivo
+   * @param objetivoProfesionalService servicio necesario para llamadas a API
+   * @param toast servicio de alertas
+   * @param router argumento para redireccionamiento
+   */
   constructor(
     private formBuilder : FormBuilder,
     private objetivoProfesionalService : ObjetivoProfesionalService,
@@ -26,15 +33,24 @@ export class AddObjetivosProfesionalesComponent implements OnInit {
     this.objetivoProfesionalForm();
   }
 
+  /**
+   * Inicio de componente
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Iniciar formulario
+   */
   objetivoProfesionalForm() {
     this.objetivoProfesionalGroup = this.formBuilder.group({
       objetivoProfesional : ['', [Validators.required]]
     });
   }
 
+  /**
+   * Guardar objetivo profesional
+   */
   saveObjetivoProfesionalForm() {
     if (this.objetivoProfesionalGroup.invalid) {
       this.toast.showDanger("Hay campos que no son válido, repásalos", 4000);
