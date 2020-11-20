@@ -282,7 +282,7 @@ app.get('/datos-personales/imagenPerfil', (req, res) => {
             console.log('[MYSQL]ERROR', err);
         })
 
-        if (JSON.parse(JSON.stringify(result.length)) != 0) {
+        if (JSON.parse(JSON.stringify(result['length'])) != 0) {
             let tieneImagen = JSON.parse(JSON.stringify(result[0]['imagen']));
     
             if (tieneImagen === 1) {

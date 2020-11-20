@@ -15,6 +15,7 @@ export class ObjetivosProfesionalesComponent implements OnInit {
   @Output() cambiarVisualizacion: EventEmitter<Shared>
   objetivosProfesionales = new Array();
 
+  
   /**
    * Constructor del componente
    * @param objetivoProfesionalService servicio necesario para llamadas a API
