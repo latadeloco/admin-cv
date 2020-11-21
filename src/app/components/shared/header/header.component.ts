@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
          ) {
         this.hashPathDefault = window.location.hash;
 
-        this.urlImg = '../../../admin-cv/assets/img/default.png';
+        this.urlImg = '../../../assets/img/default.png';
         
         if (window.location.hash !== '#/iniciar-sesion') {
             datosPersonalesService.getDatosPersonales().toPromise().then(datosPersonales => {
@@ -47,8 +47,8 @@ export class HeaderComponent implements OnInit {
             })
 
             this.datosPersonalesService.getImagenPerfil().toPromise().then(imagenPefilDetectada => {
-                if (imagenPefilDetectada['imagenNotFound'] == undefined) this.urlImg = '../../../admin-cv/assets/img/default.png';
-                if (imagenPefilDetectada['perfilExiste'] == true) this.urlImg = '../../../admin-cv/assets/img/perfil.'+ imagenPefilDetectada['extension'];
+                if (imagenPefilDetectada['imagenNotFound'] == undefined) this.urlImg = '../../../assets/img/default.png';
+                if (imagenPefilDetectada['perfilExiste'] == true) this.urlImg = '../../../assets/img/perfil.'+ imagenPefilDetectada['extension'];
             });
         }
     }

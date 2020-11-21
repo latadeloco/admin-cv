@@ -42,5 +42,8 @@ Posteriormente, se tendrá que poner la nueva configuración en el archivo **ind
 
 ## Aspectos a tener en cuenta
 
-El proyecto se abrirá en un subdirectorio, en este caso en dominio.com/admin-cv, para cambiar esta regla tendremos que quitar de *angular.json* el parámetro `"baseHref": "/admin-cv/"`.
+El proyecto se abrirá en el directorio raíz, en caso de quererlo en subcarpeta, p.e.: dominio.com/subfolder, para cambiar esta regla tendremos que añadir en *angular.json* el parámetro `"baseHref": "/subfolder/"`.
 
+# Modo producción = ON
+
+En *main.js* está environment de producción.

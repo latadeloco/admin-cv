@@ -50,7 +50,5 @@ Thumbs.db
 /back-end copy
 /back-end/node_modules
 debug.log
-src/assets/certificados/*
-src/assets/logotipos/*
 src/assets/img/perfil.jpg
 src/assets/img/perfil.png
