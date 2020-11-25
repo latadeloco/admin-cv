@@ -172,8 +172,6 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
         }
     })
 
-    console.log(sys)
-
     fs.stat('../src/assets/img/perfil.jpg', (err, stat) => {
         if (err) {
             return
