@@ -59,6 +59,8 @@ export class DatosPersonalesComponent implements OnInit {
         this.updateOInsertImagenPerfil(true, formData);
       }
     })
+
+    window.location.reload;
   }
 
   /**
@@ -155,6 +157,8 @@ export class DatosPersonalesComponent implements OnInit {
             }
           })
         }
+
+        window.location.reload();
       });
     }
   }

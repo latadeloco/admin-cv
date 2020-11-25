@@ -137,6 +137,7 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
           this.toast.showDanger("¡Error desconocido!", 3000);
         }
       }).finally(() => {
+        this.reusableService.redirectTo('experiencia-laboral');
         this.modal.open(this.content, { centered: true });
       });
     }

@@ -164,15 +164,13 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
                 });
             })
         } else {
-            con.query("UPDATE datos_personales FROM imagen=true", function(error, result, fields) {
+            con.query("UPDATE datos_personales SET imagen=true WHERE id_datos_personales = (SELECT max(id_datos_personales) FROM datos_personales )", function(error, result, fields) {
                 con.on('error', function(err) {
                     console.log('[MYSQL]ERROR', err);
                 });
             })
         }
     })
-
-    console.log(sys)
 
     fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
         if (err) {
