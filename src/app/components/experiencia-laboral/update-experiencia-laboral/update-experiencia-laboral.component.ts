@@ -80,6 +80,14 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
         fechaFin = ''
       }
 
+      if( fechaInicio  == '1970-01-01') {
+        fechaInicio = ''
+      }
+
+      if (fechaFin == '1970-01-01') {
+        fechaFin = ''
+      }
+
       this.experienciaLaboralGroup = this.formBuilder.group({
         nombreEmpresa : [experienciaLaboral[0]['empresa'], [Validators.required]],
         nombrePuesto : [experienciaLaboral[0]['puesto'], [Validators.required]],
@@ -212,5 +220,13 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
         this.router.navigateByUrl('experiencia-laboral');
       }, 1500);
     });
+  }
+
+  /**
+   * cierre del modal
+   */
+  dismiss() {
+    this.modal.dismissAll();
+    this.reusableService.redirectTo('experiencia-laboral');
   }
 }

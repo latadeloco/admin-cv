@@ -112,4 +112,9 @@ export class FormacionComponent implements OnInit {
     this.formacionService.uploadCertificateWithFormacion(formData, this.idFormacionActual).toPromise();
   }
 
+
+  dismiss() {
+    this.modal.dismissAll();
+    this.reusableService.redirectTo('formacion');
+  }
 }

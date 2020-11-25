@@ -58,7 +58,9 @@
 
         <ng-template #content let-modal>
             <div class="modal-header" style="text-align: center;">
-                <h4 class="modal-title label-login">Subir logotipo de la empresa</h4>
+              <h4 class="modal-title label-login">Subir logotipo de la empresa</h4>
+              <i-bs id="x-circle-fill" style="color: red" (click)="dismiss()" name="x-circle-fill" width="1.7rem" 
+              height="1.7rem"></i-bs>
             </div>
             <form id="formularioSubirLogotipoExperiencia" [formGroup]="experienciaLaboralGroup">
                 <ul class="nav nav-tabs">

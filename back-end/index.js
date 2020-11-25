@@ -6,16 +6,10 @@ var methodOverride = require('method-override');
 const fs = require('fs');
 
 const TokenGenerator = require('uuid-token-generator');
-const { config } = require('process');
 const token = new TokenGenerator(256, TokenGenerator.BASE62);
-
-const extensionesValidasImages = ['png', 'jpg', 'jpeg'];
 
 // Subir Archivos al servidor
 const multipart = require('connect-multiparty');
-const e = require('express');
-const { CONFIG_FILENAME } = require('tslint/lib/configuration');
-const { identifierModuleUrl } = require('@angular/compiler');
 const subirImagenes = multipart({
     uploadDir: './../src/assets/img',
     autoFiles: true
@@ -51,6 +45,7 @@ app.use(function (req, res, next) {
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     next();
 });
+
 
 /**
  * 
@@ -176,6 +171,8 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
             })
         }
     })
+
+    console.log(sys)
 
     fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
         if (err) {
@@ -425,6 +422,16 @@ app.post("/formacion/add", (req, res) => {
     con = mysql.createConnection(configuracionMysql);
     con.connect();
     var formacion = req.body;
+
+
+    if (formacion.fechaInicio == '') {
+        formacion.fechaInicio = null
+    }
+
+    if (formacion.fechaFin == '') {
+        formacion.fechaFin = null
+    }
+
     con.query("INSERT INTO formacion(nombre_titulacion, nombre_institucion, fecha_inicio, fecha_fin, certificacion, descripcion_formacion) VALUES(?,?,?,?,?,?)",
     [
         formacion.nombreTitulacion,
@@ -455,6 +462,19 @@ app.post("/formacion/add", (req, res) => {
     con.connect();
     var formacion = req.body;
     var idFormacion = req.params.idFormacion;
+
+    if (formacion.fechaInicio == '') {
+        formacion.fechaInicio = null
+    }
+
+    if (formacion.fechaFin == '') {
+        formacion.fechaFin = null
+    }
+
+    if (formacion.certificacion == 0) {
+        formacion.certificacion = false
+    }
+
     con.query("UPDATE formacion SET nombre_titulacion = ?, nombre_institucion = ?, fecha_inicio = ?, fecha_fin = ?, certificacion = ?, descripcion_formacion = ? WHERE id_formacion = ?",
     [
         formacion.nombreTitulacion,
@@ -470,19 +490,22 @@ app.post("/formacion/add", (req, res) => {
             console.log('[MYSQL]ERROR', err);
         })
 
-        console.log(req.files)
+        /*if (formacion.certificacion == true || formacion.certificacion == 1) {
+            console.log(req.files)
 
-        fs.stat('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
-            if (err) {
-                return
-            } else {
-                fs.unlink('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', () => {
-                    switchFileCertificate(req, idFormacion);
-                });
-            }
-        });
-
-        switchFileCertificate(req, idFormacion);
+            fs.stat('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
+                if (err) {
+                    return
+                } else {
+                    fs.unlink('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', () => {
+                        switchFileCertificate(req, idFormacion);
+                    });
+                }
+            });
+    
+            switchFileCertificate(req, idFormacion);
+        }*/
+        
 
         if (error == null) {
             res.end(JSON.stringify({responseOK : 'Formación actualizada.'}));
@@ -599,6 +622,7 @@ app.get("/formacion/view/:id", (req, res) => {
             console.log('[MYSQL]ERROR', err);
         })
         if (error == null) {
+            console.log(result)
             res.end(JSON.stringify(result));
         } else {
             res.end(JSON.stringify({
@@ -860,6 +884,17 @@ function switchFileLogo(req, id) {
     con = mysql.createConnection(configuracionMysql);
     con.connect();
     var experienciaLaboral = req.body;
+
+
+    if (experienciaLaboral.fechaInicio == '') {
+        experienciaLaboral.fechaInicio = null
+    }
+
+    if (experienciaLaboral.fechaFin == '') {
+        experienciaLaboral.fechaFin = null
+    }
+
+
     con.query("INSERT INTO experiencia_laboral(empresa, puesto, funciones_puesto, fecha_inicio, fecha_fin, observaciones, cronologia) VALUES(?,?,?,?,?,?,?)",
     [
         experienciaLaboral.nombreEmpresa,
@@ -1038,6 +1073,16 @@ app.post("/experiencias-laborales/update/", (req, res) => {
 
     var experienciaLaboral = req.body.params.experienciaLaboral;
     var idExperienciaLaboral = req.body.params.idExperienciaLaboral;
+
+    if (experienciaLaboral.fechaInicio == '') {
+        experienciaLaboral.fechaInicio = null
+    }
+
+    if (experienciaLaboral.fechaFin == '') {
+        experienciaLaboral.fechaFin = null
+    }
+
+    console.log(experienciaLaboral)
 
     con.query("UPDATE experiencia_laboral SET empresa=?, puesto=?, funciones_puesto=?, fecha_inicio=?, fecha_fin=?, observaciones=?, cronologia=? WHERE id_experiencia_laboral=?",
     [

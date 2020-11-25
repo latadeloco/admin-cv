@@ -65,14 +65,11 @@ export class UpdateFormacionComponent implements OnInit {
   formacionForm(routeParams) {
     this.formacionService.getFormacion(routeParams).toPromise().then(respuestaFormacionActual => {
       if (respuestaFormacionActual['responseKO'] == undefined) {
-        
-        var fechaInicio = this.formatDate(new Date(respuestaFormacionActual[0]['fecha_inicio']));
-        var fechaFin =  this.formatDate(new Date(respuestaFormacionActual[0]['fecha_fin']));
         this.formacionGroup = this.formBuilder.group({
           nombreTitulacion  : [respuestaFormacionActual[0]['nombre_titulacion'], [Validators.required, Validators.maxLength(100)]],
           nombreInstitucion : [respuestaFormacionActual[0]['nombre_institucion'], [Validators.maxLength(100)]],
-          fechaInicio       : [fechaInicio],
-          fechaFin          : [fechaFin],
+          fechaInicio       : [respuestaFormacionActual[0]['fecha_inicio']],
+          fechaFin          : [respuestaFormacionActual[0]['fecha_fin']],
           certificacion     : [respuestaFormacionActual[0]['certificacion']],
           descripcion       : [respuestaFormacionActual[0]['descripcion_formacion']]
         }, {validators : this.validadores.validatorDate('fechaInicio', 'fechaFin')});
@@ -81,6 +78,7 @@ export class UpdateFormacionComponent implements OnInit {
         this.toast.showDanger(respuestaFormacionActual['responseKO'], 3000);
         this.reusableService.redirectTo('formacion');
       }
+
     })
   }
 

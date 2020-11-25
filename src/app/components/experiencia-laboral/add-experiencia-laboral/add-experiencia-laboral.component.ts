@@ -161,14 +161,20 @@ export class AddExperienciaLaboralComponent implements OnInit {
       if (respuestaDescargaYSubidaURL['responseOK'] != undefined) {
         this.toast.showSuccess(respuestaDescargaYSubidaURL['responseOK'], 1500);
         this.modal.dismissAll();
-        setTimeout(() => {
-          this.router.navigateByUrl('experiencia-laboral');
-        }, 1500);
+        this.reusable.redirectTo('experiencia-laboral')
       } else if (respuestaDescargaYSubidaURL['responseKO'] != undefined){
         this.toast.showDanger(respuestaDescargaYSubidaURL['responseOK'], 1500);
       } else {
         this.toast.showDanger("Error desconocido", 1500);
       }
     });
+  }
+
+  /**
+   * cierre del modal
+   */
+  dismiss() {
+    this.modal.dismissAll();
+    this.reusableService.redirectTo('experiencia-laboral');
   }
 }
