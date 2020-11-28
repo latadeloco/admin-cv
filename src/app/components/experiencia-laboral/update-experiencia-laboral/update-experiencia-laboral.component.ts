@@ -179,6 +179,7 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
     this.experienciaLaboralService.updateLogo(formData, this.routeParams).toPromise().then(respuestaSubidaLogotipo => {
       if (respuestaSubidaLogotipo['responseOK'] != undefined) {
         this.toast.showSuccess(respuestaSubidaLogotipo['responseOK'], 1500);
+        this.dismiss();
         this.router.navigateByUrl('experiencia-laboral');
       } else if (respuestaSubidaLogotipo['responseKO'] != undefined) {
         this.toast.showDanger(respuestaSubidaLogotipo['responseKO'], 1500);
@@ -186,9 +187,7 @@ export class UpdateExperienciaLaboralComponent implements OnInit {
         this.toast.showDanger("Error desconocido", 1500);
       }
 
-      setTimeout(() => {
-        this.router.navigateByUrl('experiencia-laboral');
-      }, 1500);
+      this.dismiss();
     });
   }
 

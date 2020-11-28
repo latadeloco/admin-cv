@@ -134,6 +134,7 @@ export class AddExperienciaLaboralComponent implements OnInit {
     this.experienciaLaboralServive.uploadLogo(formData).toPromise().then(respuestaSubidaLogotipo => {
       if (respuestaSubidaLogotipo['responseOK'] != undefined) {
         this.toast.showSuccess(respuestaSubidaLogotipo['responseOK'], 1500);
+        this.dismiss();
         this.router.navigateByUrl('experiencia-laboral');
       } else if (respuestaSubidaLogotipo['responseKO'] != undefined) {
         this.toast.showDanger(respuestaSubidaLogotipo['responseKO'], 1500);
