@@ -232,17 +232,29 @@ app.get("/datos-personales/tieneImagenPerfil/:updateOInsert", (req, res, otro) =
     
     var updateOInsert = req.params.updateOInsert;
     if (updateOInsert == 'true') {
-        con.query("UPDATE INTO datos_personales SET imagen=true",
-        function(error, result, fields) {
+        con.query("SELECT id_datos_personales as id FROM datos_personales ORDER by id_datos_personales ASC LIMIT 1", function (error, result, fields) {
+            var idDatosPersonales = JSON.parse(JSON.stringify(result[0]['id']));
             con.on('error', function(err) {
                 console.log('[MYSQL]ERROR', err);
-            })
-            if (error == null) {
-                res.end(JSON.stringify({responseOK : 'Se ha cambiado el estado de imagen de perfil.'}));
-            } else {
-                res.end(JSON.stringify({responseKO : 'Se ha producido un error inesperado.'}));
+            });
+
+            if (idDatosPersonales > 0) {
+                con.query("UPDATE datos_personales SET imagen=true WHERE id_datos_personales = ?",[
+                    idDatosPersonales
+                ],
+                function(error, result, fields) {
+                    con.on('error', function(err) {
+                        console.log('[MYSQL]ERROR', err);
+                    })
+                    if (error == null) {
+                        res.end(JSON.stringify({responseOK : 'Se ha cambiado el estado de imagen de perfil.'}));
+                    } else {
+                        res.end(JSON.stringify({responseKO : 'Se ha producido un error inesperado.'}));
+                    }
+                })
             }
-        })
+        });
+        
     } else if (updateOInsert == 'false') {
         con.query("INSERT INTO datos_personales(nombre, apellidos, imagen) VALUES (?,?,?)", [
             '',

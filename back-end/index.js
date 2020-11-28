@@ -164,7 +164,7 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
                 });
             })
         } else {
-            con.query("UPDATE datos_personales SET imagen=true WHERE id_datos_personales = (SELECT max(id_datos_personales) FROM datos_personales )", function(error, result, fields) {
+            con.query("UPDATE datos_personales FROM imagen=true", function(error, result, fields) {
                 con.on('error', function(err) {
                     console.log('[MYSQL]ERROR', err);
                 });
@@ -176,7 +176,7 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
         if (err) {
             return
         } else {
-            fs.unlink('..\\src\\assets\\img\\perfil.jpg', () => {
+            fs.unlink('..\\src\\src\\assets\\img\\perfil.jpg', () => {
                 switchFileImageType(req);
             });
         }
@@ -231,17 +231,29 @@ app.get("/datos-personales/tieneImagenPerfil/:updateOInsert", (req, res, otro) =
     
     var updateOInsert = req.params.updateOInsert;
     if (updateOInsert == 'true') {
-        con.query("UPDATE INTO datos_personales SET imagen=true",
-        function(error, result, fields) {
+        con.query("SELECT id_datos_personales as id FROM datos_personales ORDER by id_datos_personales ASC LIMIT 1", function (error, result, fields) {
+            var idDatosPersonales = JSON.parse(JSON.stringify(result[0]['id']));
             con.on('error', function(err) {
                 console.log('[MYSQL]ERROR', err);
-            })
-            if (error == null) {
-                res.end(JSON.stringify({responseOK : 'Se ha cambiado el estado de imagen de perfil.'}));
-            } else {
-                res.end(JSON.stringify({responseKO : 'Se ha producido un error inesperado.'}));
+            });
+
+            if (idDatosPersonales > 0) {
+                con.query("UPDATE datos_personales SET imagen=true WHERE id_datos_personales = ?",[
+                    idDatosPersonales
+                ],
+                function(error, result, fields) {
+                    con.on('error', function(err) {
+                        console.log('[MYSQL]ERROR', err);
+                    })
+                    if (error == null) {
+                        res.end(JSON.stringify({responseOK : 'Se ha cambiado el estado de imagen de perfil.'}));
+                    } else {
+                        res.end(JSON.stringify({responseKO : 'Se ha producido un error inesperado.'}));
+                    }
+                })
             }
-        })
+        });
+        
     } else if (updateOInsert == 'false') {
         con.query("INSERT INTO datos_personales(nombre, apellidos, imagen) VALUES (?,?,?)", [
             '',
@@ -491,11 +503,11 @@ app.post("/formacion/add", (req, res) => {
         /*if (formacion.certificacion == true || formacion.certificacion == 1) {
             console.log(req.files)
 
-            fs.stat('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
+            fs.stat('../assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
                 if (err) {
                     return
                 } else {
-                    fs.unlink('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', () => {
+                    fs.unlink('../assets\\certificados\\' + idFormacion + '.pdf', () => {
                         switchFileCertificate(req, idFormacion);
                     });
                 }
@@ -559,7 +571,6 @@ app.post("/formacion/subirCertificadoConFormacionExistente/:idFormacion", subirC
         con.on('error', function(err) {
             console.log('[MYSQL]ERROR', err);
         }) 
-
         if (error == null) {
             fs.stat('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
                 if (err) {
@@ -575,11 +586,10 @@ app.post("/formacion/subirCertificadoConFormacionExistente/:idFormacion", subirC
                 'responseKO' : 'certificado subido correctamente.'
             });
         } else {
-                res.json({
-                    'responseKO' : 'El certificado no se ha podido subir.'
-                });
+            res.json({
+                'responseKO' : 'El certificado no se ha podido subir.'
+            });
         }
-
     })
 });
 
