@@ -111,6 +111,7 @@ export class AddFormacionComponent implements OnInit {
     formData.append("certificado", this.fileUpload[0], this.fileUpload[0].name);
 
     this.addFormacion(formData);
+    this.modal.dismissAll();
   }
 
   /**

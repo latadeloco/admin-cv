@@ -61,14 +61,18 @@ export class FormacionComponent implements OnInit {
       this.formacionService.removeCertificate(certificado).toPromise().then(respuesta => {
         if (respuesta['responseOK'] != undefined) {
           this.toast.showSuccess(respuesta['responseOK'], 4000);
+          this.reusableService.redirectTo('formacion');
+          window.location.reload;
         } else if (respuesta['responseKO'] != undefined) {
           this.toast.showDanger(respuesta['responseKO'], 4000);
         }
       });
     } else {
-      this.formacionService.removeCertificate(certificado).toPromise();
+      this.formacionService.removeCertificate(certificado).toPromise().then(_ => {
+        this.reusableService.redirectTo('formacion');
+        window.location.reload;
+      });
     }
-    this.reusableService.redirectTo('formacion');
   }
 
   /**
@@ -80,11 +84,13 @@ export class FormacionComponent implements OnInit {
     this.formacionService.removeFormacion(idFormacion).toPromise().then(respuestaEliminacionFormacion => {
       if (respuestaEliminacionFormacion['responseOK'] != undefined) {
         this.toast.showSuccess(respuestaEliminacionFormacion['responseOK'], 3000);
+        this.reusableService.redirectTo('formacion')
+        window.location.reload;
       } else if (respuestaEliminacionFormacion['responseKO'] != undefined){
         this.toast.showDanger(respuestaEliminacionFormacion['responseKO'], 3000);
       }
 
-      this.reusableService.redirectTo('formacion')
+      
       
     })
   }
@@ -109,7 +115,11 @@ export class FormacionComponent implements OnInit {
     let formData = new FormData();
     formData.append("certificado", this.fileUpload[0], this.fileUpload[0].name);
 
-    this.formacionService.uploadCertificateWithFormacion(formData, this.idFormacionActual).toPromise();
+    this.formacionService.uploadCertificateWithFormacion(formData, this.idFormacionActual).toPromise().then(_ => {
+      this.reusableService.redirectTo('formacion');
+      this.dismiss();
+      window.location.reload;
+    });
   }
 
 

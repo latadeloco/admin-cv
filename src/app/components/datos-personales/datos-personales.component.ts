@@ -71,7 +71,9 @@ export class DatosPersonalesComponent implements OnInit {
   private updateOInsertImagenPerfil(updateOInsert: boolean, formData: FormData) {
     this.datosPersonalesService.setTieneImagenPerfil(updateOInsert).toPromise().then(_ => {
       this.datosPersonalesService.setSubirImagenPerfil(formData).toPromise().then(respuesta => {
-        console.log(respuesta);
+        if (respuesta['message'] !== undefined) {
+          window.location.reload();
+        }
       });
     })
   }

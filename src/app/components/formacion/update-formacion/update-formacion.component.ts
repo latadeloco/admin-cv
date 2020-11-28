@@ -141,7 +141,10 @@ export class UpdateFormacionComponent implements OnInit {
     let formData = new FormData();
     formData.append("certificado", this.fileUpload[0], this.fileUpload[0].name);
 
-    this.formacionService.uploadCertificateWithFormacion(formData, this.routeParams).toPromise();
+    this.formacionService.uploadCertificateWithFormacion(formData, this.routeParams).toPromise().then(_ => {
+      this.reusableService.redirectTo('formacion/update-formacion/'+this.routeParams);
+      window.location.reload;
+    });
   }
 
   /**

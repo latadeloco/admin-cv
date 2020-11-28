@@ -11,16 +11,16 @@ const token = new TokenGenerator(256, TokenGenerator.BASE62);
 // Subir Archivos al servidor
 const multipart = require('connect-multiparty');
 const subirImagenes = multipart({
-    uploadDir: './../src/assets/img',
+    uploadDir: './../assets/img',
     autoFiles: true
 });
 const subirCertificados = multipart({
-    uploadDir: './../src/assets/certificados',
+    uploadDir: './../assets/certificados',
     autoFiles: true
 });
 
 const subirLogotipo = multipart({
-    uploadDir: './../src/assets/logotipos',
+    uploadDir: './../assets/logotipos',
     autoFiles: true
 });
 
@@ -172,20 +172,20 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
         }
     })
 
-    fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
+    fs.stat('..\\assets\\img\\perfil.jpg', (err, stat) => {
         if (err) {
             return
         } else {
-            fs.unlink('..\\src\\assets\\img\\perfil.jpg', () => {
+            fs.unlink('..\\assets\\img\\perfil.jpg', () => {
                 switchFileImageType(req);
             });
         }
     });
-    fs.stat('..\\src\\assets\\img\\perfil.png', (err, stat) => {
+    fs.stat('..\\assets\\img\\perfil.png', (err, stat) => {
         if (err) {
             return
         } else {
-            fs.unlink('..\\src\\assets\\img\\perfil.png', () => {
+            fs.unlink('..\\assets\\img\\perfil.png', () => {
                 switchFileImageType(req);
             });
         }
@@ -200,18 +200,18 @@ app.post('/datos-personales/subirImagen', subirImagenes, (req, res) => {
  */
 function switchFileImageType(req) {
     if (req.files.imagen.type == 'image/png') {
-        fs.stat('..\\src\\assets\\img\\perfil.png', (err, stast) => {
+        fs.stat('..\\assets\\img\\perfil.png', (err, stast) => {
             if (err != null) {
-                fs.rename(req.files.imagen.path, '..\\src\\assets\\img\\perfil.png', (err) => {
+                fs.rename(req.files.imagen.path, '..\\assets\\img\\perfil.png', (err) => {
                     if (err) return;
                     console.log('Cambio de foto de perfil!');
                     });
             }
         });
     } else if (req.files.imagen.type == 'image/jpeg') {
-        fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stast) => {
+        fs.stat('..\\assets\\img\\perfil.jpg', (err, stast) => {
             if (err != null) {
-                fs.rename(req.files.imagen.path, '..\\src\\assets\\img\\perfil.jpg', (err) => {
+                fs.rename(req.files.imagen.path, '..\\assets\\img\\perfil.jpg', (err) => {
                     if (err) return;
                     console.log('Cambio de foto de perfil!');
                     });
@@ -281,7 +281,7 @@ app.get('/datos-personales/imagenPerfil', (req, res) => {
             let tieneImagen = JSON.parse(JSON.stringify(result[0]['imagen']));
     
             if (tieneImagen === 1) {
-                fs.stat('..\\src\\assets\\img\\perfil.jpg', (err, stat) => {
+                fs.stat('..\\assets\\img\\perfil.jpg', (err, stat) => {
                     if (err != null) {
                         return
                     } else {
@@ -291,7 +291,7 @@ app.get('/datos-personales/imagenPerfil', (req, res) => {
                         }));
                     }
                 });
-                fs.stat('..\\src\\assets\\img\\perfil.png', (err, stat) => {
+                fs.stat('..\\assets\\img\\perfil.png', (err, stat) => {
                     if (err != null) {
                         return
                     } else {
@@ -491,11 +491,11 @@ app.post("/formacion/add", (req, res) => {
         /*if (formacion.certificacion == true || formacion.certificacion == 1) {
             console.log(req.files)
 
-            fs.stat('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
+            fs.stat('..\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
                 if (err) {
                     return
                 } else {
-                    fs.unlink('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', () => {
+                    fs.unlink('..\\assets\\certificados\\' + idFormacion + '.pdf', () => {
                         switchFileCertificate(req, idFormacion);
                     });
                 }
@@ -528,11 +528,11 @@ app.post("/formacion/subirCertificado", subirCertificados, (req, res) => {
 
         var id = result.length == 0 ? 1 : (JSON.parse(JSON.stringify(result))[0]['id']);
 
-        fs.stat('..\\src\\assets\\certificados\\' + id + '.pdf', (err, stat) => {
+        fs.stat('..\\assets\\certificados\\' + id + '.pdf', (err, stat) => {
             if (err) {
                 return
             } else {
-                fs.unlink('..\\src\\assets\\certificados\\' + id + '.pdf', () => {
+                fs.unlink('..\\assets\\certificados\\' + id + '.pdf', () => {
                     switchFileCertificate(req, id);
                 });
             }
@@ -559,13 +559,12 @@ app.post("/formacion/subirCertificadoConFormacionExistente/:idFormacion", subirC
         con.on('error', function(err) {
             console.log('[MYSQL]ERROR', err);
         }) 
-
         if (error == null) {
-            fs.stat('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
+            fs.stat('..\\assets\\certificados\\' + idFormacion + '.pdf', (err, stat) => {
                 if (err) {
                     return
                 } else {
-                    fs.unlink('..\\src\\assets\\certificados\\' + idFormacion + '.pdf', () => {
+                    fs.unlink('..\\assets\\certificados\\' + idFormacion + '.pdf', () => {
                         switchFileCertificate(req, idFormacion);
                     });
                 }
@@ -575,11 +574,10 @@ app.post("/formacion/subirCertificadoConFormacionExistente/:idFormacion", subirC
                 'responseKO' : 'certificado subido correctamente.'
             });
         } else {
-                res.json({
-                    'responseKO' : 'El certificado no se ha podido subir.'
-                });
+            res.json({
+                'responseKO' : 'El certificado no se ha podido subir.'
+            });
         }
-
     })
 });
 
@@ -589,9 +587,9 @@ app.post("/formacion/subirCertificadoConFormacionExistente/:idFormacion", subirC
  */
 function switchFileCertificate(req, id) {
     if (req.files.certificado.type == 'application/pdf') {
-        fs.stat('..\\src\\assets\\certificados\\' + id + '.pdf', (err, stast) => {
+        fs.stat('..\\assets\\certificados\\' + id + '.pdf', (err, stast) => {
             if (err != null) {
-                fs.rename(req.files.certificado.path, '..\\src\\assets\\certificados\\' + id + '.pdf', (err) => {
+                fs.rename(req.files.certificado.path, '..\\assets\\certificados\\' + id + '.pdf', (err) => {
                     if (err) return;
                     console.log('Añadido certificado!');
                     });
@@ -653,14 +651,14 @@ app.post("/formacion/removeCertificate", (req, res) => {
             console.log('[MYSQL]ERROR', err);
         })
 
-        fs.stat('..\\src\\assets\\certificados\\' + removeCertificate + '.pdf', (err, stat) => {
+        fs.stat('..\\assets\\certificados\\' + removeCertificate + '.pdf', (err, stat) => {
             if (err) {
                 res.json({
                     responseKO: 'El certificado que intenta eliminar no existe.',
                 }); 
                 return
             } else {
-                fs.unlink('..\\src\\assets\\certificados\\' + removeCertificate + '.pdf', () => {
+                fs.unlink('..\\assets\\certificados\\' + removeCertificate + '.pdf', () => {
                     res.json({
                         responseOK: 'Certificado eliminado correctamente.',
                     }); 
@@ -776,12 +774,12 @@ app.post('/experiencias-laborales/updateSubirLogotipo', subirLogotipo, (req, res
         return;
     }
 
-    fs.unlink('..\\src\\assets\\logotipos\\'+ id +'.png', function(err) {
+    fs.unlink('..\\assets\\logotipos\\'+ id +'.png', function(err) {
         if (err != null) {
             console.log("no existe")
         }
     });
-    fs.unlink('..\\src\\assets\\logotipos\\'+ id +'.jpg', function(err) {
+    fs.unlink('..\\assets\\logotipos\\'+ id +'.jpg', function(err) {
         if (err != null) {
             console.log("no existe")
         }
@@ -833,12 +831,12 @@ function extensionFileLogo(req) {
  */
 function updateSwitchFileLogo(req, id) {
     if (req.files.logotipo.type == 'image/png') {
-        fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.png', (err) => {
+        fs.rename(req.files.logotipo.path, '..\\assets\\logotipos\\'+ id +'.png', (err) => {
             if (err) return;
             console.log('¡Subido logotipo PNG!');
         });
     } else if (req.files.logotipo.type == 'image/jpeg') {
-        fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.jpg', (err) => {
+        fs.rename(req.files.logotipo.path, '..\\assets\\logotipos\\'+ id +'.jpg', (err) => {
             if (err) return;
             console.log('¡Subido logotipo JPG!');
         });
@@ -852,9 +850,9 @@ function updateSwitchFileLogo(req, id) {
  */
 function switchFileLogo(req, id) {
     if (req.files.logotipo.type == 'image/png') {
-        fs.stat('..\\src\\assets\\logotipos\\'+ id +'.png', (err, stast) => {
+        fs.stat('..\\assets\\logotipos\\'+ id +'.png', (err, stast) => {
             if (err != null) {
-                fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.png', (err) => {
+                fs.rename(req.files.logotipo.path, '..\\assets\\logotipos\\'+ id +'.png', (err) => {
                     if (err) return;
                     console.log('¡Subido logotipo PNG!');
 
@@ -867,9 +865,9 @@ function switchFileLogo(req, id) {
             }
         });
     } else if (req.files.logotipo.type == 'image/jpeg') {
-        fs.stat('..\\src\\assets\\logotipos\\'+ id +'.jpg', (err, stast) => {
+        fs.stat('..\\assets\\logotipos\\'+ id +'.jpg', (err, stast) => {
             if (err != null) {
-                fs.rename(req.files.logotipo.path, '..\\src\\assets\\logotipos\\'+ id +'.jpg', (err) => {
+                fs.rename(req.files.logotipo.path, '..\\assets\\logotipos\\'+ id +'.jpg', (err) => {
                     if (err) return;
                     console.log('¡Subido logotipo JPG!');
 
@@ -965,12 +963,12 @@ app.post('/experiencias-laborales/updateImageURL/', (req, res) => {
     var idExperienciaLaboral = req.body.params.idExperienciaLaboral;
     var url = req.body.params.protocolo +"//"+ req.body.params.host + req.body.params.path;
 
-    fs.unlink('..\\src\\assets\\logotipos\\'+ idExperienciaLaboral +'.png', function(err) {
+    fs.unlink('..\\assets\\logotipos\\'+ idExperienciaLaboral +'.png', function(err) {
         if (err != null) {
             console.log("no existe")
         }
     });
-    fs.unlink('..\\src\\assets\\logotipos\\'+ idExperienciaLaboral +'.jpg', function(err) {
+    fs.unlink('..\\assets\\logotipos\\'+ idExperienciaLaboral +'.jpg', function(err) {
         if (err != null) {
             console.log("no existe")
         }
@@ -1023,11 +1021,11 @@ app.post("/experiencias-laborales/removeExperienciaLaboral", (req, res) => {
         var tieneLogo = JSON.parse(JSON.stringify(result[0]['logo_empresa']));
         
         if (tieneLogo === 1) {
-            fs.stat('..\\src\\assets\\logotipos\\' + idExperienciaLaboral + extension, (err, stat) => {
+            fs.stat('..\\assets\\logotipos\\' + idExperienciaLaboral + extension, (err, stat) => {
                 if (err) {
                     return
                 } else {
-                    fs.unlink('..\\src\\assets\\logotipos\\' + idExperienciaLaboral + extension, () => {
+                    fs.unlink('..\\assets\\logotipos\\' + idExperienciaLaboral + extension, () => {
                     });
                 }
             });
